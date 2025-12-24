@@ -1,0 +1,277 @@
+---
+/**
+ * Reviews Section
+ * Отзывы клиентов и учеников
+ */
+
+const reviews = [
+  {
+    name: 'Мария А.',
+    role: 'Психотерапевт',
+    text: 'После курса я стала спокойнее и увереннее. Осознала многие причины своих тревог. Спасибо команде ЦЕРГ',
+    image: '/images/reviews/review-1.png',
+  },
+  {
+    name: 'Марина А.',
+    role: 'Студентка',
+    text: 'Обучение помогло внедрить гипноз в мою психотерапевтическую практику. Качественный материал и поддержка!',
+    image: '/images/reviews/review-2.png',
+  },
+  {
+    name: 'Сергей Л.',
+    role: 'Психотерапевт',
+    text: 'Обучение помогло внедрить гипноз в мою психотерапевтическую практику. Качественный материал и поддержка!',
+    image: '/images/reviews/review-3.png',
+  },
+]
+---
+
+<section class="reviews" id="reviews">
+  <div class="reviews__container">
+    <!-- Header -->
+    <div class="reviews__header">
+      <h2 class="reviews__title">Отзывы клиентов и учеников</h2>
+      <p class="reviews__description">
+        Узнайте, что говорят о нас наши клиенты и ученики после прохождения наших курсов и сеансов
+      </p>
+    </div>
+
+    <!-- VK Button -->
+    <a href="https://vk.com/cerghypno" target="_blank" rel="noopener noreferrer" class="reviews__vk-btn">
+      Больше отзывов в нашей группе ВКонтакте
+    </a>
+
+    <!-- Navigation -->
+    <div class="reviews__nav">
+      <button class="reviews__nav-btn" aria-label="Предыдущий отзыв">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15,18 9,12 15,6"></polyline>
+        </svg>
+      </button>
+      <button class="reviews__nav-btn" aria-label="Следующий отзыв">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9,18 15,12 9,6"></polyline>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Reviews Cards -->
+    <div class="reviews__cards">
+      {reviews.map((review) => (
+        <article class="review-card">
+          <img 
+            src={review.image} 
+            alt={review.name}
+            class="review-card__image"
+            loading="lazy"
+          />
+          <div class="review-card__info">
+            <h4 class="review-card__name">{review.name}</h4>
+            <span class="review-card__role">{review.role}</span>
+          </div>
+          <p class="review-card__text">{review.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .reviews {
+    background: white;
+    border-radius: 32px;
+    margin: 20px;
+    padding: 24px;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .reviews {
+      padding: 33px;
+    }
+  }
+
+  .reviews__container {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .reviews__container {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 2rem;
+    }
+  }
+
+  .reviews__header {
+    grid-column: 1;
+  }
+
+  .reviews__title {
+    color: var(--color-text);
+    font-size: clamp(36px, 5vw, 65px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+  }
+
+  .reviews__description {
+    color: var(--color-text);
+    font-size: 1.125rem;
+    line-height: 1.17;
+    max-width: 590px;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .reviews__description {
+      font-size: 1.25rem;
+    }
+  }
+
+  .reviews__vk-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 32px;
+    background: #587087;
+    border: 1px solid black;
+    color: #060606;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: background 0.2s ease;
+    width: fit-content;
+  }
+
+  .reviews__vk-btn:hover {
+    background: #4a6073;
+    color: white;
+  }
+
+  .reviews__nav {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .reviews__nav {
+      position: absolute;
+      left: 570px;
+      top: 429px;
+    }
+  }
+
+  .reviews__nav-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #F2F2F2;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-dark);
+    transition: background 0.2s ease;
+  }
+
+  .reviews__nav-btn:hover {
+    background: var(--color-beige-200);
+  }
+
+  .reviews__cards {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .reviews__cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .reviews__cards {
+      grid-column: 2;
+      grid-row: 1 / 4;
+    }
+  }
+
+  /* Review Card */
+  .review-card {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    background: #EEF3F9;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 468px;
+  }
+
+  @media (min-width: 640px) {
+    .review-card {
+      flex: 0 0 320px;
+    }
+  }
+
+  .review-card__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 640px) {
+    .review-card__image {
+      height: 250px;
+    }
+  }
+
+  .review-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .review-card__name {
+    color: white;
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin: 0;
+    /* Dark text for light background */
+    color: var(--color-dark);
+  }
+
+  .review-card__role {
+    color: #9E9E9E;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.17;
+  }
+
+  .review-card__text {
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.17;
+    margin: 0;
+    /* Dark text for light background */
+    color: var(--color-dark);
+  }
+</style>
+

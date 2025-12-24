@@ -1,0 +1,224 @@
+---
+/**
+ * Experts Section
+ * Наши эксперты - 3 карточки специалистов
+ */
+
+const experts = [
+  {
+    name: 'Олег Гаас',
+    role: 'Гипнолог, психолог-консультант, сертифицированный специалист по ДПДГ и ведущий курсов по директивному, классическому и регрессивному гипнозу, доцент',
+    description: 'Изучает человеческие рефлексы, мысли и эмоции. Помогает клиентам понять свои внутренние проблемы, преодолеть зависимости и решить задачи в кратчайшие сроки',
+    badges: ['Глубокие знания нейро-физиологии'],
+    image: '/images/experts/expert-oleg.png',
+  },
+  {
+    name: 'Алёна Любочко',
+    role: 'Психолог-консультант, гипнолог, специалист по глубокой регрессии, проводник в прошлые жизни и к духовному наставнику, преподаватель',
+    description: 'Специалист, который поможет вам преодолеть жизненные трудности, найти причину неудовлетворённости, разобраться в себе и встать на свой жизненный путь',
+    badges: ['Большой опыт погружения в гипноз', 'Исследование трансовых состояний с 17 лет'],
+    image: '/images/experts/expert-alena.png',
+  },
+  {
+    name: 'Ваагн Хачатрян',
+    role: 'Врач-физиотерапевт с 20-летним стажем, реабилитолог, суггестивный психолог: сертифицированный гипнотерапевт (классический и регрессивный гипноз)',
+    description: 'Опыт работы в военной и гражданской медицине в сфере неврологии, ревматологии, травматологии и психического здоровья. Большой опыт работы с особыми детьми: ДЦП, аутизм',
+    badges: [],
+    image: '/images/experts/expert-vaagn.png',
+  },
+]
+---
+
+<section class="experts" id="experts">
+  <div class="container">
+    <h2 class="experts__title">Наши эксперты</h2>
+    
+    <div class="experts__grid">
+      {experts.map((expert) => (
+        <article class="expert-card">
+          <img 
+            src={expert.image} 
+            alt={expert.name}
+            class="expert-card__image"
+            loading="lazy"
+          />
+          
+          <h3 class="expert-card__name">{expert.name}</h3>
+          <p class="expert-card__role">{expert.role}</p>
+          
+          {expert.badges.length > 0 && (
+            <div class="expert-card__badges">
+              {expert.badges.map((badge) => (
+                <span class="expert-card__badge">{badge}</span>
+              ))}
+            </div>
+          )}
+          
+          <div class="expert-card__description-wrap">
+            <p class="expert-card__description">{expert.description}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .experts {
+    background: var(--color-bg);
+    padding: 80px 0;
+  }
+
+  .experts__title {
+    color: var(--color-text);
+    font-size: clamp(40px, 5vw, 65px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin: 0 0 2rem;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .experts__title {
+      text-align: left;
+    }
+  }
+
+  .experts__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .experts__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .experts__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Expert Card */
+  .expert-card {
+    background: #EDF4FF;
+    border-radius: 32px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .expert-card__image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 16px;
+    margin-bottom: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    border-radius: 0;
+    z-index: 0;
+  }
+
+  .expert-card__name {
+    color: white;
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .expert-card__role {
+    color: #E0E0E0;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.17;
+    margin: 0 0 auto;
+    max-width: 373px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .expert-card__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 260px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .expert-card__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 16px;
+    background: rgba(103, 82, 70, 0.3);
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .expert-card__description-wrap {
+    background: white;
+    border-radius: 24px;
+    padding: 12px;
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .expert-card__description {
+    color: var(--color-text-secondary);
+    font-size: 16px;
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  /* Card without badges needs extra margin */
+  .expert-card:last-child .expert-card__description-wrap {
+    margin-top: auto;
+  }
+
+  .expert-card:last-child .expert-card__badges + .expert-card__description-wrap,
+  .expert-card:last-child .expert-card__role {
+    margin-bottom: 0;
+  }
+
+  /* Adjust for cards without badges */
+  .expert-card:last-child {
+    min-height: 538px;
+  }
+
+  .expert-card:last-child .expert-card__role {
+    margin-bottom: auto;
+    padding-top: 260px;
+  }
+
+  .expert-card:last-child .expert-card__description-wrap {
+    margin-top: 10px;
+  }
+
+  /* First two cards have badges, adjust their spacing */
+  .expert-card:not(:last-child) {
+    min-height: 538px;
+  }
+</style>
+

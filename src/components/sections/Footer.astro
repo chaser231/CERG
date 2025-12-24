@@ -1,0 +1,252 @@
+---
+/**
+ * Footer Section
+ * Подвал с контактами, навигацией и юридической информацией
+ */
+
+const menuItems = [
+  { label: 'О центре', href: '#about' },
+  { label: 'Услуги', href: '#services' },
+  { label: 'Обучение гипнозу', href: '#training' },
+  { label: 'Отзывы', href: '#reviews' },
+  { label: 'Эксперты', href: '#experts' },
+  { label: 'Цены', href: '#courses' },
+  { label: 'Частые вопросы', href: '#faq' },
+]
+---
+
+<footer class="footer">
+  <div class="footer__container">
+    <!-- Logo -->
+    <img 
+      src="/images/logo.png" 
+      alt="ЦЕРГ" 
+      width="182" 
+      height="49"
+      class="footer__logo"
+    />
+
+    <!-- Navigation -->
+    <nav class="footer__nav">
+      {menuItems.map((item) => (
+        <a href={item.href} class="footer__nav-link">
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Contacts -->
+    <div class="footer__contacts">
+      <a href="tel:+79114721704" class="footer__contact">
+        <svg class="footer__contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+        </svg>
+        <span>+7 (911) 472-17-04</span>
+      </a>
+      
+      <a href="mailto:helpcerh@mail.ru" class="footer__contact">
+        <svg class="footer__contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        <span>helpcerh@mail.ru</span>
+      </a>
+      
+      <div class="footer__contact">
+        <svg class="footer__contact-icon" width="26" height="27" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+        <span>
+          Калининград, Минская 25, каб. 220 (2 этаж)<br />
+          Москва, проект «Галерея», часовая аренда
+        </span>
+      </div>
+      
+      <div class="footer__contact">
+        <svg class="footer__contact-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+        </svg>
+        <span>9:00 — 18:00</span>
+      </div>
+    </div>
+
+    <!-- Social Links -->
+    <div class="footer__social">
+      <a href="https://vk.com/cerghypno" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="ВКонтакте">
+        <svg width="74" height="74" viewBox="0 0 74 74" fill="none">
+          <circle cx="37" cy="37" r="36" stroke="currentColor" stroke-width="2"/>
+          <path d="M38.5 50.5C27.5 50.5 21 42.5 20.75 29.75H26C26.25 39 30.25 43 33.5 43.75V29.75H38.5V38C41.75 37.5 45.25 33.5 46.5 29.75H51.5C50.5 34.5 46.75 38.5 44 40C46.75 41.25 51 44.75 52.5 50.5H47C45.75 46.75 42.5 43.25 38.5 42.75V50.5Z" fill="currentColor"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Copyright -->
+    <p class="footer__copyright">
+      © 2025 ЦЕРГ<br />
+      Страница изменена: 14.10.2024, 14:11
+    </p>
+
+    <!-- Legal Links -->
+    <div class="footer__legal">
+      <a href="/privacy" class="footer__legal-link">Политика конфиденциальности</a>
+      <a href="/terms" class="footer__legal-link">Пользовательское соглашение</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: #0A0A0A;
+    padding: 32px 50px;
+  }
+
+  .footer__container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) {
+    .footer__container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .footer__container {
+      grid-template-columns: 182px 1fr 1fr 1fr 74px;
+      gap: 2rem 4rem;
+      align-items: start;
+    }
+  }
+
+  .footer__logo {
+    height: 49px;
+    width: auto;
+  }
+
+  /* Navigation */
+  .footer__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .footer__nav-link {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.17;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer__nav-link:hover {
+    color: var(--color-primary);
+  }
+
+  /* Contacts */
+  .footer__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .footer__contact {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    color: white;
+    font-size: 18px;
+    line-height: 1.17;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  a.footer__contact:hover {
+    color: var(--color-primary);
+  }
+
+  .footer__contact-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Social */
+  .footer__social {
+    display: flex;
+    gap: 1rem;
+  }
+
+  @media (min-width: 1200px) {
+    .footer__social {
+      grid-column: 5;
+      grid-row: 1;
+    }
+  }
+
+  .footer__social-link {
+    color: white;
+    transition: color 0.2s ease;
+  }
+
+  .footer__social-link:hover {
+    color: var(--color-primary);
+  }
+
+  /* Copyright */
+  .footer__copyright {
+    color: #F2F2F2;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  @media (min-width: 1200px) {
+    .footer__copyright {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+
+  /* Legal */
+  .footer__legal {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer__legal {
+      flex-direction: row;
+      gap: 24px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .footer__legal {
+      grid-column: 4 / 6;
+      grid-row: 2;
+      justify-content: flex-end;
+    }
+  }
+
+  .footer__legal-link {
+    color: #F2F2F2;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer__legal-link:hover {
+    color: white;
+  }
+</style>
+

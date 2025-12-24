@@ -1,0 +1,192 @@
+---
+/**
+ * FAQ Section
+ * Ответы на частые вопросы с аккордеоном
+ */
+
+const questions = [
+  {
+    question: 'Как будет проходить сеанс?',
+    answer: 'Сеанс проходит в комфортной обстановке. Вы располагаетесь в удобном кресле, специалист вводит вас в состояние транса и работает с вашим подсознанием для решения поставленных задач.',
+  },
+  {
+    question: 'Что происходит во время обучения?',
+    answer: 'Обучение включает теоретическую часть и практические занятия. Вы изучаете техники гипноза, отрабатываете их с партнёрами и получаете обратную связь от преподавателей.',
+  },
+  {
+    question: 'Что если мне не понравится обучение?',
+    answer: 'Мы уверены в качестве наших программ. Если после первого занятия вы поймёте, что курс не для вас, мы вернём полную стоимость обучения.',
+  },
+  {
+    question: 'Какие документы я получу после обучения?',
+    answer: 'По окончании курса вы получите сертификат о прохождении программы обучения гипнозу, подтверждающий ваши навыки и квалификацию.',
+  },
+  {
+    question: 'Безопасен ли гипноз?',
+    answer: 'Да, гипноз полностью безопасен. Это естественное состояние сознания, которое человек испытывает ежедневно. Вы всегда остаётесь в контроле и можете выйти из транса в любой момент.',
+  },
+  {
+    question: 'Что такое ДПДГ?',
+    answer: 'ДПДГ (десенсибилизация и переработка движением глаз) — это метод психотерапии, разработанный для лечения посттравматического стрессового расстройства. Он помогает переработать травматические воспоминания.',
+  },
+  {
+    question: 'Есть ли гарантия результата?',
+    answer: 'Результат зависит от многих факторов, включая индивидуальные особенности клиента и его готовность к работе. Мы гарантируем профессиональный подход и применение проверенных методик.',
+  },
+]
+---
+
+<section class="faq" id="faq">
+  <!-- Decorative Image -->
+  <img 
+    src="/images/faq/faq-image.png" 
+    alt="" 
+    class="faq__image"
+    loading="lazy"
+  />
+
+  <div class="faq__content">
+    <h2 class="faq__title">Ответы на вопросы</h2>
+    
+    <div class="faq__questions">
+      {questions.map((item, index) => (
+        <details class="faq-item" open={index === 0}>
+          <summary class="faq-item__question">
+            <span class="faq-item__text">{item.question}</span>
+            <span class="faq-item__icon">
+              <svg width="25" height="16" viewBox="0 0 25 16" fill="none">
+                <path d="M2 2L12.5 12L23 2" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="faq-item__answer">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    background: #1D1E1E;
+    position: relative;
+    overflow: hidden;
+    min-height: 748px;
+    display: flex;
+  }
+
+  .faq__image {
+    position: absolute;
+    left: 0;
+    top: 100px;
+    width: 400px;
+    height: auto;
+    object-fit: contain;
+    opacity: 0.8;
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .faq__image {
+      display: block;
+    }
+  }
+
+  .faq__content {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 57px 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .faq__content {
+      padding-left: 409px;
+    }
+  }
+
+  .faq__title {
+    color: white;
+    font-size: clamp(40px, 5vw, 65px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .faq__questions {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* FAQ Item */
+  .faq-item {
+    border-top: 1px solid #E8E8E8;
+  }
+
+  .faq-item:last-child {
+    border-bottom: 1px solid #E8E8E8;
+  }
+
+  .faq-item__question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 24px;
+    cursor: pointer;
+    list-style: none;
+    transition: background 0.2s ease;
+    backdrop-filter: blur(75px);
+    -webkit-backdrop-filter: blur(75px);
+  }
+
+  .faq-item__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item__question:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .faq-item__text {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 0.99;
+    letter-spacing: -0.01em;
+  }
+
+  .faq-item__icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #949799;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] .faq-item__icon {
+    transform: rotate(180deg);
+  }
+
+  .faq-item__answer {
+    padding: 0 24px 24px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .faq-item__answer p {
+    margin: 0;
+  }
+</style>
+

@@ -1,127 +1,255 @@
 ---
-interface Props {
-  title?: string
-  description?: string
-}
-
-const { 
-  title = 'Центр\nрегрессивного\nгипноза',
-  description = 'Помогаем адаптировать психические и физические реакции к негативным раздражителям в повседневной жизни, что приводит к внутреннему равновесию и здоровому пофигизму'
-} = Astro.props
-
-// Split title into lines for proper rendering
-const titleLines = title.split('\n')
+/**
+ * Hero Section
+ * Layout: фоновое изображение на весь экран,
+ * заголовок слева внизу, описание и кнопки справа внизу
+ */
 ---
 
-<section class="relative min-h-screen flex flex-col justify-end pb-16 md:pb-24 lg:pb-32 overflow-hidden">
+<section class="hero">
   <!-- Background Image -->
-  <div class="absolute inset-0 -z-10">
-    <img 
-      src="/images/hero/hero-image.png" 
-      alt="" 
-      class="w-full h-full object-cover object-center"
-      loading="eager"
-    />
-    <!-- Gradient overlay for better text readability -->
-    <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
-  </div>
+  <img 
+    src="/images/hero/hero-image.png" 
+    alt="" 
+    class="hero__bg"
+    loading="eager"
+    fetchpriority="high"
+  />
 
-  <!-- Content -->
-  <div class="container">
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 lg:gap-16">
-      
-      <!-- Left: Title -->
-      <div class="flex-shrink-0">
-        <h1 class="text-white leading-[0.86] tracking-tight">
-          {titleLines.map((line, i) => (
-            <span class="block">
-              {line}
-            </span>
-          ))}
-        </h1>
+  <!-- Content Container -->
+  <div class="hero__content container">
+    <!-- Left: Title -->
+    <h1 class="hero__title">
+      Центр<br />
+      регрессивного<br />
+      гипноза
+    </h1>
+
+    <!-- Right: Description + Buttons -->
+    <div class="hero__right">
+      <!-- Description Box -->
+      <div class="hero__description">
+        <p>
+          Помогаем адаптировать психические и физические реакции к негативным раздражителям 
+          в повседневной жизни, что приводит к внутреннему равновесию и здоровому пофигизму
+        </p>
       </div>
 
-      <!-- Right: Description + Buttons -->
-      <div class="flex flex-col gap-5 lg:max-w-[524px]">
-        
-        <!-- Description Box -->
-        <div class="bg-white/5 backdrop-blur-sm rounded-[20px] p-4">
-          <p class="text-white text-base md:text-xl leading-snug">
-            {description}
-          </p>
-        </div>
+      <!-- Buttons -->
+      <div class="hero__buttons">
+        <!-- Primary Button -->
+        <a href="#contact" class="hero__btn hero__btn--primary">
+          <div class="hero__btn-icon">
+            <img src="/images/icons/icon-arrow.svg" alt="" width="13" height="13" />
+          </div>
+          <span class="hero__btn-text">
+            Записаться<br />на консультацию
+          </span>
+        </a>
 
-        <!-- Buttons -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 h-auto sm:h-[148px]">
-          
-          <!-- Primary Button -->
-          <a 
-            href="#contact" 
-            class="group relative flex flex-col justify-between p-4 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] rounded-[16px] transition-colors min-h-[120px] sm:min-h-0"
-          >
-            <!-- Arrow Icon -->
-            <div class="flex justify-end">
-              <div class="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full group-hover:bg-white/30 transition-colors">
-                <img 
-                  src="/images/icons/icon-arrow.svg" 
-                  alt="" 
-                  width="13" 
-                  height="13"
-                  class="w-3 h-3"
-                />
-              </div>
-            </div>
-            
-            <!-- Text -->
-            <span class="text-white text-xl md:text-[28px] font-extrabold uppercase leading-[0.86] tracking-tight">
-              Записаться<br />на консультацию
-            </span>
-          </a>
-
-          <!-- Secondary Button -->
-          <a 
-            href="#training" 
-            class="group relative flex flex-col justify-between p-4 bg-[#E5E5E5] hover:bg-[#D5D5D5] rounded-[20px] transition-colors min-h-[120px] sm:min-h-0"
-          >
-            <!-- Arrow Icon -->
-            <div class="flex justify-end">
-              <div class="w-10 h-10 flex items-center justify-center bg-black/10 rounded-full group-hover:bg-black/20 transition-colors">
-                <img 
-                  src="/images/icons/icon-arrow.svg" 
-                  alt="" 
-                  width="13" 
-                  height="13"
-                  class="w-3 h-3 invert"
-                />
-              </div>
-            </div>
-            
-            <!-- Text -->
-            <span class="text-black text-xl md:text-[28px] font-extrabold uppercase leading-[0.86] tracking-tight">
-              Узнать<br />об обучении
-            </span>
-          </a>
-        </div>
+        <!-- Secondary Button -->
+        <a href="#training" class="hero__btn hero__btn--secondary">
+          <div class="hero__btn-icon">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 12L12 1M12 1H3M12 1V10" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <span class="hero__btn-text">
+            Узнать<br />об обучении
+          </span>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  /* Responsive title sizes */
-  h1 {
-    font-size: clamp(48px, 10vw, 110px);
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
   }
-  
-  /* Ensure proper spacing for header */
-  section {
-    padding-top: 100px;
+
+  .hero__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
   }
-  
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-bottom: 3rem;
+    padding-top: 120px;
+  }
+
   @media (min-width: 1024px) {
-    section {
-      padding-top: 120px;
+    .hero__content {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 4rem;
+      padding-bottom: 5rem;
     }
   }
-</style>
 
+  .hero__title {
+    color: white;
+    font-size: clamp(48px, 8vw, 110px);
+    font-weight: 700;
+    line-height: 0.86;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .hero__right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .hero__right {
+      max-width: 524px;
+      flex-shrink: 0;
+    }
+  }
+
+  .hero__description {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 1rem;
+  }
+
+  .hero__description p {
+    color: white;
+    font-size: 1rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .hero__description p {
+      font-size: 1.25rem;
+    }
+  }
+
+  .hero__buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.625rem;
+    height: auto;
+  }
+
+  @media (min-width: 640px) {
+    .hero__buttons {
+      height: 148px;
+    }
+  }
+
+  .hero__btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    min-height: 120px;
+  }
+
+  @media (min-width: 640px) {
+    .hero__btn {
+      min-height: auto;
+      height: 100%;
+    }
+  }
+
+  .hero__btn--primary {
+    background-color: #71BB70;
+    border-radius: 16px;
+  }
+
+  .hero__btn--primary:hover {
+    background-color: #5EA85D;
+  }
+
+  .hero__btn--secondary {
+    background-color: #E5E5E5;
+    border-radius: 20px;
+  }
+
+  .hero__btn--secondary:hover {
+    background-color: #D5D5D5;
+  }
+
+  .hero__btn-icon {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .hero__btn-icon > * {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .hero__btn--primary .hero__btn-icon > * {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .hero__btn--primary .hero__btn-icon img {
+    width: 13px;
+    height: 13px;
+    filter: none;
+  }
+
+  .hero__btn--secondary .hero__btn-icon > * {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000;
+  }
+
+  .hero__btn--secondary .hero__btn-icon svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .hero__btn-text {
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 0.86;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 768px) {
+    .hero__btn-text {
+      font-size: 1.75rem;
+    }
+  }
+
+  .hero__btn--primary .hero__btn-text {
+    color: white;
+  }
+
+  .hero__btn--secondary .hero__btn-text {
+    color: black;
+  }
+</style>

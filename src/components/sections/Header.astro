@@ -1,9 +1,9 @@
 ---
-interface Props {
-  transparent?: boolean
-}
-
-const { transparent = true } = Astro.props
+/**
+ * Header Component
+ * Прозрачный header поверх Hero-секции
+ * Становится затемнённым при скролле
+ */
 
 const menuItems = [
   { label: 'О центре', href: '#about' },
@@ -17,95 +17,67 @@ const menuItems = [
 ]
 ---
 
-<header 
-  class:list={[
-    'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-    transparent ? 'py-5' : 'py-3 bg-white/90 backdrop-blur-md shadow-sm'
-  ]}
-  data-header
->
-  <div class="container">
-    <div class="flex items-center justify-between gap-8">
-      <!-- Logo -->
-      <a href="/" class="flex-shrink-0">
-        <img 
-          src="/images/logo.png" 
-          alt="ЦЕРГ — Центр регрессивного гипноза" 
-          width="182" 
-          height="49"
-          class="h-10 md:h-12 w-auto"
-        />
-      </a>
+<header class="header" data-header>
+  <div class="header__inner container">
+    <!-- Logo -->
+    <a href="/" class="header__logo">
+      <img 
+        src="/images/logo.png" 
+        alt="ЦЕРГ — Центр регрессивного гипноза" 
+        width="182" 
+        height="49"
+      />
+    </a>
 
-      <!-- Desktop Navigation -->
-      <nav class="hidden xl:flex items-center gap-6 2xl:gap-9">
-        {menuItems.map((item) => (
-          <a 
-            href={item.href}
-            class="text-white text-sm 2xl:text-base hover:opacity-80 transition-opacity whitespace-nowrap"
-          >
-            {item.label}
-          </a>
-        ))}
-      </nav>
-
-      <!-- CTA Button -->
-      <a 
-        href="#contact" 
-        class="hidden md:inline-flex items-center justify-center px-6 py-3 bg-white text-black text-sm font-normal rounded-full hover:bg-gray-100 transition-colors whitespace-nowrap"
-      >
-        Связаться с нами
-      </a>
-
-      <!-- Mobile Menu Button -->
-      <button 
-        type="button"
-        class="xl:hidden flex items-center justify-center w-10 h-10 text-white"
-        aria-label="Открыть меню"
-        data-menu-toggle
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <line x1="3" y1="12" x2="21" y2="12" />
-          <line x1="3" y1="18" x2="21" y2="18" />
-        </svg>
-      </button>
-    </div>
-  </div>
-</header>
-
-<!-- Mobile Menu Overlay -->
-<div 
-  class="fixed inset-0 z-40 bg-black/90 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 xl:hidden"
-  data-mobile-menu
->
-  <div class="container h-full flex flex-col pt-24 pb-8">
-    <nav class="flex flex-col gap-6">
+    <!-- Desktop Navigation -->
+    <nav class="header__nav">
       {menuItems.map((item) => (
-        <a 
-          href={item.href}
-          class="text-white text-2xl font-medium hover:text-[var(--color-primary)] transition-colors"
-          data-menu-link
-        >
+        <a href={item.href} class="header__link">
           {item.label}
         </a>
       ))}
     </nav>
-    <div class="mt-auto">
-      <a 
-        href="#contact" 
-        class="inline-flex items-center justify-center w-full px-6 py-4 bg-[var(--color-primary)] text-white text-lg font-bold uppercase rounded-full hover:bg-[var(--color-primary-hover)] transition-colors"
-        data-menu-link
-      >
-        Связаться с нами
-      </a>
-    </div>
+
+    <!-- CTA Button -->
+    <a href="#contact" class="header__cta">
+      Связаться с нами
+    </a>
+
+    <!-- Mobile Menu Button -->
+    <button 
+      type="button"
+      class="header__burger"
+      aria-label="Открыть меню"
+      data-menu-toggle
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu" data-mobile-menu>
+  <div class="mobile-menu__inner container">
+    <nav class="mobile-menu__nav">
+      {menuItems.map((item) => (
+        <a href={item.href} class="mobile-menu__link" data-menu-link>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <a href="#contact" class="mobile-menu__cta" data-menu-link>
+      Связаться с нами
+    </a>
   </div>
   
   <!-- Close Button -->
   <button 
     type="button"
-    class="absolute top-5 right-5 flex items-center justify-center w-10 h-10 text-white"
+    class="mobile-menu__close"
     aria-label="Закрыть меню"
     data-menu-close
   >
@@ -116,6 +88,205 @@ const menuItems = [
   </button>
 </div>
 
+<style>
+  /* Header */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 20px 0;
+    transition: all 0.3s ease;
+  }
+
+  .header.scrolled {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 12px 0;
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .header__logo {
+    flex-shrink: 0;
+  }
+
+  .header__logo img {
+    height: 40px;
+    width: auto;
+  }
+
+  @media (min-width: 768px) {
+    .header__logo img {
+      height: 49px;
+    }
+  }
+
+  /* Navigation */
+  .header__nav {
+    display: none;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 1280px) {
+    .header__nav {
+      display: flex;
+      gap: 2rem;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .header__nav {
+      gap: 2.2rem;
+    }
+  }
+
+  .header__link {
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
+  }
+
+  .header__link:hover {
+    opacity: 0.7;
+  }
+
+  /* CTA Button */
+  .header__cta {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    background: white;
+    color: black;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+
+  @media (min-width: 768px) {
+    .header__cta {
+      display: inline-flex;
+    }
+  }
+
+  .header__cta:hover {
+    background: #f0f0f0;
+  }
+
+  /* Burger */
+  .header__burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  @media (min-width: 1280px) {
+    .header__burger {
+      display: none;
+    }
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-menu.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-menu__inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 100px;
+    padding-bottom: 2rem;
+  }
+
+  .mobile-menu__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .mobile-menu__link {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .mobile-menu__link:hover {
+    color: #71BB70;
+  }
+
+  .mobile-menu__cta {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 2rem;
+    background: #71BB70;
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: background 0.2s ease;
+  }
+
+  .mobile-menu__cta:hover {
+    background: #5EA85D;
+  }
+
+  .mobile-menu__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+</style>
+
 <script>
   // Mobile menu toggle
   const menuToggle = document.querySelector('[data-menu-toggle]')
@@ -124,14 +295,12 @@ const menuItems = [
   const menuLinks = document.querySelectorAll('[data-menu-link]')
 
   function openMenu() {
-    mobileMenu?.classList.remove('opacity-0', 'pointer-events-none')
-    mobileMenu?.classList.add('opacity-100', 'pointer-events-auto')
+    mobileMenu?.classList.add('open')
     document.body.style.overflow = 'hidden'
   }
 
   function closeMenu() {
-    mobileMenu?.classList.add('opacity-0', 'pointer-events-none')
-    mobileMenu?.classList.remove('opacity-100', 'pointer-events-auto')
+    mobileMenu?.classList.remove('open')
     document.body.style.overflow = ''
   }
 
@@ -143,15 +312,13 @@ const menuItems = [
   const header = document.querySelector('[data-header]')
   
   function handleScroll() {
-    if (window.scrollY > 100) {
-      header?.classList.add('bg-black/80', 'backdrop-blur-md', 'py-3')
-      header?.classList.remove('py-5')
+    if (window.scrollY > 50) {
+      header?.classList.add('scrolled')
     } else {
-      header?.classList.remove('bg-black/80', 'backdrop-blur-md', 'py-3')
-      header?.classList.add('py-5')
+      header?.classList.remove('scrolled')
     }
   }
 
   window.addEventListener('scroll', handleScroll)
+  handleScroll() // Check on load
 </script>
-

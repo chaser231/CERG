@@ -4,6 +4,7 @@ import Header from '../components/sections/Header.astro'
 import Hero from '../components/sections/Hero.astro'
 import About from '../components/sections/About.astro'
 import Services from '../components/sections/Services.astro'
+import Training from '../components/sections/Training.astro'
 ---
 
 <Layout title="Главная">
@@ -18,45 +19,8 @@ import Services from '../components/sections/Services.astro'
     <!-- Services Section -->
     <Services />
 
-    <!-- Training Section Placeholder -->
-    <section id="training" class="section bg-[var(--color-bg)]">
-      <div class="container">
-        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-12">
-          <h2 class="text-[var(--color-text)]">Обучение гипнозу</h2>
-          <p class="text-lg md:text-xl max-w-md text-[var(--color-text-secondary)]">
-            Программа подходит для психологов, психотерапевтов, консультантов, врачей, коучей 
-            и всех, кто хочет глубже понимать внутренние механизмы человека
-          </p>
-        </div>
-        
-        <h4 class="text-center mb-8 text-[var(--color-text)]">Наши преимущества</h4>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-          {[
-            'Практическая направленность',
-            'Выдача сертификата',
-            'Поддержка после курса',
-            'Доступная стоимость',
-          ].map((item) => (
-            <div class="aspect-square rounded-[24px] bg-[var(--color-beige-400)] p-6 flex flex-col justify-between">
-              <p class="text-white text-lg md:text-xl font-bold uppercase leading-tight whitespace-pre-line">
-                {item}
-              </p>
-              <div class="h-32 bg-white/20 rounded-xl"></div>
-            </div>
-          ))}
-        </div>
-        
-        <div class="text-center">
-          <a 
-            href="#contact" 
-            class="inline-flex items-center justify-center px-8 py-5 bg-[var(--color-primary)] text-white text-lg font-normal rounded-full hover:bg-[var(--color-primary-hover)] transition-colors"
-          >
-            Оставить заявку на обучение
-          </a>
-        </div>
-      </div>
-    </section>
+    <!-- Training Section -->
+    <Training />
 
     <!-- Contact Form Section -->
     <section id="contact" class="section">

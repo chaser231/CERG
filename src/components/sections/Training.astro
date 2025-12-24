@@ -1,0 +1,397 @@
+---
+/**
+ * Training Section
+ * Обучение гипнозу с преимуществами и списком курсов
+ */
+
+const advantages = [
+  {
+    title: 'Практическая направленность',
+    image: '/images/training/advantage-practice.png',
+    color: '#D7C7AE',
+  },
+  {
+    title: 'Выдача сертификата',
+    image: '/images/training/advantage-certificate.png',
+    color: '#D4C0A7',
+  },
+  {
+    title: 'Поддержка после курса',
+    image: '/images/training/advantage-support.png',
+    color: '#D7C5AD',
+  },
+  {
+    title: 'Доступная стоимость',
+    image: '/images/training/advantage-price.png',
+    color: '#BAA586',
+  },
+]
+
+const courses = [
+  {
+    name: 'Регрессивный гипноз',
+    price: '36 000 ₽',
+    description: 'Основная цель курса — формирование у учащихся навыков поиска и устранения причин нынешних негативных состояний человека в событиях прошлого, находящегося вне сознания человека',
+    lessons: '12',
+    hours: '36',
+  },
+  {
+    name: 'Глубокая\nрегрессия',
+    price: '28 000 ₽',
+    description: 'Основная цель курса — погружение в прошлые воплощения и их исследование с целью нахождения и разрешения причин нынешних негативных состояний, а так же погружение в жизнь между жизнями по методике Майкла Ньютона',
+    lessons: '10',
+    hours: '30',
+  },
+  {
+    name: 'Классический\nгипноз',
+    price: '28 000 ₽',
+    description: 'Цель данного курса — формирование практических навыков погружения в гипнотическое состояние и его использование в различных сферах профессиональной деятельности и вопросах саморегуляции',
+    lessons: '10',
+    hours: '30',
+  },
+  {
+    name: 'Разговорный\nгипноз',
+    price: '22 000 ₽',
+    description: 'Курс научит вас уверенному и эффективному взаимодействию с людьми: от профессиональных отношений до семейного общения. Вы сможете легко находить общий язык с коллегами, бизнес-партнёрами, детьми, родителями и близкими людьми',
+    lessons: '7',
+    hours: '21',
+  },
+  {
+    name: 'Самогипноз',
+    price: '12 000 ₽',
+    description: 'Самогипноз - это курс который поможет в обретении навыков саморегуляции, самоконтроля и самопознания',
+    lessons: '4',
+    hours: '12',
+  },
+]
+---
+
+<section class="training" id="training">
+  <!-- Header -->
+  <div class="training__header container">
+    <h2 class="training__title">Обучение гипнозу</h2>
+    <p class="training__description">
+      Программа подходит для психологов, психотерапевтов, консультантов, врачей, коучей 
+      и всех, кто хочет глубже понимать внутренние механизмы человека. Обучение включает теорию, практику и сертификацию
+    </p>
+  </div>
+
+  <!-- Advantages -->
+  <div class="training__advantages container">
+    <h4 class="training__advantages-title">Наши преимущества</h4>
+    
+    <div class="advantages-grid">
+      {advantages.map((item) => (
+        <div class="advantage-card" style={`background-color: ${item.color}`}>
+          <p class="advantage-card__title">{item.title}</p>
+          <img 
+            src={item.image} 
+            alt="" 
+            class="advantage-card__image"
+            loading="lazy"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- CTA Button -->
+  <div class="training__cta container">
+    <a href="#contact" class="training__cta-btn">
+      Оставить заявку на обучение
+    </a>
+  </div>
+
+  <!-- Courses -->
+  <div class="training__courses" id="courses">
+    <div class="courses-container">
+      <h4 class="courses__title">Наши курсы</h4>
+      
+      <div class="courses-list">
+        {courses.map((course, index) => (
+          <div class="course-item">
+            <div class="course-item__row">
+              <h3 class="course-item__name">{course.name}</h3>
+              <div class="course-item__details">
+                <div class="course-item__info">
+                  <span class="course-item__price">{course.price}</span>
+                  <p class="course-item__description">{course.description}</p>
+                </div>
+                <div class="course-item__badges">
+                  <span class="course-item__badge">
+                    <span class="course-item__badge-value">{course.lessons}</span>
+                    <span class="course-item__badge-label">занятий</span>
+                  </span>
+                  <span class="course-item__badge">
+                    <span class="course-item__badge-value">{course.hours}</span>
+                    <span class="course-item__badge-label">часов</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            {index < courses.length - 1 && <div class="course-item__divider"></div>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .training {
+    background: var(--color-bg);
+    padding-top: 80px;
+    padding-bottom: 0;
+  }
+
+  .training__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .training__header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+  }
+
+  .training__title {
+    color: var(--color-text);
+    font-size: clamp(40px, 5vw, 65px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .training__description {
+    color: var(--color-text);
+    font-size: 1.125rem;
+    line-height: 1.17;
+    max-width: 481px;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .training__description {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* Advantages */
+  .training__advantages {
+    margin-bottom: 2rem;
+  }
+
+  .training__advantages-title {
+    color: var(--color-text);
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 800;
+    line-height: 0.875;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 0 1.5rem;
+  }
+
+  .advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  @media (min-width: 768px) {
+    .advantages-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .advantage-card {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 24px;
+    padding: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .advantage-card__title {
+    color: white;
+    font-size: clamp(20px, 3vw, 38px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin: 0;
+    max-width: 250px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .advantage-card__image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* CTA */
+  .training__cta {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .training__cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 48px;
+    background: var(--color-primary);
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: background 0.2s ease;
+  }
+
+  .training__cta-btn:hover {
+    background: var(--color-primary-hover);
+  }
+
+  /* Courses */
+  .training__courses {
+    background: #E6E4E0;
+    padding: 65px 50px;
+  }
+
+  .courses-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  .courses__title {
+    color: black;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 800;
+    line-height: 0.875;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 0 2rem;
+  }
+
+  .courses-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .course-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .course-item__row {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem 0;
+  }
+
+  @media (min-width: 1024px) {
+    .course-item__row {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 4rem;
+    }
+  }
+
+  .course-item__name {
+    color: #B6B3AB;
+    font-size: clamp(48px, 8vw, 125px);
+    font-weight: 600;
+    line-height: 0.8;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0;
+    white-space: pre-line;
+    flex-shrink: 0;
+    min-width: 300px;
+  }
+
+  @media (min-width: 1024px) {
+    .course-item__name {
+      min-width: 500px;
+    }
+  }
+
+  .course-item__details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 507px;
+  }
+
+  .course-item__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .course-item__price {
+    color: var(--color-primary);
+    font-size: clamp(40px, 5vw, 65px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .course-item__description {
+    color: black;
+    font-size: 16px;
+    line-height: 1.21;
+    margin: 0;
+  }
+
+  .course-item__badges {
+    display: flex;
+    gap: 8px;
+  }
+
+  .course-item__badge {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(205, 205, 205, 0.2);
+    border-radius: 12px;
+  }
+
+  .course-item__badge-value,
+  .course-item__badge-label {
+    color: #515151;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .course-item__divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+</style>
+

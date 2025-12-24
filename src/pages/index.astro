@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title="Главная">
+  <main>
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center bg-[var(--color-bg)]">
+      <div class="container">
+        <h1 class="text-[var(--color-white)] max-w-4xl">
+          Центр<br />
+          регрессивного<br />
+          гипноза
+        </h1>
+        <p class="mt-8 text-xl text-[var(--color-white)] max-w-xl opacity-90">
+          Помогаем адаптировать психические и физические реакции к негативным раздражителям 
+          в повседневной жизни
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row gap-4">
+          <a href="#contact" class="btn btn-primary">
+            Записаться на консультацию
+          </a>
+          <a href="#training" class="btn btn-secondary">
+            Узнать об обучении
+          </a>
+        </div>
+      </div>
+      
+      <!-- Hero Background Placeholder -->
+      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-[var(--color-beige-400)] to-[var(--color-beige-500)]">
+        <!-- Image will be added here -->
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section bg-white rounded-t-[48px] -mt-12 relative z-10">
+      <div class="container">
+        <h2>Наш центр</h2>
+        <p class="mt-6 text-xl max-w-2xl text-[var(--color-text-secondary)]">
+          Это объединение профессионалов, оказывающих помощь в решении сложных 
+          психо-физиологических проблем
+        </p>
+      </div>
+    </section>
+
+    <!-- Directions Section -->
+    <section id="directions" class="section bg-white">
+      <div class="container">
+        <h4 class="text-center mb-12">Список направлений</h4>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Direction cards will be added here -->
+          <div class="aspect-square rounded-[var(--radius-lg)] bg-[var(--color-beige-100)] p-5 flex flex-col justify-between">
+            <span class="text-5xl font-bold text-white">01</span>
+            <p class="font-bold text-white uppercase text-sm">
+              Психосоматические<br />расстройства
+            </p>
+          </div>
+          <!-- More cards... -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact" class="section bg-white rounded-[var(--radius-3xl)] mx-4 my-8">
+      <div class="container max-w-4xl">
+        <h2 class="text-[var(--color-dark)]">
+          Оставьте заявку<br />на консультацию
+        </h2>
+        <p class="mt-4 text-[var(--color-text-secondary)]">
+          Мы разберем ваш случай и подберем подходящую программу
+        </p>
+        
+        <!-- Form will be added here -->
+        <form class="mt-10 grid gap-6 max-w-md">
+          <div>
+            <label class="block text-sm text-[var(--color-text-muted)] mb-2">Имя</label>
+            <input 
+              type="text" 
+              placeholder="Иван Иванов"
+              class="w-full px-4 py-3 rounded-[var(--radius-md)] border border-gray-300 focus:border-[var(--color-primary)] outline-none transition"
+            />
+          </div>
+          <div>
+            <label class="block text-sm text-[var(--color-text-muted)] mb-2">Email</label>
+            <input 
+              type="email" 
+              placeholder="mail@yandex.ru"
+              class="w-full px-4 py-3 rounded-[var(--radius-md)] border border-gray-300 focus:border-[var(--color-primary)] outline-none transition"
+            />
+          </div>
+          <div>
+            <label class="block text-sm text-[var(--color-text-muted)] mb-2">Телефон</label>
+            <input 
+              type="tel" 
+              placeholder="+7 (___) ___-__-__"
+              class="w-full px-4 py-3 rounded-[var(--radius-md)] border border-gray-300 focus:border-[var(--color-primary)] outline-none transition"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary w-full mt-4">
+            Отправить
+          </button>
+          <p class="text-xs text-[var(--color-text-muted)] text-center">
+            Нажимая на кнопку, вы подтверждаете согласие на обработку персональных данных
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--color-dark-deep)] text-white py-16">
+      <div class="container">
+        <div class="grid md:grid-cols-3 gap-12">
+          <div>
+            <div class="text-2xl font-bold">ЦЕРГ</div>
+            <p class="mt-4 text-sm text-gray-400">
+              © 2025 ЦЕРГ<br />
+              Центр регрессивного гипноза
+            </p>
+          </div>
+          <div>
+            <nav class="flex flex-col gap-3 text-sm">
+              <a href="#about" class="hover:text-[var(--color-primary)] transition">О центре</a>
+              <a href="#services" class="hover:text-[var(--color-primary)] transition">Услуги</a>
+              <a href="#training" class="hover:text-[var(--color-primary)] transition">Обучение гипнозу</a>
+              <a href="#experts" class="hover:text-[var(--color-primary)] transition">Эксперты</a>
+              <a href="#faq" class="hover:text-[var(--color-primary)] transition">Частые вопросы</a>
+            </nav>
+          </div>
+          <div class="text-sm space-y-3">
+            <p>+7 (911) 472-17-04</p>
+            <p>helpcerh@mail.ru</p>
+            <p>Калининград, Минская 25, каб. 220</p>
+            <p>9:00 — 18:00</p>
+          </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row gap-4 text-sm text-gray-400">
+          <a href="/privacy" class="hover:text-white transition">Политика конфиденциальности</a>
+          <a href="/terms" class="hover:text-white transition">Пользовательское соглашение</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+</Layout>

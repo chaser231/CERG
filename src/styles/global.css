@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+/* ========================================
+   CERG Landing — Design Tokens
+   ======================================== */
+
+/* Custom CSS Variables */
+:root {
+  /* === Colors === */
+  
+  /* Primary (Green) */
+  --color-primary: #71BB70;
+  --color-primary-hover: #5EA85D;
+  
+  /* Dark Shades */
+  --color-dark: #1D1E1E;
+  --color-dark-deep: #0A0A0A;
+  --color-dark-soft: #262626;
+  
+  /* Text Colors */
+  --color-text: #212121;
+  --color-text-secondary: #444444;
+  --color-text-muted: #515151;
+  
+  /* Light Shades */
+  --color-white: #FFFFFF;
+  --color-bg: #EFEFEF;
+  --color-bg-light: #F8F9FA;
+  --color-bg-warm: #E6E4E0;
+  
+  /* Beige/Warm Shades */
+  --color-beige-100: #FBFBFB;
+  --color-beige-200: #F1F0EE;
+  --color-beige-300: #DEDCD9;
+  --color-beige-400: #D7C7AE;
+  --color-beige-500: #BAA586;
+  
+  /* Accent Colors */
+  --color-card-blue: #EDF4FF;
+  --color-card-warm: #EEF3F9;
+  --color-overlay: rgba(117, 109, 94, 0.2);
+  
+  /* === Border Radius === */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-2xl: 28px;
+  --radius-3xl: 32px;
+  --radius-4xl: 48px;
+  --radius-full: 999px;
+  
+  /* === Shadows === */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --blur-backdrop: blur(75px);
+  
+  /* === Spacing === */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  
+  /* === Container === */
+  --container-max: 1440px;
+  --container-padding: 50px;
+  --container-padding-mobile: 20px;
+}
+
+/* ========================================
+   Tailwind Theme Extensions (v4 syntax)
+   ======================================== */
+
+@theme {
+  /* Colors */
+  --color-primary: #71BB70;
+  --color-primary-hover: #5EA85D;
+  --color-dark: #1D1E1E;
+  --color-dark-deep: #0A0A0A;
+  --color-dark-soft: #262626;
+  --color-beige-100: #FBFBFB;
+  --color-beige-200: #F1F0EE;
+  --color-beige-300: #DEDCD9;
+  --color-beige-400: #D7C7AE;
+  --color-beige-500: #BAA586;
+  
+  /* Border Radius */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-2xl: 28px;
+  --radius-3xl: 32px;
+  --radius-4xl: 48px;
+  --radius-full: 999px;
+  
+  /* Font Families */
+  --font-primary: 'Roboto Flex', system-ui, sans-serif;
+  --font-secondary: 'Inter', system-ui, sans-serif;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-primary);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   Typography
+   ======================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/* Responsive Typography */
+h1 {
+  font-size: clamp(48px, 8vw, 110px);
+  line-height: 0.86;
+}
+
+h2 {
+  font-size: clamp(32px, 5vw, 65px);
+  line-height: 1;
+}
+
+h3 {
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 0.95;
+  font-weight: 800;
+}
+
+h4 {
+  font-size: clamp(20px, 2.5vw, 32px);
+  line-height: 0.875;
+  font-weight: 800;
+}
+
+/* ========================================
+   Utility Classes
+   ======================================== */
+
+.container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding-mobile);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-inline: var(--container-padding);
+  }
+}
+
+.section {
+  padding-block: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-block: var(--space-20);
+  }
+}
+
+/* Button base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--color-white);
+  color: var(--color-dark);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-beige-100);
+}
+
+/* ========================================
+   Focus States (Accessibility)
+   ======================================== */
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   Selection
+   ======================================== */
+
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}

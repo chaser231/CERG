@@ -161,6 +161,7 @@ h4 {
    ======================================== */
 
 .container {
+  width: 100%;
   max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--container-padding-mobile);
@@ -169,6 +170,12 @@ h4 {
 @media (min-width: 768px) {
   .container {
     padding-inline: var(--container-padding);
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    padding-inline: 50px;
   }
 }
 

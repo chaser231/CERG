@@ -1,0 +1,157 @@
+---
+interface Props {
+  transparent?: boolean
+}
+
+const { transparent = true } = Astro.props
+
+const menuItems = [
+  { label: 'О центре', href: '#about' },
+  { label: 'Услуги', href: '#services' },
+  { label: 'Обучение гипнозу', href: '#training' },
+  { label: 'Отзывы', href: '#reviews' },
+  { label: 'Эксперты', href: '#experts' },
+  { label: 'Цены', href: '#courses' },
+  { label: 'Частые вопросы', href: '#faq' },
+  { label: 'Контакты', href: '#contact' },
+]
+---
+
+<header 
+  class:list={[
+    'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+    transparent ? 'py-5' : 'py-3 bg-white/90 backdrop-blur-md shadow-sm'
+  ]}
+  data-header
+>
+  <div class="container">
+    <div class="flex items-center justify-between gap-8">
+      <!-- Logo -->
+      <a href="/" class="flex-shrink-0">
+        <img 
+          src="/images/logo.png" 
+          alt="ЦЕРГ — Центр регрессивного гипноза" 
+          width="182" 
+          height="49"
+          class="h-10 md:h-12 w-auto"
+        />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden xl:flex items-center gap-6 2xl:gap-9">
+        {menuItems.map((item) => (
+          <a 
+            href={item.href}
+            class="text-white text-sm 2xl:text-base hover:opacity-80 transition-opacity whitespace-nowrap"
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- CTA Button -->
+      <a 
+        href="#contact" 
+        class="hidden md:inline-flex items-center justify-center px-6 py-3 bg-white text-black text-sm font-normal rounded-full hover:bg-gray-100 transition-colors whitespace-nowrap"
+      >
+        Связаться с нами
+      </a>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        type="button"
+        class="xl:hidden flex items-center justify-center w-10 h-10 text-white"
+        aria-label="Открыть меню"
+        data-menu-toggle
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div 
+  class="fixed inset-0 z-40 bg-black/90 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 xl:hidden"
+  data-mobile-menu
+>
+  <div class="container h-full flex flex-col pt-24 pb-8">
+    <nav class="flex flex-col gap-6">
+      {menuItems.map((item) => (
+        <a 
+          href={item.href}
+          class="text-white text-2xl font-medium hover:text-[var(--color-primary)] transition-colors"
+          data-menu-link
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <div class="mt-auto">
+      <a 
+        href="#contact" 
+        class="inline-flex items-center justify-center w-full px-6 py-4 bg-[var(--color-primary)] text-white text-lg font-bold uppercase rounded-full hover:bg-[var(--color-primary-hover)] transition-colors"
+        data-menu-link
+      >
+        Связаться с нами
+      </a>
+    </div>
+  </div>
+  
+  <!-- Close Button -->
+  <button 
+    type="button"
+    class="absolute top-5 right-5 flex items-center justify-center w-10 h-10 text-white"
+    aria-label="Закрыть меню"
+    data-menu-close
+  >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  </button>
+</div>
+
+<script>
+  // Mobile menu toggle
+  const menuToggle = document.querySelector('[data-menu-toggle]')
+  const menuClose = document.querySelector('[data-menu-close]')
+  const mobileMenu = document.querySelector('[data-mobile-menu]')
+  const menuLinks = document.querySelectorAll('[data-menu-link]')
+
+  function openMenu() {
+    mobileMenu?.classList.remove('opacity-0', 'pointer-events-none')
+    mobileMenu?.classList.add('opacity-100', 'pointer-events-auto')
+    document.body.style.overflow = 'hidden'
+  }
+
+  function closeMenu() {
+    mobileMenu?.classList.add('opacity-0', 'pointer-events-none')
+    mobileMenu?.classList.remove('opacity-100', 'pointer-events-auto')
+    document.body.style.overflow = ''
+  }
+
+  menuToggle?.addEventListener('click', openMenu)
+  menuClose?.addEventListener('click', closeMenu)
+  menuLinks.forEach(link => link.addEventListener('click', closeMenu))
+
+  // Header scroll effect
+  const header = document.querySelector('[data-header]')
+  
+  function handleScroll() {
+    if (window.scrollY > 100) {
+      header?.classList.add('bg-black/80', 'backdrop-blur-md', 'py-3')
+      header?.classList.remove('py-5')
+    } else {
+      header?.classList.remove('bg-black/80', 'backdrop-blur-md', 'py-3')
+      header?.classList.add('py-5')
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll)
+</script>
+

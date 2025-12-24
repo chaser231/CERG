@@ -1,142 +1,265 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import Header from '../components/sections/Header.astro'
+import Hero from '../components/sections/Hero.astro'
 ---
 
 <Layout title="Главная">
+  <Header />
+  
   <main>
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center bg-[var(--color-bg)]">
-      <div class="container">
-        <h1 class="text-[var(--color-white)] max-w-4xl">
-          Центр<br />
-          регрессивного<br />
-          гипноза
-        </h1>
-        <p class="mt-8 text-xl text-[var(--color-white)] max-w-xl opacity-90">
-          Помогаем адаптировать психические и физические реакции к негативным раздражителям 
-          в повседневной жизни
-        </p>
-        <div class="mt-10 flex flex-col sm:flex-row gap-4">
-          <a href="#contact" class="btn btn-primary">
-            Записаться на консультацию
-          </a>
-          <a href="#training" class="btn btn-secondary">
-            Узнать об обучении
-          </a>
-        </div>
-      </div>
-      
-      <!-- Hero Background Placeholder -->
-      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-[var(--color-beige-400)] to-[var(--color-beige-500)]">
-        <!-- Image will be added here -->
-      </div>
-    </section>
+    <Hero />
 
     <!-- About Section -->
     <section id="about" class="section bg-white rounded-t-[48px] -mt-12 relative z-10">
       <div class="container">
-        <h2>Наш центр</h2>
-        <p class="mt-6 text-xl max-w-2xl text-[var(--color-text-secondary)]">
-          Это объединение профессионалов, оказывающих помощь в решении сложных 
-          психо-физиологических проблем
-        </p>
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+          <h2 class="text-[var(--color-text)]">Наш центр</h2>
+          <p class="text-lg md:text-xl max-w-md text-[var(--color-text-secondary)]">
+            Это объединение профессионалов, оказывающих помощь в решении сложных 
+            психо-физиологических проблем
+          </p>
+        </div>
       </div>
     </section>
 
-    <!-- Directions Section -->
+    <!-- Directions Section Placeholder -->
     <section id="directions" class="section bg-white">
       <div class="container">
-        <h4 class="text-center mb-12">Список направлений</h4>
+        <h4 class="text-center mb-12 text-[var(--color-text)]">Список направлений</h4>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <!-- Direction cards will be added here -->
-          <div class="aspect-square rounded-[var(--radius-lg)] bg-[var(--color-beige-100)] p-5 flex flex-col justify-between">
-            <span class="text-5xl font-bold text-white">01</span>
-            <p class="font-bold text-white uppercase text-sm">
-              Психосоматические<br />расстройства
-            </p>
+          <!-- Direction cards will be added in next phase -->
+          {[
+            { num: '01', title: 'Психосоматические\nрасстройства' },
+            { num: '02', title: 'Фобии\nи панические атаки' },
+            { num: '03', title: 'Зависимости' },
+            { num: '04', title: 'Расстройства\nсна и пищевого\nповедения' },
+            { num: '05', title: 'Тревожные\nсостояния\nи депрессии' },
+            { num: '06', title: 'Переживание\nрасставания\nи утраты близкого' },
+            { num: '07', title: 'Создание лучшей\nверсии себя, поиск\nпредназначения' },
+            { num: '08', title: 'Паттерны поведения,\nограничивающие\nразвитие и рост' },
+          ].map((item) => (
+            <div class="aspect-square rounded-[var(--radius-lg)] bg-[var(--color-beige-200)] p-5 flex flex-col justify-between relative overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow">
+              <span class="text-5xl md:text-6xl font-bold text-white/80 relative z-10">{item.num}</span>
+              <p class="font-bold text-white uppercase text-xs md:text-sm leading-tight relative z-10 whitespace-pre-line">
+                {item.title}
+              </p>
+              <!-- Placeholder gradient -->
+              <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-beige-500)] to-[var(--color-beige-300)]"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section Placeholder -->
+    <section id="services" class="section bg-white">
+      <div class="container">
+        <div class="flex items-center justify-between mb-10">
+          <h2 class="text-[var(--color-text)]">Наши услуги</h2>
+          <div class="flex gap-2">
+            <button class="w-12 h-12 rounded-full bg-[var(--color-bg)] flex items-center justify-center hover:bg-[var(--color-beige-200)] transition-colors">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"></polyline>
+              </svg>
+            </button>
+            <button class="w-12 h-12 rounded-full bg-[var(--color-bg)] flex items-center justify-center hover:bg-[var(--color-beige-200)] transition-colors">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,18 15,12 9,6"></polyline>
+              </svg>
+            </button>
           </div>
-          <!-- More cards... -->
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[
+            { title: 'Сеанс гипноза', price: '3000 ₽', duration: '60-120 мин', desc: 'Включает в себя гипноанализ. Избавление от негативных последствий после травмирующего события.' },
+            { title: 'ДПДГ', price: '3000 ₽', duration: '60-120 мин', desc: 'Десенсибилизация и переработка движением глаз — активации системы мозга.' },
+            { title: 'Сеанс глубокой регрессии', price: null, duration: '2-5 часов', desc: 'Это погружение в прошлый опыт. Помогает выявить кармический долг.' },
+          ].map((service) => (
+            <div class="bg-[var(--color-beige-200)] rounded-[28px] overflow-hidden">
+              <div class="aspect-video bg-[var(--color-beige-300)] relative">
+                <!-- Image placeholder -->
+                <div class="absolute top-4 right-4 flex gap-2">
+                  {service.price && (
+                    <span class="px-3 py-2 bg-black/20 backdrop-blur-sm rounded-xl text-white text-sm font-bold">
+                      {service.price}
+                    </span>
+                  )}
+                  <span class="px-3 py-2 bg-black/20 backdrop-blur-sm rounded-xl text-white text-sm font-bold">
+                    {service.duration}
+                  </span>
+                </div>
+              </div>
+              <div class="p-4 bg-white rounded-[16px] m-2 mt-0">
+                <h4 class="text-lg font-bold uppercase mb-2">{service.title}</h4>
+                <p class="text-sm text-[var(--color-text-secondary)]">{service.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Training Section Placeholder -->
+    <section id="training" class="section bg-[var(--color-bg)]">
+      <div class="container">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-12">
+          <h2 class="text-[var(--color-text)]">Обучение гипнозу</h2>
+          <p class="text-lg md:text-xl max-w-md text-[var(--color-text-secondary)]">
+            Программа подходит для психологов, психотерапевтов, консультантов, врачей, коучей 
+            и всех, кто хочет глубже понимать внутренние механизмы человека
+          </p>
+        </div>
+        
+        <h4 class="text-center mb-8 text-[var(--color-text)]">Наши преимущества</h4>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          {[
+            'Практическая направленность',
+            'Выдача сертификата',
+            'Поддержка после курса',
+            'Доступная стоимость',
+          ].map((item) => (
+            <div class="aspect-square rounded-[24px] bg-[var(--color-beige-400)] p-6 flex flex-col justify-between">
+              <p class="text-white text-lg md:text-xl font-bold uppercase leading-tight whitespace-pre-line">
+                {item}
+              </p>
+              <div class="h-32 bg-white/20 rounded-xl"></div>
+            </div>
+          ))}
+        </div>
+        
+        <div class="text-center">
+          <a 
+            href="#contact" 
+            class="inline-flex items-center justify-center px-8 py-5 bg-[var(--color-primary)] text-white text-lg font-normal rounded-full hover:bg-[var(--color-primary-hover)] transition-colors"
+          >
+            Оставить заявку на обучение
+          </a>
         </div>
       </div>
     </section>
 
     <!-- Contact Form Section -->
-    <section id="contact" class="section bg-white rounded-[var(--radius-3xl)] mx-4 my-8">
-      <div class="container max-w-4xl">
-        <h2 class="text-[var(--color-dark)]">
-          Оставьте заявку<br />на консультацию
-        </h2>
-        <p class="mt-4 text-[var(--color-text-secondary)]">
-          Мы разберем ваш случай и подберем подходящую программу
-        </p>
-        
-        <!-- Form will be added here -->
-        <form class="mt-10 grid gap-6 max-w-md">
-          <div>
-            <label class="block text-sm text-[var(--color-text-muted)] mb-2">Имя</label>
-            <input 
-              type="text" 
-              placeholder="Иван Иванов"
-              class="w-full px-4 py-3 rounded-[var(--radius-md)] border border-gray-300 focus:border-[var(--color-primary)] outline-none transition"
-            />
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="bg-white rounded-[var(--radius-3xl)] p-6 md:p-10 lg:p-16">
+          <div class="grid lg:grid-cols-2 gap-10 lg:gap-20">
+            <div>
+              <h2 class="text-[var(--color-dark)]">
+                Оставьте заявку<br />на консультацию
+              </h2>
+              <p class="mt-4 text-lg text-[var(--color-text-secondary)]">
+                Мы разберем ваш случай и подберем подходящую программу
+              </p>
+            </div>
+            
+            <form class="flex flex-col gap-4">
+              <div>
+                <label class="block text-sm text-[var(--color-text-muted)] mb-2">Имя</label>
+                <input 
+                  type="text" 
+                  placeholder="Иван Иванов"
+                  class="w-full px-4 py-4 rounded-[var(--radius-md)] border border-gray-300 focus:border-[var(--color-primary)] outline-none transition bg-[var(--color-bg-light)]"
+                />
+              </div>
+              <div>
+                <label class="block text-sm text-[var(--color-text-muted)] mb-2">Email</label>
+                <input 
+                  type="email" 
+                  placeholder="mail@yandex.ru"
+                  class="w-full px-4 py-4 rounded-[var(--radius-md)] border border-gray-300 focus:border-[var(--color-primary)] outline-none transition bg-[var(--color-bg-light)]"
+                />
+              </div>
+              <div>
+                <label class="block text-sm text-[var(--color-text-muted)] mb-2">Номер телефона</label>
+                <input 
+                  type="tel" 
+                  placeholder="+7 (___) ___-__-__"
+                  class="w-full px-4 py-4 rounded-[var(--radius-md)] border border-gray-300 focus:border-[var(--color-primary)] outline-none transition bg-[var(--color-bg-light)]"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary w-full mt-4 py-5">
+                Отправить
+              </button>
+              <p class="text-xs text-[var(--color-text-muted)] text-center">
+                Нажимая на кнопку, вы подтверждаете согласие на обработку персональных данных
+              </p>
+            </form>
           </div>
-          <div>
-            <label class="block text-sm text-[var(--color-text-muted)] mb-2">Email</label>
-            <input 
-              type="email" 
-              placeholder="mail@yandex.ru"
-              class="w-full px-4 py-3 rounded-[var(--radius-md)] border border-gray-300 focus:border-[var(--color-primary)] outline-none transition"
-            />
-          </div>
-          <div>
-            <label class="block text-sm text-[var(--color-text-muted)] mb-2">Телефон</label>
-            <input 
-              type="tel" 
-              placeholder="+7 (___) ___-__-__"
-              class="w-full px-4 py-3 rounded-[var(--radius-md)] border border-gray-300 focus:border-[var(--color-primary)] outline-none transition"
-            />
-          </div>
-          <button type="submit" class="btn btn-primary w-full mt-4">
-            Отправить
-          </button>
-          <p class="text-xs text-[var(--color-text-muted)] text-center">
-            Нажимая на кнопку, вы подтверждаете согласие на обработку персональных данных
-          </p>
-        </form>
+        </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-[var(--color-dark-deep)] text-white py-16">
+    <footer class="bg-[var(--color-dark-deep)] text-white py-12 md:py-16">
       <div class="container">
-        <div class="grid md:grid-cols-3 gap-12">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <!-- Logo & Copyright -->
           <div>
-            <div class="text-2xl font-bold">ЦЕРГ</div>
-            <p class="mt-4 text-sm text-gray-400">
+            <img 
+              src="/images/logo.png" 
+              alt="ЦЕРГ" 
+              width="182" 
+              height="49"
+              class="h-12 w-auto mb-6"
+            />
+            <p class="text-sm text-gray-400">
               © 2025 ЦЕРГ<br />
-              Центр регрессивного гипноза
+              Страница изменена: 14.10.2024
             </p>
           </div>
+
+          <!-- Navigation -->
           <div>
             <nav class="flex flex-col gap-3 text-sm">
               <a href="#about" class="hover:text-[var(--color-primary)] transition">О центре</a>
               <a href="#services" class="hover:text-[var(--color-primary)] transition">Услуги</a>
               <a href="#training" class="hover:text-[var(--color-primary)] transition">Обучение гипнозу</a>
+              <a href="#reviews" class="hover:text-[var(--color-primary)] transition">Отзывы</a>
               <a href="#experts" class="hover:text-[var(--color-primary)] transition">Эксперты</a>
               <a href="#faq" class="hover:text-[var(--color-primary)] transition">Частые вопросы</a>
             </nav>
           </div>
-          <div class="text-sm space-y-3">
-            <p>+7 (911) 472-17-04</p>
-            <p>helpcerh@mail.ru</p>
-            <p>Калининград, Минская 25, каб. 220</p>
-            <p>9:00 — 18:00</p>
+
+          <!-- Contacts -->
+          <div class="text-sm space-y-4">
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+              </svg>
+              <span>+7 (911) 472-17-04</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+              <span>helpcerh@mail.ru</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+              <span>
+                Калининград, Минская 25, каб. 220<br />
+                Москва, проект «Галерея»
+              </span>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+              </svg>
+              <span>9:00 — 18:00</span>
+            </div>
           </div>
-        </div>
-        <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row gap-4 text-sm text-gray-400">
-          <a href="/privacy" class="hover:text-white transition">Политика конфиденциальности</a>
-          <a href="/terms" class="hover:text-white transition">Пользовательское соглашение</a>
+
+          <!-- Legal -->
+          <div class="text-sm space-y-3 text-gray-400">
+            <a href="/privacy" class="block hover:text-white transition">Политика конфиденциальности</a>
+            <a href="/terms" class="block hover:text-white transition">Пользовательское соглашение</a>
+          </div>
         </div>
       </div>
     </footer>

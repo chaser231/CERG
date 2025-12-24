@@ -71,6 +71,14 @@
   --container-max: 1440px;
   --container-padding: 50px;
   --container-padding-mobile: 20px;
+
+  /* === Font Width (Roboto Flex variable axis) === */
+  /* Range: 25 (ultra condensed) to 151 (ultra wide), default 100 */
+  --font-width-condensed: 25;
+  --font-width-narrow: 40;
+  --font-width-medium: 50;
+  --font-width-semi: 65;
+  --font-width-normal: 100;
 }
 
 /* ========================================
@@ -133,27 +141,45 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
 }
 
-/* Responsive Typography */
+/* Responsive Typography with Variable Font Width */
 h1 {
   font-size: clamp(48px, 8vw, 110px);
   line-height: 0.86;
+  font-variation-settings: 'wdth' 65; /* Condensed for large headlines */
 }
 
 h2 {
   font-size: clamp(32px, 5vw, 65px);
   line-height: 1;
+  font-variation-settings: 'wdth' 65; /* Condensed for section titles */
 }
 
 h3 {
   font-size: clamp(24px, 3vw, 38px);
   line-height: 0.95;
   font-weight: 800;
+  font-variation-settings: 'wdth' 50; /* Medium width */
 }
 
 h4 {
   font-size: clamp(20px, 2.5vw, 32px);
   line-height: 0.875;
   font-weight: 800;
+  font-variation-settings: 'wdth' 40; /* Slightly condensed */
+}
+
+h5 {
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 0.9;
+  font-weight: 800;
+  font-variation-settings: 'wdth' 35;
+}
+
+h6 {
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1;
+  font-weight: 700;
+  font-variation-settings: 'wdth' 30;
 }
 
 /* ========================================
@@ -241,4 +267,28 @@ h4 {
 ::selection {
   background-color: var(--color-primary);
   color: var(--color-white);
+}
+
+/* ========================================
+   Font Width Utilities (Roboto Flex)
+   ======================================== */
+
+.font-width-condensed {
+  font-variation-settings: 'wdth' var(--font-width-condensed); /* 25 */
+}
+
+.font-width-narrow {
+  font-variation-settings: 'wdth' var(--font-width-narrow); /* 40 */
+}
+
+.font-width-medium {
+  font-variation-settings: 'wdth' var(--font-width-medium); /* 50 */
+}
+
+.font-width-semi {
+  font-variation-settings: 'wdth' var(--font-width-semi); /* 65 */
+}
+
+.font-width-normal {
+  font-variation-settings: 'wdth' var(--font-width-normal); /* 100 */
 }

@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro'
 import Header from '../components/sections/Header.astro'
 import Hero from '../components/sections/Hero.astro'
 import About from '../components/sections/About.astro'
+import Services from '../components/sections/Services.astro'
 ---
 
 <Layout title="Главная">
@@ -14,54 +15,8 @@ import About from '../components/sections/About.astro'
     <!-- About + Directions Section -->
     <About />
 
-    <!-- Services Section Placeholder -->
-    <section id="services" class="section bg-white">
-      <div class="container">
-        <div class="flex items-center justify-between mb-10">
-          <h2 class="text-[var(--color-text)]">Наши услуги</h2>
-          <div class="flex gap-2">
-            <button class="w-12 h-12 rounded-full bg-[var(--color-bg)] flex items-center justify-center hover:bg-[var(--color-beige-200)] transition-colors">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="15,18 9,12 15,6"></polyline>
-              </svg>
-            </button>
-            <button class="w-12 h-12 rounded-full bg-[var(--color-bg)] flex items-center justify-center hover:bg-[var(--color-beige-200)] transition-colors">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9,18 15,12 9,6"></polyline>
-              </svg>
-            </button>
-          </div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            { title: 'Сеанс гипноза', price: '3000 ₽', duration: '60-120 мин', desc: 'Включает в себя гипноанализ. Избавление от негативных последствий после травмирующего события.' },
-            { title: 'ДПДГ', price: '3000 ₽', duration: '60-120 мин', desc: 'Десенсибилизация и переработка движением глаз — активации системы мозга.' },
-            { title: 'Сеанс глубокой регрессии', price: null, duration: '2-5 часов', desc: 'Это погружение в прошлый опыт. Помогает выявить кармический долг.' },
-          ].map((service) => (
-            <div class="bg-[var(--color-beige-200)] rounded-[28px] overflow-hidden">
-              <div class="aspect-video bg-[var(--color-beige-300)] relative">
-                <!-- Image placeholder -->
-                <div class="absolute top-4 right-4 flex gap-2">
-                  {service.price && (
-                    <span class="px-3 py-2 bg-black/20 backdrop-blur-sm rounded-xl text-white text-sm font-bold">
-                      {service.price}
-                    </span>
-                  )}
-                  <span class="px-3 py-2 bg-black/20 backdrop-blur-sm rounded-xl text-white text-sm font-bold">
-                    {service.duration}
-                  </span>
-                </div>
-              </div>
-              <div class="p-4 bg-white rounded-[16px] m-2 mt-0">
-                <h4 class="text-lg font-bold uppercase mb-2">{service.title}</h4>
-                <p class="text-sm text-[var(--color-text-secondary)]">{service.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <!-- Services Section -->
+    <Services />
 
     <!-- Training Section Placeholder -->
     <section id="training" class="section bg-[var(--color-bg)]">

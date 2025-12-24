@@ -1,0 +1,251 @@
+---
+/**
+ * Services Section
+ * 4 карточки услуг с изображениями, описанием, ценой и длительностью
+ */
+
+const services = [
+  {
+    title: 'Сеанс гипноза',
+    description: 'Включает в себя гипноанализ. Избавление от негативных последствий после травмирующего события. Формирование нового позитивного опыта и моделирование нового поведения и реакции в будущем',
+    duration: '60-120 мин',
+    price: '3000 ₽',
+    image: '/images/services/service-hypnosis.png',
+  },
+  {
+    title: 'ДПДГ',
+    description: 'Десенсибилизация и переработка движением глаз — активации системы мозга, отвечающей за переработку информации. Вместе со специалистом вы находите ранние интенсивные травмирующие воспоминания, оказывающиеся источником имеющихся проблем',
+    duration: '60-120 мин',
+    price: '3000 ₽',
+    image: '/images/services/service-emdr.png',
+  },
+  {
+    title: 'Сеанс глубокой регрессии',
+    description: 'Это погружение в прошлый опыт (прошлые жизни). Он помогает выявить кармический долг и определить предназначение на подсознательном уровне. Также во время сеанса можно встретиться с наставником и получить ответы на волнующие вопросы',
+    duration: '2-5 часов',
+    price: null,
+    image: '/images/services/service-regression.png',
+  },
+  {
+    title: 'Первичная консультация',
+    description: 'Определение целей и задач погружения, выявление гипнабельности и уровня внушаемости клиента, выбор способа погружения индивидуально для него',
+    duration: '60-90 мин',
+    price: 'Бесплатно',
+    image: '/images/services/service-consultation.png',
+  },
+]
+---
+
+<section class="services" id="services">
+  <div class="services__header container">
+    <h2 class="services__title">Наши услуги</h2>
+    
+    <!-- Navigation Arrows -->
+    <div class="services__nav">
+      <button class="services__nav-btn" aria-label="Предыдущий слайд">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15,18 9,12 15,6"></polyline>
+        </svg>
+      </button>
+      <button class="services__nav-btn" aria-label="Следующий слайд">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9,18 15,12 9,6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="services__grid container">
+    {services.map((service) => (
+      <article class="service-card">
+        <div class="service-card__image-wrap">
+          <img 
+            src={service.image} 
+            alt={service.title}
+            class="service-card__image"
+            loading="lazy"
+          />
+          
+          <!-- Badges -->
+          <div class="service-card__badges">
+            <span class="service-card__badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="service-card__badge-icon">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              {service.duration}
+            </span>
+            {service.price && (
+              <span class="service-card__badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="service-card__badge-icon">
+                  <path d="M19 5L5 19M5 5l14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <circle cx="5" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="19" cy="19" r="3" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                {service.price}
+              </span>
+            )}
+          </div>
+        </div>
+        
+        <div class="service-card__content">
+          <h4 class="service-card__title">{service.title}</h4>
+          <p class="service-card__description">{service.description}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .services {
+    background: white;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .services__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .services__title {
+    color: var(--color-dark-soft);
+    font-size: clamp(40px, 5vw, 65px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .services__nav {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .services__nav-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #F2F2F2;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-dark);
+    transition: background 0.2s ease;
+  }
+
+  .services__nav-btn:hover {
+    background: var(--color-beige-200);
+  }
+
+  /* Services Grid */
+  .services__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  @media (min-width: 640px) {
+    .services__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .services__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Service Card */
+  .service-card {
+    background: #DEDCD9;
+    border-radius: 28px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .service-card__image-wrap {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .service-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .service-card__badges {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .service-card__badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(117, 109, 94, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    color: white;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .service-card__badge-icon {
+    flex-shrink: 0;
+  }
+
+  .service-card__content {
+    background: white;
+    border-radius: 16px;
+    padding: 12px;
+    margin: 0 16px 16px;
+    margin-top: -8px;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+  }
+
+  .service-card__title {
+    color: var(--color-text-secondary);
+    font-size: clamp(20px, 2.5vw, 32px);
+    font-weight: 800;
+    line-height: 0.875;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+  }
+
+  .service-card__description {
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    line-height: 1.33;
+    margin: 0;
+  }
+</style>
+

@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro'
 import Header from '../components/sections/Header.astro'
 import Hero from '../components/sections/Hero.astro'
+import About from '../components/sections/About.astro'
 ---
 
 <Layout title="Главная">
@@ -10,48 +11,8 @@ import Hero from '../components/sections/Hero.astro'
   <main>
     <Hero />
 
-    <!-- About Section -->
-    <section id="about" class="section bg-white rounded-t-[48px] -mt-12 relative z-10">
-      <div class="container">
-        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
-          <h2 class="text-[var(--color-text)]">Наш центр</h2>
-          <p class="text-lg md:text-xl max-w-md text-[var(--color-text-secondary)]">
-            Это объединение профессионалов, оказывающих помощь в решении сложных 
-            психо-физиологических проблем
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Directions Section Placeholder -->
-    <section id="directions" class="section bg-white">
-      <div class="container">
-        <h4 class="text-center mb-12 text-[var(--color-text)]">Список направлений</h4>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <!-- Direction cards will be added in next phase -->
-          {[
-            { num: '01', title: 'Психосоматические\nрасстройства' },
-            { num: '02', title: 'Фобии\nи панические атаки' },
-            { num: '03', title: 'Зависимости' },
-            { num: '04', title: 'Расстройства\nсна и пищевого\nповедения' },
-            { num: '05', title: 'Тревожные\nсостояния\nи депрессии' },
-            { num: '06', title: 'Переживание\nрасставания\nи утраты близкого' },
-            { num: '07', title: 'Создание лучшей\nверсии себя, поиск\nпредназначения' },
-            { num: '08', title: 'Паттерны поведения,\nограничивающие\nразвитие и рост' },
-          ].map((item) => (
-            <div class="aspect-square rounded-[var(--radius-lg)] bg-[var(--color-beige-200)] p-5 flex flex-col justify-between relative overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow">
-              <span class="text-5xl md:text-6xl font-bold text-white/80 relative z-10">{item.num}</span>
-              <p class="font-bold text-white uppercase text-xs md:text-sm leading-tight relative z-10 whitespace-pre-line">
-                {item.title}
-              </p>
-              <!-- Placeholder gradient -->
-              <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-beige-500)] to-[var(--color-beige-300)]"></div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <!-- About + Directions Section -->
+    <About />
 
     <!-- Services Section Placeholder -->
     <section id="services" class="section bg-white">

@@ -98,11 +98,13 @@ const studentReviews = [
               class="review-card__image"
               loading="lazy"
             />
-            <div class="review-card__content">
-              <div class="review-card__info">
-                <h4 class="review-card__name">{review.name}</h4>
-                <span class="review-card__role">{review.role}</span>
-              </div>
+            <!-- Имя и роль сверху -->
+            <div class="review-card__header">
+              <h4 class="review-card__name">{review.name}</h4>
+              <span class="review-card__role">{review.role}</span>
+            </div>
+            <!-- Цитата снизу -->
+            <div class="review-card__footer">
               <p class="review-card__text">{review.text}</p>
             </div>
           </article>
@@ -119,11 +121,13 @@ const studentReviews = [
               class="review-card__image"
               loading="lazy"
             />
-            <div class="review-card__content">
-              <div class="review-card__info">
-                <h4 class="review-card__name">{review.name}</h4>
-                <span class="review-card__role">{review.role}</span>
-              </div>
+            <!-- Имя и роль сверху -->
+            <div class="review-card__header">
+              <h4 class="review-card__name">{review.name}</h4>
+              <span class="review-card__role">{review.role}</span>
+            </div>
+            <!-- Цитата снизу -->
+            <div class="review-card__footer">
               <p class="review-card__text">{review.text}</p>
             </div>
           </article>
@@ -390,6 +394,7 @@ const studentReviews = [
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     position: relative;
     min-height: 450px;
   }
@@ -412,27 +417,20 @@ const studentReviews = [
     z-index: 0;
   }
 
-  /* Контент поверх фото */
-  .review-card__content {
+  /* Имя и роль сверху */
+  .review-card__header {
     position: relative;
     z-index: 1;
-    margin-top: auto;
     padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 4px;
     background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.8) 0%,
-      rgba(0, 0, 0, 0.4) 60%,
+      to bottom,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.3) 60%,
       transparent 100%
     );
-  }
-
-  .review-card__info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
   }
 
   .review-card__name {
@@ -450,6 +448,19 @@ const studentReviews = [
     font-size: 12px;
     font-weight: 300;
     line-height: 1.17;
+  }
+
+  /* Цитата снизу */
+  .review-card__footer {
+    position: relative;
+    z-index: 1;
+    padding: 16px;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.4) 60%,
+      transparent 100%
+    );
   }
 
   .review-card__text {

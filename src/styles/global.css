@@ -292,3 +292,33 @@ h6 {
 .font-width-normal {
   font-variation-settings: 'wdth' var(--font-width-normal); /* 100 */
 }
+
+/* ========================================
+   Unified Text Styles (wdth: 25, weight: 800)
+   Применяется ко всем «заголовочным» элементам в карточках
+   ======================================== */
+
+/* Card numbers, titles, prices, badges across all sections */
+.direction-card__num,
+.direction-card__title,
+.about__title,
+.about__directions-title,
+.services__title,
+.service-card__title,
+.service-card__badge,
+.training__title,
+.training__advantages-title,
+.advantage-card__title,
+.courses__title,
+.course-item__price,
+.course-item__badge-value,
+.course-item__badge-label,
+.reviews__title,
+.review-card__name,
+.experts__title,
+.expert-card__name,
+.faq__title,
+.contact__title {
+  font-weight: 800;
+  font-variation-settings: 'wdth' var(--font-width-condensed); /* 25 */
+}

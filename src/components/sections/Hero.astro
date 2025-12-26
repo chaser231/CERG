@@ -47,25 +47,28 @@ const navItems = [
     Связаться с нами
   </a>
 
-  <!-- Description (right side, middle) - Liquid Glass -->
-  <div class="hero__description">
-    <p>
-      Помогаем адаптировать психические и физические реакции к негативным раздражителям 
-      в повседневной жизни, что приводит к внутреннему равновесию и здоровому пофигизму
-    </p>
-  </div>
-
-  <!-- Learn More Button (right side, below description) - Liquid Glass -->
-  <a href="#training" class="hero__learn-btn">
-    <span class="hero__btn-text">
-      Узнать<br />об обучении
-    </span>
-    <div class="hero__btn-icon">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-        <path d="M1 12L12 1M12 1H3M12 1V10" stroke="currentColor" stroke-width="2"/>
-      </svg>
+  <!-- Right side container: Description + Learn More Button -->
+  <div class="hero__right-block">
+    <!-- Description - Liquid Glass -->
+    <div class="hero__description">
+      <p>
+        Помогаем адаптировать психические и физические реакции к негативным раздражителям 
+        в повседневной жизни, что приводит к внутреннему равновесию и здоровому пофигизму
+      </p>
     </div>
-  </a>
+
+    <!-- Learn More Button - Liquid Glass -->
+    <a href="#training" class="hero__learn-btn">
+      <span class="hero__btn-text">
+        Узнать<br />об обучении
+      </span>
+      <div class="hero__btn-icon">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M1 12L12 1M12 1H3M12 1V10" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+    </a>
+  </div>
 
   <!-- CTA Button (bottom-left) -->
   <a href="#contact" class="hero__cta-btn">
@@ -97,9 +100,9 @@ const navItems = [
     --feedback-width: clamp(160px, 15vw, 210px);
     --feedback-height: clamp(44px, 3.8vw, 52px);
     
-    /* Размеры CTA кнопки (масштабируются) */
-    --cta-width: clamp(280px, 28vw, 400px);
-    --cta-height: clamp(70px, 6vw, 90px);
+    /* Размеры CTA кнопки — шире и ниже */
+    --cta-width: clamp(320px, 32vw, 440px);
+    --cta-height: clamp(60px, 5vw, 75px);
     
     /* Радиус скругления - фиксированный */
     --radius: 32px;
@@ -124,11 +127,11 @@ const navItems = [
 
   /* 
     Image mask with cutouts
-    Вырезы точно под размеры кнопок с отступом var(--hero-gap)
+    Вырезы под размеры кнопок:
     
     Структура SVG (viewBox 1340x794):
-    - Верхний-правый вырез: для кнопки "Связаться с нами" (~230x65)
-    - Нижний-левый вырез: для CTA кнопки (~420x105)
+    - Верхний-правый вырез: ~250x60 для "Связаться с нами" (выровнен по верху)
+    - Нижний-левый вырез: ~470x85 для CTA (шире, ниже по высоте)
   */
   .hero__image-mask {
     position: relative;
@@ -136,10 +139,10 @@ const navItems = [
     height: 100%;
     border-radius: var(--radius);
     overflow: hidden;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1078 C1096 0 1110 14 1110 32 L1110 33 C1110 51 1124 65 1142 65 L1308 65 C1326 65 1340 79 1340 97 L1340 762 C1340 780 1326 794 1308 794 L452 794 C434 794 420 780 420 762 L420 721 C420 703 406 689 388 689 L32 689 C14 689 0 675 0 657 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1058 C1076 0 1090 14 1090 32 C1090 50 1104 64 1122 64 L1308 64 C1326 64 1340 78 1340 96 L1340 762 C1340 780 1326 794 1308 794 L502 794 C484 794 470 780 470 762 L470 741 C470 723 456 709 438 709 L32 709 C14 709 0 695 0 677 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1078 C1096 0 1110 14 1110 32 L1110 33 C1110 51 1124 65 1142 65 L1308 65 C1326 65 1340 79 1340 97 L1340 762 C1340 780 1326 794 1308 794 L452 794 C434 794 420 780 420 762 L420 721 C420 703 406 689 388 689 L32 689 C14 689 0 675 0 657 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1058 C1076 0 1090 14 1090 32 C1090 50 1104 64 1122 64 L1308 64 C1326 64 1340 78 1340 96 L1340 762 C1340 780 1326 794 1308 794 L502 794 C484 794 470 780 470 762 L470 741 C470 723 456 709 438 709 L32 709 C14 709 0 695 0 677 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
     -webkit-mask-size: 100% 100%;
     -webkit-mask-repeat: no-repeat;
   }
@@ -189,11 +192,11 @@ const navItems = [
     width: auto;
   }
 
-  /* Feedback Button (top-right) - масштабируется */
+  /* Feedback Button (top-right) - выравнивание по верхнему краю картинки */
   .hero__feedback-btn {
     position: absolute;
-    top: calc(var(--hero-padding) + var(--hero-gap));
-    right: calc(var(--hero-padding) + var(--hero-gap));
+    top: var(--hero-padding);
+    right: calc(var(--hero-padding) + 16px);
     min-width: var(--feedback-width);
     height: var(--feedback-height);
     padding: 0 clamp(24px, 2.2vw, 34px);
@@ -216,12 +219,21 @@ const navItems = [
     background: rgba(255, 255, 255, 0.1);
   }
 
+  /* Right Block Container - Description + Learn More */
+  .hero__right-block {
+    position: absolute;
+    top: 50%;
+    right: calc(var(--hero-padding) + 30px);
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: clamp(220px, 20vw, 300px);
+    z-index: 2;
+  }
+
   /* Description Block - Liquid Glass */
   .hero__description {
-    position: absolute;
-    top: clamp(180px, 25vh, 260px);
-    right: calc(var(--hero-padding) + 30px);
-    width: clamp(220px, 20vw, 300px);
     padding: clamp(16px, 1.4vw, 24px);
     /* Liquid Glass Effect */
     background: linear-gradient(
@@ -237,7 +249,6 @@ const navItems = [
       0 8px 32px rgba(0, 0, 0, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
     border-radius: var(--radius-sm);
-    z-index: 2;
   }
 
   .hero__description p {
@@ -250,10 +261,6 @@ const navItems = [
 
   /* Learn More Button - Liquid Glass */
   .hero__learn-btn {
-    position: absolute;
-    bottom: clamp(160px, 22vh, 220px);
-    right: calc(var(--hero-padding) + 30px);
-    width: clamp(220px, 20vw, 300px);
     padding: clamp(16px, 1.4vw, 24px);
     /* Liquid Glass Effect */
     background: linear-gradient(
@@ -273,7 +280,6 @@ const navItems = [
     flex-direction: column;
     gap: 16px;
     text-decoration: none;
-    z-index: 2;
     transition: all 0.2s ease;
   }
 
@@ -286,14 +292,14 @@ const navItems = [
     );
   }
 
-  /* CTA Button - масштабируется */
+  /* CTA Button - выравнивание по нижнему краю картинки */
   .hero__cta-btn {
     position: absolute;
-    bottom: calc(var(--hero-padding) + var(--hero-gap));
-    left: calc(var(--hero-padding) + var(--hero-gap));
+    bottom: calc(var(--hero-padding) + 20px);
+    left: calc(var(--hero-padding) + 16px);
     width: var(--cta-width);
     height: var(--cta-height);
-    padding: clamp(12px, 1.2vw, 20px);
+    padding: clamp(12px, 1.2vw, 16px) clamp(16px, 1.5vw, 24px);
     background: white;
     border-radius: var(--radius-sm);
     display: flex;
@@ -342,11 +348,11 @@ const navItems = [
     color: black;
   }
 
-  /* Navigation Pills - справа внизу */
+  /* Navigation Pills - справа внизу, отступы 16px */
   .hero__nav {
     position: absolute;
-    bottom: calc(var(--hero-padding) + 22px);
-    right: calc(var(--hero-padding) + var(--hero-gap));
+    bottom: calc(var(--hero-padding) + 16px);
+    right: calc(var(--hero-padding) + 16px);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -384,13 +390,9 @@ const navItems = [
 
   /* Tablet */
   @media (max-width: 1024px) {
-    .hero__description {
-      top: auto;
-      bottom: clamp(260px, 35vh, 320px);
-    }
-
-    .hero__learn-btn {
-      bottom: clamp(140px, 18vh, 180px);
+    .hero__right-block {
+      right: calc(var(--hero-padding) + 16px);
+      width: clamp(200px, 25vw, 260px);
     }
   }
 
@@ -440,11 +442,11 @@ const navItems = [
       display: none;
     }
 
-    .hero__description {
+    .hero__right-block {
       position: relative;
       top: 0;
       right: 0;
-      bottom: auto;
+      transform: none;
       width: 100%;
       order: 3;
     }
@@ -455,20 +457,14 @@ const navItems = [
       left: 0;
       width: 100%;
       height: auto;
-      min-height: 70px;
+      min-height: 60px;
       order: 4;
     }
 
     .hero__learn-btn {
-      position: relative;
-      top: 0;
-      right: 0;
-      bottom: auto;
-      width: 100%;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      order: 5;
     }
 
     .hero__nav {

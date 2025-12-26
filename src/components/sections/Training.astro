@@ -216,32 +216,44 @@ const courses = [
     position: relative;
     aspect-ratio: 1;
     border-radius: 24px;
-    padding: 24px;
+    padding: 20px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    /* Убираем фоновый цвет - картинка будет фоном */
+    background-color: transparent !important;
   }
 
   .advantage-card__title {
     color: white;
-    font-size: clamp(20px, 3vw, 38px);
+    font-size: clamp(18px, 2.5vw, 32px);
     font-weight: 800;
     line-height: 0.95;
     letter-spacing: -0.01em;
     text-transform: uppercase;
+    font-style: italic;
     margin: 0;
-    max-width: 250px;
+    max-width: 180px;
     position: relative;
     z-index: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
 
+  @media (min-width: 768px) {
+    .advantage-card__title {
+      max-width: 200px;
+    }
+  }
+
+  /* Картинка заполняет всю карточку */
   .advantage-card__image {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 80%;
-    height: auto;
-    object-fit: contain;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    border-radius: 24px;
   }
 
   /* CTA */

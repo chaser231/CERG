@@ -294,6 +294,34 @@ h6 {
 }
 
 /* ========================================
+   Liquid Glass Effect
+   ======================================== */
+
+.liquid-glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Вариант для тёмных плашек на светлом фоне */
+.liquid-glass--dark {
+  background: rgba(117, 109, 94, 0.2);
+  backdrop-filter: blur(75px) saturate(180%);
+  -webkit-backdrop-filter: blur(75px) saturate(180%);
+  border: none;
+  box-shadow: none;
+}
+
+/* ========================================
    Unified Text Styles (wdth: 25, weight: 800)
    Применяется ко всем «заголовочным» элементам в карточках
    ======================================== */

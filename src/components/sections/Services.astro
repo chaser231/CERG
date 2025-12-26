@@ -145,33 +145,56 @@ const services = [
     background: var(--color-beige-200);
   }
 
-  /* Services Grid */
+  /* Services Grid - horizontal scroll on mobile, grid on desktop */
   .services__grid {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
     gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 10px;
   }
 
-  @media (min-width: 640px) {
-    .services__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  .services__grid::-webkit-scrollbar {
+    display: none;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1200px) {
     .services__grid {
+      display: grid;
       grid-template-columns: repeat(4, 1fr);
+      overflow: visible;
     }
   }
 
-  /* Service Card */
+  /* Service Card - match Figma: 489×538px */
   .service-card {
+    flex: 0 0 320px;
+    scroll-snap-align: start;
     background: #DEDCD9;
     border-radius: 28px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    position: relative;
+    min-height: 450px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  @media (min-width: 640px) {
+    .service-card {
+      flex: 0 0 380px;
+      min-height: 500px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .service-card {
+      flex: 1;
+      min-height: 538px;
+    }
   }
 
   .service-card:hover {
@@ -180,8 +203,8 @@ const services = [
   }
 
   .service-card__image-wrap {
-    position: relative;
-    aspect-ratio: 16 / 9;
+    position: absolute;
+    inset: 0;
     overflow: hidden;
   }
 
@@ -189,14 +212,25 @@ const services = [
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center top;
   }
 
+  /* Badges - Liquid Glass Effect */
   .service-card__badges {
     position: absolute;
     top: 20px;
-    right: 20px;
+    right: 16px;
     display: flex;
+    flex-direction: column;
     gap: 8px;
+    z-index: 2;
+  }
+
+  @media (min-width: 640px) {
+    .service-card__badges {
+      flex-direction: row;
+      right: 20px;
+    }
   }
 
   .service-card__badge {
@@ -204,31 +238,46 @@ const services = [
     align-items: center;
     gap: 10px;
     padding: 12px;
-    background: rgba(117, 109, 94, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* Liquid Glass Effect */
+    background: linear-gradient(
+      135deg,
+      rgba(117, 109, 94, 0.25) 0%,
+      rgba(117, 109, 94, 0.15) 50%,
+      rgba(117, 109, 94, 0.2) 100%
+    );
+    backdrop-filter: blur(75px) saturate(180%);
+    -webkit-backdrop-filter: blur(75px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.01em;
     text-transform: uppercase;
   }
 
+  @media (min-width: 640px) {
+    .service-card__badge {
+      font-size: 20px;
+    }
+  }
+
   .service-card__badge-icon {
     flex-shrink: 0;
   }
 
+  /* Content block at bottom */
   .service-card__content {
     background: white;
     border-radius: 16px;
     padding: 12px;
-    margin: 0 16px 16px;
-    margin-top: -8px;
+    margin: auto 16px 16px;
     position: relative;
     z-index: 1;
-    flex: 1;
   }
 
   .service-card__title {

@@ -167,7 +167,19 @@ const experts = [
     display: inline-flex;
     align-items: center;
     padding: 16px;
-    background: rgba(103, 82, 70, 0.3);
+    /* Liquid Glass Effect */
+    background: linear-gradient(
+      135deg,
+      rgba(103, 82, 70, 0.35) 0%,
+      rgba(103, 82, 70, 0.2) 50%,
+      rgba(103, 82, 70, 0.3) 100%
+    );
+    backdrop-filter: blur(75px) saturate(180%);
+    -webkit-backdrop-filter: blur(75px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
     border-radius: 20px;
     color: white;
     font-size: 12px;

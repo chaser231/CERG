@@ -150,17 +150,24 @@ const navItems = [
   }
 
   /* Image mask with smooth curved cutouts via CSS mask */
+  /* Все углы имеют радиус 32px */
   .hero__image-mask {
     position: relative;
     width: 100%;
     height: 100%;
     border-radius: 32px;
     overflow: hidden;
-    /* Используем CSS mask-image для сложной формы */
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1100 Q1100 0 1100 0 L1100 0 Q1100 50 1130 70 Q1160 90 1200 90 L1340 90 L1340 762 Q1340 794 1308 794 L430 794 Q400 794 380 774 Q360 754 360 724 L360 704 Q360 684 340 684 L32 684 Q0 684 0 652 L0 32 Q0 0 32 0 Z'/%3E%3C/svg%3E");
+    /* 
+      SVG маска с вырезами:
+      - Все внешние углы: 32px
+      - Все внутренние углы вырезов: 32px
+      - Вырез справа сверху: ~240x70px для кнопки "Связаться с нами"
+      - Вырез слева снизу: ~420x110px для CTA кнопки
+    */
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1068 C1086 0 1100 14 1100 32 L1100 38 C1100 56 1114 70 1132 70 L1308 70 C1326 70 1340 84 1340 102 L1340 762 C1340 780 1326 794 1308 794 L452 794 C434 794 420 780 420 762 L420 742 C420 724 406 710 388 710 L32 710 C14 710 0 696 0 678 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1100 Q1100 0 1100 0 L1100 0 Q1100 50 1130 70 Q1160 90 1200 90 L1340 90 L1340 762 Q1340 794 1308 794 L430 794 Q400 794 380 774 Q360 754 360 724 L360 704 Q360 684 340 684 L32 684 Q0 684 0 652 L0 32 Q0 0 32 0 Z'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1068 C1086 0 1100 14 1100 32 L1100 38 C1100 56 1114 70 1132 70 L1308 70 C1326 70 1340 84 1340 102 L1340 762 C1340 780 1326 794 1308 794 L452 794 C434 794 420 780 420 762 L420 742 C420 724 406 710 388 710 L32 710 C14 710 0 696 0 678 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
     -webkit-mask-size: 100% 100%;
     -webkit-mask-repeat: no-repeat;
   }
@@ -213,9 +220,9 @@ const navItems = [
   /* Feedback Button (top-right, in cutout area) */
   .hero__feedback-btn {
     position: absolute;
-    top: 50px;
-    right: 50px;
-    padding: 15px 34px;
+    top: 58px;
+    right: 58px;
+    padding: 14px 32px;
     background: transparent;
     border: 1px solid white;
     border-radius: 999px;
@@ -304,10 +311,10 @@ const navItems = [
   /* CTA Button */
   .hero__cta-btn {
     position: absolute;
-    bottom: 70px;
-    left: 50px;
-    width: 391px;
-    height: 79px;
+    bottom: 58px;
+    left: 58px;
+    width: 380px;
+    height: 80px;
     padding: 16px 20px;
     background: white;
     border-radius: 24px;
@@ -362,8 +369,8 @@ const navItems = [
   /* Navigation Pills */
   .hero__nav {
     position: absolute;
-    bottom: 78px;
-    left: 480px;
+    bottom: 72px;
+    left: 470px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -422,41 +429,42 @@ const navItems = [
     }
 
     .hero__feedback-btn {
-      right: 30px;
-      top: 30px;
+      right: 38px;
+      top: 38px;
     }
 
     .hero__description {
       right: 50px;
       top: 220px;
-      width: 240px;
+      width: 220px;
       padding: 16px;
     }
 
     .hero__description p {
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .hero__learn-btn {
       right: 50px;
       bottom: 160px;
-      width: 240px;
+      width: 220px;
       padding: 16px;
     }
 
     .hero__cta-btn {
-      left: 30px;
-      bottom: 50px;
-      width: 320px;
+      left: 38px;
+      bottom: 58px;
+      width: 300px;
+      height: 70px;
     }
 
     .hero__btn-text {
-      font-size: 22px;
+      font-size: 20px;
     }
 
     .hero__nav {
-      left: 370px;
-      bottom: 60px;
+      left: 360px;
+      bottom: 65px;
     }
 
     .hero__nav-link {

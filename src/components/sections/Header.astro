@@ -1,8 +1,7 @@
 ---
 /**
  * Header Component
- * Прозрачный header поверх Hero-секции
- * Становится затемнённым при скролле
+ * Скрыт в Hero-секции, появляется при скролле до второго блока
  */
 
 const menuItems = [
@@ -17,7 +16,7 @@ const menuItems = [
 ]
 ---
 
-<header class="header" data-header>
+<header class="header header--hidden" data-header>
   <div class="header__inner container">
     <!-- Logo -->
     <a href="/" class="header__logo">
@@ -97,14 +96,26 @@ const menuItems = [
     right: 0;
     z-index: 50;
     padding: 20px 0;
-    transition: all 0.3s ease;
-  }
-
-  .header.scrolled {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    padding: 12px 0;
+    transition: all 0.4s ease;
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Hidden state - initially hidden in Hero */
+  .header--hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Visible state - shown after scrolling past Hero */
+  .header--visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .header__inner {
@@ -309,14 +320,22 @@ const menuItems = [
   menuClose?.addEventListener('click', closeMenu)
   menuLinks.forEach(link => link.addEventListener('click', closeMenu))
 
-  // Header scroll effect
+  // Header visibility based on scroll position
   const header = document.querySelector('[data-header]')
+  const heroSection = document.querySelector('.hero')
   
   function handleScroll() {
-    if (window.scrollY > 50) {
-      header?.classList.add('scrolled')
+    if (!heroSection || !header) return
+    
+    const heroBottom = heroSection.getBoundingClientRect().bottom
+    
+    // Show header when Hero section is scrolled out of view
+    if (heroBottom <= 0) {
+      header.classList.remove('header--hidden')
+      header.classList.add('header--visible')
     } else {
-      header?.classList.remove('scrolled')
+      header.classList.add('header--hidden')
+      header.classList.remove('header--visible')
     }
   }
 

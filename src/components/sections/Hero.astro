@@ -1,7 +1,8 @@
 ---
 /**
  * Hero Section — Bento-style layout
- * Дизайн с 3D изображением и обтекаемыми вырезами (все углы скруглены через SVG clip-path)
+ * Дизайн с 3D изображением и обтекаемыми вырезами
+ * Вырезы масштабируются вместе с кнопками
  */
 
 const navItems = [
@@ -16,43 +17,6 @@ const navItems = [
 ---
 
 <section class="hero">
-  <!-- SVG Clip Path Definition -->
-  <svg class="hero__clip-svg" width="0" height="0">
-    <defs>
-      <clipPath id="hero-clip" clipPathUnits="objectBoundingBox">
-        <!-- 
-          Сложная форма с вырезами:
-          - Основной прямоугольник со скруглёнными углами (r=0.024)
-          - Вырез справа сверху для кнопки "Связаться с нами" 
-          - Вырез слева снизу для CTA кнопки
-          Все углы плавно скруглены
-        -->
-        <path d="
-          M 0.024 0
-          L 0.78 0
-          C 0.78 0, 0.78 0.06, 0.76 0.08
-          C 0.74 0.1, 0.72 0.1, 0.72 0.1
-          L 0.72 0.1
-          C 0.72 0.1, 0.70 0.1, 0.70 0.1
-          L 0.70 0.1
-          L 1 0.1
-          L 1 0.976
-          C 1 0.99, 0.985 1, 0.976 1
-          L 0.35 1
-          C 0.35 1, 0.32 1, 0.30 0.98
-          C 0.28 0.96, 0.28 0.93, 0.28 0.93
-          L 0.28 0.88
-          C 0.28 0.88, 0.28 0.86, 0.26 0.86
-          L 0.024 0.86
-          C 0.01 0.86, 0 0.85, 0 0.836
-          L 0 0.024
-          C 0 0.01, 0.01 0, 0.024 0
-          Z
-        "/>
-      </clipPath>
-    </defs>
-  </svg>
-
   <!-- Background Image with SVG Mask -->
   <div class="hero__image-wrap">
     <div class="hero__image-mask">
@@ -115,7 +79,7 @@ const navItems = [
     </div>
   </a>
 
-  <!-- Navigation Pills (bottom-center) -->
+  <!-- Navigation Pills (right side) -->
   <nav class="hero__nav">
     {navItems.map((item) => (
       <a href={item.href} class="hero__nav-link">{item.label}</a>
@@ -124,50 +88,58 @@ const navItems = [
 </section>
 
 <style>
+  /* CSS Custom Properties для масштабирования */
   .hero {
+    --hero-padding: clamp(20px, 3.5vw, 50px);
+    --hero-gap: 8px;
+    
+    /* Размеры кнопки Feedback (масштабируются) */
+    --feedback-width: clamp(160px, 15vw, 210px);
+    --feedback-height: clamp(44px, 3.8vw, 52px);
+    
+    /* Размеры CTA кнопки (масштабируются) */
+    --cta-width: clamp(280px, 28vw, 400px);
+    --cta-height: clamp(70px, 6vw, 90px);
+    
+    /* Радиус скругления - фиксированный */
+    --radius: 32px;
+    --radius-sm: 24px;
+    
     position: relative;
     width: 100%;
     min-height: 100vh;
     background: #2A2624;
     overflow: hidden;
-    padding: 50px;
-  }
-
-  /* SVG for clip-path definition (hidden) */
-  .hero__clip-svg {
-    position: absolute;
-    width: 0;
-    height: 0;
+    padding: var(--hero-padding);
   }
 
   /* Image wrapper for positioning */
   .hero__image-wrap {
     position: absolute;
-    top: 50px;
-    left: 50px;
-    right: 50px;
-    bottom: 70px;
+    top: var(--hero-padding);
+    left: var(--hero-padding);
+    right: var(--hero-padding);
+    bottom: calc(var(--hero-padding) + 20px);
   }
 
-  /* Image mask with smooth curved cutouts via CSS mask */
-  /* Все углы имеют радиус 32px */
+  /* 
+    Image mask with cutouts
+    Вырезы точно под размеры кнопок с отступом var(--hero-gap)
+    
+    Структура SVG (viewBox 1340x794):
+    - Верхний-правый вырез: для кнопки "Связаться с нами" (~230x65)
+    - Нижний-левый вырез: для CTA кнопки (~420x105)
+  */
   .hero__image-mask {
     position: relative;
     width: 100%;
     height: 100%;
-    border-radius: 32px;
+    border-radius: var(--radius);
     overflow: hidden;
-    /* 
-      SVG маска с вырезами:
-      - Все внешние углы: 32px
-      - Все внутренние углы вырезов: 32px
-      - Вырез справа сверху: ~240x70px для кнопки "Связаться с нами"
-      - Вырез слева снизу: ~420x110px для CTA кнопки
-    */
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1068 C1086 0 1100 14 1100 32 L1100 38 C1100 56 1114 70 1132 70 L1308 70 C1326 70 1340 84 1340 102 L1340 762 C1340 780 1326 794 1308 794 L452 794 C434 794 420 780 420 762 L420 742 C420 724 406 710 388 710 L32 710 C14 710 0 696 0 678 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1078 C1096 0 1110 14 1110 32 L1110 33 C1110 51 1124 65 1142 65 L1308 65 C1326 65 1340 79 1340 97 L1340 762 C1340 780 1326 794 1308 794 L452 794 C434 794 420 780 420 762 L420 721 C420 703 406 689 388 689 L32 689 C14 689 0 675 0 657 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1068 C1086 0 1100 14 1100 32 L1100 38 C1100 56 1114 70 1132 70 L1308 70 C1326 70 1340 84 1340 102 L1340 762 C1340 780 1326 794 1308 794 L452 794 C434 794 420 780 420 762 L420 742 C420 724 406 710 388 710 L32 710 C14 710 0 696 0 678 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1078 C1096 0 1110 14 1110 32 L1110 33 C1110 51 1124 65 1142 65 L1308 65 C1326 65 1340 79 1340 97 L1340 762 C1340 780 1326 794 1308 794 L452 794 C434 794 420 780 420 762 L420 721 C420 703 406 689 388 689 L32 689 C14 689 0 675 0 657 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
     -webkit-mask-size: 100% 100%;
     -webkit-mask-repeat: no-repeat;
   }
@@ -181,8 +153,8 @@ const navItems = [
   /* Title Block */
   .hero__title-block {
     position: absolute;
-    top: 80px;
-    left: 80px;
+    top: calc(var(--hero-padding) + 30px);
+    left: calc(var(--hero-padding) + 30px);
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -192,12 +164,12 @@ const navItems = [
   .hero__title-row {
     display: flex;
     align-items: center;
-    gap: 23px;
+    gap: clamp(12px, 1.5vw, 23px);
   }
 
   .hero__title {
     font-family: 'Roboto Flex', sans-serif;
-    font-size: 65px;
+    font-size: clamp(40px, 4.5vw, 65px);
     font-weight: 700;
     font-variation-settings: 'wdth' 65;
     line-height: 0.85;
@@ -213,25 +185,31 @@ const navItems = [
   }
 
   .hero__logo-img {
-    height: 49px;
+    height: clamp(32px, 3.4vw, 49px);
     width: auto;
   }
 
-  /* Feedback Button (top-right, in cutout area) */
+  /* Feedback Button (top-right) - масштабируется */
   .hero__feedback-btn {
     position: absolute;
-    top: 58px;
-    right: 58px;
-    padding: 14px 32px;
+    top: calc(var(--hero-padding) + var(--hero-gap));
+    right: calc(var(--hero-padding) + var(--hero-gap));
+    min-width: var(--feedback-width);
+    height: var(--feedback-height);
+    padding: 0 clamp(24px, 2.2vw, 34px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: transparent;
     border: 1px solid white;
     border-radius: 999px;
     color: white;
-    font-size: 16px;
+    font-size: clamp(14px, 1.1vw, 16px);
     font-weight: 400;
     text-decoration: none;
     transition: all 0.2s ease;
     z-index: 2;
+    white-space: nowrap;
   }
 
   .hero__feedback-btn:hover {
@@ -241,10 +219,10 @@ const navItems = [
   /* Description Block - Liquid Glass */
   .hero__description {
     position: absolute;
-    top: 260px;
-    right: 80px;
-    width: 280px;
-    padding: 20px;
+    top: clamp(180px, 25vh, 260px);
+    right: calc(var(--hero-padding) + 30px);
+    width: clamp(220px, 20vw, 300px);
+    padding: clamp(16px, 1.4vw, 24px);
     /* Liquid Glass Effect */
     background: linear-gradient(
       135deg,
@@ -258,13 +236,13 @@ const navItems = [
     box-shadow: 
       0 8px 32px rgba(0, 0, 0, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    border-radius: 24px;
+    border-radius: var(--radius-sm);
     z-index: 2;
   }
 
   .hero__description p {
     color: white;
-    font-size: 18px;
+    font-size: clamp(15px, 1.3vw, 20px);
     font-weight: 400;
     line-height: 1.3;
     margin: 0;
@@ -273,10 +251,10 @@ const navItems = [
   /* Learn More Button - Liquid Glass */
   .hero__learn-btn {
     position: absolute;
-    bottom: 200px;
-    right: 80px;
-    width: 280px;
-    padding: 20px;
+    bottom: clamp(160px, 22vh, 220px);
+    right: calc(var(--hero-padding) + 30px);
+    width: clamp(220px, 20vw, 300px);
+    padding: clamp(16px, 1.4vw, 24px);
     /* Liquid Glass Effect */
     background: linear-gradient(
       135deg,
@@ -290,7 +268,7 @@ const navItems = [
     box-shadow: 
       0 8px 32px rgba(0, 0, 0, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    border-radius: 24px;
+    border-radius: var(--radius-sm);
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -308,16 +286,16 @@ const navItems = [
     );
   }
 
-  /* CTA Button */
+  /* CTA Button - масштабируется */
   .hero__cta-btn {
     position: absolute;
-    bottom: 58px;
-    left: 58px;
-    width: 380px;
-    height: 80px;
-    padding: 16px 20px;
+    bottom: calc(var(--hero-padding) + var(--hero-gap));
+    left: calc(var(--hero-padding) + var(--hero-gap));
+    width: var(--cta-width);
+    height: var(--cta-height);
+    padding: clamp(12px, 1.2vw, 20px);
     background: white;
-    border-radius: 24px;
+    border-radius: var(--radius-sm);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -333,7 +311,7 @@ const navItems = [
   /* Button Text */
   .hero__btn-text {
     font-family: 'Roboto Flex', sans-serif;
-    font-size: 28px;
+    font-size: clamp(18px, 1.9vw, 28px);
     font-weight: 800;
     font-variation-settings: 'wdth' 25;
     line-height: 0.86;
@@ -348,29 +326,27 @@ const navItems = [
 
   /* Button Icon */
   .hero__btn-icon {
-    width: 40px;
-    height: 40px;
+    width: clamp(32px, 2.8vw, 44px);
+    height: clamp(32px, 2.8vw, 44px);
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.15);
     color: white;
-    align-self: flex-end;
+    flex-shrink: 0;
   }
 
   .hero__btn-icon--dark {
-    width: 48px;
-    height: 48px;
     background: rgba(0, 0, 0, 0.08);
     color: black;
   }
 
-  /* Navigation Pills */
+  /* Navigation Pills - справа внизу */
   .hero__nav {
     position: absolute;
-    bottom: 72px;
-    left: 470px;
+    bottom: calc(var(--hero-padding) + 22px);
+    right: calc(var(--hero-padding) + var(--hero-gap));
     display: flex;
     align-items: center;
     gap: 8px;
@@ -383,7 +359,7 @@ const navItems = [
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 999px;
     color: white;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 400;
     text-decoration: none;
     white-space: nowrap;
@@ -399,103 +375,33 @@ const navItems = [
   /* Responsive Styles     */
   /* ===================== */
 
-  /* Large Desktop */
-  @media (max-width: 1400px) {
+  /* Hide nav on screens < 1280px (use header burger instead) */
+  @media (max-width: 1279px) {
     .hero__nav {
-      left: 420px;
+      display: none;
     }
   }
 
   /* Tablet */
-  @media (max-width: 1200px) {
-    .hero {
-      padding: 30px;
-    }
-
-    .hero__image-wrap {
-      left: 30px;
-      right: 30px;
-      top: 30px;
-      bottom: 50px;
-    }
-
-    .hero__title-block {
-      left: 50px;
-      top: 60px;
-    }
-
-    .hero__title {
-      font-size: 48px;
-    }
-
-    .hero__feedback-btn {
-      right: 38px;
-      top: 38px;
-    }
-
+  @media (max-width: 1024px) {
     .hero__description {
-      right: 50px;
-      top: 220px;
-      width: 220px;
-      padding: 16px;
-    }
-
-    .hero__description p {
-      font-size: 15px;
+      top: auto;
+      bottom: clamp(260px, 35vh, 320px);
     }
 
     .hero__learn-btn {
-      right: 50px;
-      bottom: 160px;
-      width: 220px;
-      padding: 16px;
-    }
-
-    .hero__cta-btn {
-      left: 38px;
-      bottom: 58px;
-      width: 300px;
-      height: 70px;
-    }
-
-    .hero__btn-text {
-      font-size: 20px;
-    }
-
-    .hero__nav {
-      left: 360px;
-      bottom: 65px;
-    }
-
-    .hero__nav-link {
-      padding: 8px 14px;
-      font-size: 14px;
+      bottom: clamp(140px, 18vh, 180px);
     }
   }
 
-  /* Small Tablet */
-  @media (max-width: 1024px) {
-    .hero__nav {
-      left: 50%;
-      transform: translateX(-50%);
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 500px;
-    }
-
-    .hero__cta-btn {
-      width: 280px;
-    }
-  }
-
-  /* Mobile - без сложной маски */
+  /* Mobile */
   @media (max-width: 768px) {
     .hero {
+      --hero-padding: 20px;
       min-height: auto;
-      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .hero__image-wrap {
@@ -504,15 +410,15 @@ const navItems = [
       left: 0;
       right: 0;
       bottom: auto;
-      height: 350px;
+      height: clamp(300px, 50vh, 400px);
       order: 2;
     }
 
     .hero__image-mask {
-      /* На мобильных используем простые скругления */
+      /* На мобильных — простые скругления без вырезов */
       mask-image: none;
       -webkit-mask-image: none;
-      border-radius: 24px;
+      border-radius: var(--radius-sm);
     }
 
     .hero__title-block {
@@ -520,15 +426,14 @@ const navItems = [
       top: 0;
       left: 0;
       order: 1;
-      margin-bottom: 10px;
     }
 
     .hero__title {
-      font-size: clamp(32px, 10vw, 48px);
+      font-size: clamp(32px, 9vw, 48px);
     }
 
     .hero__logo-img {
-      height: 36px;
+      height: 32px;
     }
 
     .hero__feedback-btn {
@@ -539,8 +444,19 @@ const navItems = [
       position: relative;
       top: 0;
       right: 0;
+      bottom: auto;
       width: 100%;
       order: 3;
+    }
+
+    .hero__cta-btn {
+      position: relative;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      min-height: 70px;
+      order: 4;
     }
 
     .hero__learn-btn {
@@ -555,31 +471,7 @@ const navItems = [
       order: 5;
     }
 
-    .hero__cta-btn {
-      position: relative;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: auto;
-      order: 4;
-    }
-
     .hero__nav {
-      position: relative;
-      bottom: 0;
-      left: 0;
-      transform: none;
-      max-width: none;
-      overflow-x: auto;
-      justify-content: flex-start;
-      flex-wrap: nowrap;
-      padding-bottom: 10px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      order: 6;
-    }
-
-    .hero__nav::-webkit-scrollbar {
       display: none;
     }
   }

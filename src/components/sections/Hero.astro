@@ -1,7 +1,7 @@
 ---
 /**
  * Hero Section — Bento-style layout
- * Новый дизайн с 3D изображением в центре
+ * Дизайн с 3D изображением и обтекаемыми вырезами
  */
 
 const navItems = [
@@ -16,388 +16,498 @@ const navItems = [
 ---
 
 <section class="hero">
-  <div class="hero__container">
-    <!-- Top Row: Title + Logo + Contact Button -->
-    <div class="hero__top">
-      <div class="hero__title-wrap">
-        <h1 class="hero__title">
-          Центр<br />
-          регрессивного<br />
-          гипноза
-        </h1>
-        <div class="hero__logo-badge">
-          <img src="/images/logo.png" alt="ЦЕРГ" class="hero__logo-img" />
-        </div>
-      </div>
-      
-      <a href="#contact" class="hero__contact-btn">
-        Связаться с нами
-      </a>
-    </div>
-
-    <!-- Main Content: Image + Right Column -->
-    <div class="hero__main">
-      <!-- 3D Image -->
-      <div class="hero__image-wrap">
-        <img 
-          src="/images/hero/image 35261.png" 
-          alt="3D логотип ЦЕРГ" 
-          class="hero__image"
-          loading="eager"
-          fetchpriority="high"
-        />
-      </div>
-
-      <!-- Right Column: Description + Button -->
-      <div class="hero__right">
-        <div class="hero__description">
-          <p>
-            Помогаем адаптировать психические и физические реакции к негативным раздражителям 
-            в повседневной жизни, что приводит к внутреннему равновесию и здоровому пофигизму
-          </p>
-        </div>
-        
-        <a href="#training" class="hero__btn hero__btn--secondary">
-          <span class="hero__btn-text">
-            Узнать<br />об обучении
-          </span>
-          <div class="hero__btn-icon">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-              <path d="M1 12L12 1M12 1H3M12 1V10" stroke="currentColor" stroke-width="2"/>
-            </svg>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!-- Bottom Row: CTA Button + Navigation Pills -->
-    <div class="hero__bottom">
-      <a href="#contact" class="hero__btn hero__btn--primary">
-        <span class="hero__btn-text">
-          Записаться<br />на консультацию
-        </span>
-        <div class="hero__btn-icon">
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <path d="M1 12L12 1M12 1H3M12 1V10" stroke="currentColor" stroke-width="2"/>
-          </svg>
-        </div>
-      </a>
-
-      <nav class="hero__nav">
-        {navItems.map((item) => (
-          <a href={item.href} class="hero__nav-link">{item.label}</a>
-        ))}
-      </nav>
-    </div>
+  <!-- Background Image with Mask -->
+  <div class="hero__image-mask">
+    <img 
+      src="/images/hero/image 35261.png" 
+      alt="3D логотип ЦЕРГ" 
+      class="hero__image"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <!-- Cutout areas for buttons -->
+    <div class="hero__cutout hero__cutout--cta"></div>
+    <div class="hero__cutout hero__cutout--learn"></div>
   </div>
+
+  <!-- Title + Logo (top-left) -->
+  <div class="hero__title-block">
+    <div class="hero__title-row">
+      <h1 class="hero__title">Центр</h1>
+      <div class="hero__logo">
+        <img src="/images/logo.png" alt="ЦЕРГ" class="hero__logo-img" />
+      </div>
+    </div>
+    <h1 class="hero__title">регрессивного</h1>
+    <h1 class="hero__title">гипноза</h1>
+  </div>
+
+  <!-- Feedback Button (top-right) -->
+  <a href="#contact" class="hero__feedback-btn">
+    Связаться с нами
+  </a>
+
+  <!-- Description (right side, middle) -->
+  <div class="hero__description">
+    <p>
+      Помогаем адаптировать психические и физические реакции к негативным раздражителям 
+      в повседневной жизни, что приводит к внутреннему равновесию и здоровому пофигизму
+    </p>
+  </div>
+
+  <!-- Learn More Button (right side, below description) -->
+  <a href="#training" class="hero__learn-btn">
+    <span class="hero__btn-text">
+      Узнать<br />об обучении
+    </span>
+    <div class="hero__btn-icon">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <path d="M1 12L12 1M12 1H3M12 1V10" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </div>
+  </a>
+
+  <!-- CTA Button (bottom-left) -->
+  <a href="#contact" class="hero__cta-btn">
+    <span class="hero__btn-text">
+      Записаться<br />на консультацию
+    </span>
+    <div class="hero__btn-icon hero__btn-icon--dark">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <path d="M1 12L12 1M12 1H3M12 1V10" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </div>
+  </a>
+
+  <!-- Navigation Pills (bottom-center) -->
+  <nav class="hero__nav">
+    {navItems.map((item) => (
+      <a href={item.href} class="hero__nav-link">{item.label}</a>
+    ))}
+  </nav>
 </section>
 
 <style>
   .hero {
-    background: linear-gradient(135deg, #2D2A26 0%, #1D1E1E 100%);
-    min-height: 100vh;
-    padding: 20px;
-    display: flex;
-    align-items: stretch;
-  }
-
-  .hero__container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 1400px;
-    margin: 0 auto;
+    position: relative;
     width: 100%;
+    min-height: 100vh;
+    background: #2A2624;
+    overflow: hidden;
   }
 
-  /* Top Row */
-  .hero__top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .hero__title-wrap {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .hero__title {
-    color: white;
-    font-family: 'Roboto Flex', sans-serif;
-    font-size: clamp(32px, 6vw, 72px);
-    font-weight: 700;
-    font-variation-settings: 'wdth' 65;
-    line-height: 0.9;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-    margin: 0;
-  }
-
-  .hero__logo-badge {
-    background: #3A3A3A;
-    border-radius: 16px;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hero__logo-img {
-    height: 24px;
-    width: auto;
-  }
-
-  @media (min-width: 768px) {
-    .hero__logo-img {
-      height: 32px;
-    }
-  }
-
-  .hero__contact-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px 32px;
-    background: white;
-    color: black;
-    font-size: 16px;
-    font-weight: 500;
-    text-decoration: none;
-    border-radius: 999px;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-  }
-
-  .hero__contact-btn:hover {
-    background: var(--color-beige-200);
-  }
-
-  /* Main Content */
-  .hero__main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    min-height: 300px;
-  }
-
-  @media (min-width: 1024px) {
-    .hero__main {
-      flex-direction: row;
-      min-height: 400px;
-    }
-  }
-
-  .hero__image-wrap {
-    flex: 1;
-    background: linear-gradient(145deg, #C4A882 0%, #8B7355 100%);
+  /* Background Image with Mask */
+  .hero__image-mask {
+    position: absolute;
+    top: 50px;
+    left: 53px;
+    right: 53px;
+    bottom: 70px;
     border-radius: 32px;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 250px;
-  }
-
-  @media (min-width: 1024px) {
-    .hero__image-wrap {
-      min-height: auto;
-    }
   }
 
   .hero__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
   }
 
-  .hero__right {
+  /* Cutouts (white areas that reveal the background for buttons) */
+  .hero__cutout {
+    position: absolute;
+    background: #2A2624;
+  }
+
+  .hero__cutout--cta {
+    bottom: 0;
+    left: 0;
+    width: 407px;
+    height: 95px;
+    border-top-right-radius: 32px;
+  }
+
+  .hero__cutout--learn {
+    bottom: 140px;
+    right: 0;
+    width: 275px;
+    height: 115px;
+    border-top-left-radius: 32px;
+    border-bottom-left-radius: 32px;
+  }
+
+  /* Title Block */
+  .hero__title-block {
+    position: absolute;
+    top: 80px;
+    left: 82px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    width: 100%;
+    gap: 2px;
+    z-index: 2;
   }
 
-  @media (min-width: 1024px) {
-    .hero__right {
-      width: 320px;
-      flex-shrink: 0;
-    }
-  }
-
-  .hero__description {
-    flex: 1;
-    /* Liquid Glass Effect */
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.12) 0%,
-      rgba(255, 255, 255, 0.05) 50%,
-      rgba(255, 255, 255, 0.08) 100%
-    );
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
-    padding: 24px;
+  .hero__title-row {
     display: flex;
     align-items: center;
+    gap: 23px;
+  }
+
+  .hero__title {
+    font-family: 'Roboto Flex', sans-serif;
+    font-size: 65px;
+    font-weight: 700;
+    font-variation-settings: 'wdth' 65;
+    line-height: 0.85;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: white;
+    margin: 0;
+  }
+
+  .hero__logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .hero__logo-img {
+    height: 49px;
+    width: auto;
+  }
+
+  /* Feedback Button (top-right) */
+  .hero__feedback-btn {
+    position: absolute;
+    top: 50px;
+    right: 53px;
+    padding: 15px 34px;
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 999px;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    z-index: 2;
+  }
+
+  .hero__feedback-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Description Block */
+  .hero__description {
+    position: absolute;
+    top: 285px;
+    right: 53px;
+    width: 257px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    z-index: 2;
   }
 
   .hero__description p {
     color: white;
-    font-size: 16px;
-    line-height: 1.4;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.17;
     margin: 0;
   }
 
-  @media (min-width: 768px) {
-    .hero__description p {
-      font-size: 18px;
-    }
-  }
-
-  /* Buttons */
-  .hero__btn {
+  /* Learn More Button */
+  .hero__learn-btn {
+    position: absolute;
+    top: 560px;
+    right: 53px;
+    width: 257px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 20px 24px;
-    border-radius: 24px;
+    flex-direction: column;
+    gap: 10px;
     text-decoration: none;
+    z-index: 2;
     transition: all 0.2s ease;
   }
 
-  .hero__btn--primary {
+  .hero__learn-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  /* CTA Button */
+  .hero__cta-btn {
+    position: absolute;
+    bottom: 70px;
+    left: 53px;
+    width: 391px;
+    height: 79px;
+    padding: 16px;
     background: white;
-    flex-shrink: 0;
+    border-radius: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    z-index: 2;
+    transition: all 0.2s ease;
   }
 
-  .hero__btn--primary:hover {
-    background: var(--color-beige-100);
+  .hero__cta-btn:hover {
+    background: #f0f0f0;
   }
 
-  .hero__btn--secondary {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .hero__btn--secondary:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
-
+  /* Button Text */
   .hero__btn-text {
     font-family: 'Roboto Flex', sans-serif;
-    font-size: 20px;
+    font-size: 28px;
     font-weight: 800;
     font-variation-settings: 'wdth' 25;
-    line-height: 0.9;
+    line-height: 0.86;
     letter-spacing: -0.01em;
     text-transform: uppercase;
   }
 
-  @media (min-width: 768px) {
-    .hero__btn-text {
-      font-size: 24px;
-    }
-  }
-
-  .hero__btn--primary .hero__btn-text {
-    color: black;
-  }
-
-  .hero__btn--secondary .hero__btn-text {
+  .hero__learn-btn .hero__btn-text {
     color: white;
   }
 
+  .hero__cta-btn .hero__btn-text {
+    color: black;
+  }
+
+  /* Button Icon */
   .hero__btn-icon {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    align-self: flex-end;
   }
 
-  .hero__btn--primary .hero__btn-icon {
+  .hero__btn-icon--dark {
+    width: 48px;
+    height: 48px;
     background: rgba(0, 0, 0, 0.1);
     color: black;
   }
 
-  .hero__btn--secondary .hero__btn-icon {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-  }
-
-  /* Bottom Row */
-  .hero__bottom {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  @media (min-width: 768px) {
-    .hero__bottom {
-      flex-direction: row;
-      align-items: stretch;
-    }
-  }
-
+  /* Navigation Pills */
   .hero__nav {
-    flex: 1;
+    position: absolute;
+    bottom: 78px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 8px;
-    flex-wrap: wrap;
-    padding: 16px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 24px;
+    z-index: 2;
   }
 
   .hero__nav-link {
-    display: inline-flex;
-    align-items: center;
-    padding: 12px 20px;
+    padding: 8px 16px;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid #D5D5D5;
     border-radius: 999px;
     color: white;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     text-decoration: none;
-    transition: all 0.2s ease;
     white-space: nowrap;
+    transition: all 0.2s ease;
   }
 
   .hero__nav-link:hover {
     background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: white;
   }
 
-  /* Mobile adjustments */
-  @media (max-width: 767px) {
-    .hero__contact-btn {
+  /* ===================== */
+  /* Responsive Styles     */
+  /* ===================== */
+
+  /* Tablet */
+  @media (max-width: 1200px) {
+    .hero__image-mask {
+      left: 30px;
+      right: 30px;
+    }
+
+    .hero__title-block {
+      left: 50px;
+    }
+
+    .hero__title {
+      font-size: 50px;
+    }
+
+    .hero__feedback-btn {
+      right: 30px;
+    }
+
+    .hero__description {
+      right: 30px;
+      top: 250px;
+      width: 220px;
+    }
+
+    .hero__description p {
+      font-size: 16px;
+    }
+
+    .hero__learn-btn {
+      right: 30px;
+      top: auto;
+      bottom: 200px;
+      width: 220px;
+    }
+
+    .hero__cta-btn {
+      left: 30px;
+      width: 350px;
+    }
+
+    .hero__btn-text {
+      font-size: 24px;
+    }
+
+    .hero__cutout--cta {
+      width: 370px;
+    }
+
+    .hero__cutout--learn {
+      width: 240px;
+      bottom: 115px;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .hero {
+      min-height: auto;
+      padding-bottom: 20px;
+    }
+
+    .hero__image-mask {
+      position: relative;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: auto;
+      margin: 20px;
+      height: 400px;
+      border-radius: 24px;
+    }
+
+    .hero__cutout {
       display: none;
     }
 
+    .hero__title-block {
+      position: relative;
+      top: 0;
+      left: 0;
+      padding: 20px;
+      order: -1;
+    }
+
+    .hero__title {
+      font-size: clamp(36px, 10vw, 50px);
+    }
+
+    .hero__logo-img {
+      height: 36px;
+    }
+
+    .hero__feedback-btn {
+      display: none;
+    }
+
+    .hero__description {
+      position: relative;
+      top: 0;
+      right: 0;
+      width: auto;
+      margin: 0 20px 10px;
+    }
+
+    .hero__learn-btn {
+      position: relative;
+      top: 0;
+      right: 0;
+      bottom: auto;
+      width: auto;
+      margin: 0 20px 10px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hero__cta-btn {
+      position: relative;
+      bottom: 0;
+      left: 0;
+      width: auto;
+      height: auto;
+      margin: 0 20px 10px;
+    }
+
     .hero__nav {
+      position: relative;
+      bottom: 0;
+      left: 0;
+      transform: none;
+      margin: 10px 20px 0;
       overflow-x: auto;
       justify-content: flex-start;
+      padding-bottom: 10px;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      -ms-overflow-style: none;
     }
 
     .hero__nav::-webkit-scrollbar {
       display: none;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero__image-mask {
+      order: 2;
+    }
+
+    .hero__title-block {
+      order: 1;
+    }
+
+    .hero__description {
+      order: 3;
+    }
+
+    .hero__learn-btn {
+      order: 5;
+    }
+
+    .hero__cta-btn {
+      order: 4;
+    }
+
+    .hero__nav {
+      order: 6;
     }
   }
 </style>

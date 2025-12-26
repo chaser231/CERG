@@ -1,7 +1,7 @@
 ---
 /**
  * Hero Section — Bento-style layout
- * Дизайн с 3D изображением и обтекаемыми вырезами (все углы скруглены)
+ * Дизайн с 3D изображением и обтекаемыми вырезами (все углы скруглены через SVG clip-path)
  */
 
 const navItems = [
@@ -16,17 +16,54 @@ const navItems = [
 ---
 
 <section class="hero">
-  <!-- Background Image with Mask -->
-  <div class="hero__image-mask">
-    <img 
-      src="/images/hero/image 35261.png" 
-      alt="3D логотип ЦЕРГ" 
-      class="hero__image"
-      loading="eager"
-      fetchpriority="high"
-    />
-    <!-- Cutout for feedback button (top-right) -->
-    <div class="hero__cutout hero__cutout--feedback"></div>
+  <!-- SVG Clip Path Definition -->
+  <svg class="hero__clip-svg" width="0" height="0">
+    <defs>
+      <clipPath id="hero-clip" clipPathUnits="objectBoundingBox">
+        <!-- 
+          Сложная форма с вырезами:
+          - Основной прямоугольник со скруглёнными углами (r=0.024)
+          - Вырез справа сверху для кнопки "Связаться с нами" 
+          - Вырез слева снизу для CTA кнопки
+          Все углы плавно скруглены
+        -->
+        <path d="
+          M 0.024 0
+          L 0.78 0
+          C 0.78 0, 0.78 0.06, 0.76 0.08
+          C 0.74 0.1, 0.72 0.1, 0.72 0.1
+          L 0.72 0.1
+          C 0.72 0.1, 0.70 0.1, 0.70 0.1
+          L 0.70 0.1
+          L 1 0.1
+          L 1 0.976
+          C 1 0.99, 0.985 1, 0.976 1
+          L 0.35 1
+          C 0.35 1, 0.32 1, 0.30 0.98
+          C 0.28 0.96, 0.28 0.93, 0.28 0.93
+          L 0.28 0.88
+          C 0.28 0.88, 0.28 0.86, 0.26 0.86
+          L 0.024 0.86
+          C 0.01 0.86, 0 0.85, 0 0.836
+          L 0 0.024
+          C 0 0.01, 0.01 0, 0.024 0
+          Z
+        "/>
+      </clipPath>
+    </defs>
+  </svg>
+
+  <!-- Background Image with SVG Mask -->
+  <div class="hero__image-wrap">
+    <div class="hero__image-mask">
+      <img 
+        src="/images/hero/image 35261.png" 
+        alt="3D логотип ЦЕРГ" 
+        class="hero__image"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
   </div>
 
   <!-- Title + Logo (top-left) -->
@@ -96,35 +133,42 @@ const navItems = [
     padding: 50px;
   }
 
-  /* Background Image with Mask */
-  .hero__image-mask {
+  /* SVG for clip-path definition (hidden) */
+  .hero__clip-svg {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+
+  /* Image wrapper for positioning */
+  .hero__image-wrap {
     position: absolute;
     top: 50px;
     left: 50px;
     right: 50px;
     bottom: 70px;
+  }
+
+  /* Image mask with smooth curved cutouts via CSS mask */
+  .hero__image-mask {
+    position: relative;
+    width: 100%;
+    height: 100%;
     border-radius: 32px;
     overflow: hidden;
+    /* Используем CSS mask-image для сложной формы */
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1100 Q1100 0 1100 0 L1100 0 Q1100 50 1130 70 Q1160 90 1200 90 L1340 90 L1340 762 Q1340 794 1308 794 L430 794 Q400 794 380 774 Q360 754 360 724 L360 704 Q360 684 340 684 L32 684 Q0 684 0 652 L0 32 Q0 0 32 0 Z'/%3E%3C/svg%3E");
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 794' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1100 Q1100 0 1100 0 L1100 0 Q1100 50 1130 70 Q1160 90 1200 90 L1340 90 L1340 762 Q1340 794 1308 794 L430 794 Q400 794 380 774 Q360 754 360 724 L360 704 Q360 684 340 684 L32 684 Q0 684 0 652 L0 32 Q0 0 32 0 Z'/%3E%3C/svg%3E");
+    -webkit-mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
   }
 
   .hero__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  /* Cutout for feedback button - все углы скруглены */
-  .hero__cutout {
-    position: absolute;
-    background: #2A2624;
-  }
-
-  .hero__cutout--feedback {
-    top: 0;
-    right: 0;
-    width: 240px;
-    height: 70px;
-    border-bottom-left-radius: 32px;
   }
 
   /* Title Block */
@@ -361,7 +405,7 @@ const navItems = [
       padding: 30px;
     }
 
-    .hero__image-mask {
+    .hero__image-wrap {
       left: 30px;
       right: 30px;
       top: 30px;
@@ -380,11 +424,6 @@ const navItems = [
     .hero__feedback-btn {
       right: 30px;
       top: 30px;
-    }
-
-    .hero__cutout--feedback {
-      width: 220px;
-      height: 60px;
     }
 
     .hero__description {
@@ -441,7 +480,7 @@ const navItems = [
     }
   }
 
-  /* Mobile */
+  /* Mobile - без сложной маски */
   @media (max-width: 768px) {
     .hero {
       min-height: auto;
@@ -451,19 +490,21 @@ const navItems = [
       gap: 10px;
     }
 
-    .hero__image-mask {
+    .hero__image-wrap {
       position: relative;
       top: 0;
       left: 0;
       right: 0;
       bottom: auto;
       height: 350px;
-      border-radius: 24px;
       order: 2;
     }
 
-    .hero__cutout {
-      display: none;
+    .hero__image-mask {
+      /* На мобильных используем простые скругления */
+      mask-image: none;
+      -webkit-mask-image: none;
+      border-radius: 24px;
     }
 
     .hero__title-block {

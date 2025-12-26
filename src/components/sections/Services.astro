@@ -187,8 +187,8 @@ const services = [
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    /* Левый отступ = container padding для выравнивания с заголовком */
-    padding-left: var(--container-padding-mobile);
+    /* Левый отступ для выравнивания с заголовком */
+    padding-left: 20px;
     /* Правый padding для последней карточки */
     padding-right: 20px;
     scroll-behavior: smooth;
@@ -200,8 +200,15 @@ const services = [
 
   @media (min-width: 768px) {
     .services__track {
-      padding-left: var(--container-padding);
+      padding-left: 50px;
       padding-right: 50px;
+    }
+  }
+  
+  /* Для очень больших экранов центрируем контент */
+  @media (min-width: 1540px) {
+    .services__track {
+      padding-left: calc((100vw - 1440px) / 2 + 50px);
     }
   }
 

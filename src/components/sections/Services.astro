@@ -42,12 +42,12 @@ const services = [
     
     <!-- Navigation Arrows -->
     <div class="services__nav">
-      <button class="services__nav-btn" aria-label="Предыдущий слайд">
+      <button class="services__nav-btn services__nav-btn--prev" aria-label="Предыдущий слайд">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polyline points="15,18 9,12 15,6"></polyline>
         </svg>
       </button>
-      <button class="services__nav-btn" aria-label="Следующий слайд">
+      <button class="services__nav-btn services__nav-btn--next" aria-label="Следующий слайд">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polyline points="9,18 15,12 9,6"></polyline>
         </svg>
@@ -55,53 +55,76 @@ const services = [
     </div>
   </div>
 
-  <div class="services__grid container">
-    {services.map((service) => (
-      <article class="service-card">
-        <div class="service-card__image-wrap">
-          <img 
-            src={service.image} 
-            alt={service.title}
-            class="service-card__image"
-            loading="lazy"
-          />
-          
-          <!-- Badges -->
-          <div class="service-card__badges">
-            <span class="service-card__badge">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="service-card__badge-icon">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-              {service.duration}
-            </span>
-            {service.price && (
+  <!-- Slider выходит за пределы контейнера -->
+  <div class="services__slider">
+    <div class="services__track">
+      {services.map((service) => (
+        <article class="service-card">
+          <div class="service-card__image-wrap">
+            <img 
+              src={service.image} 
+              alt={service.title}
+              class="service-card__image"
+              loading="lazy"
+            />
+            
+            <!-- Badges -->
+            <div class="service-card__badges">
+              {service.price && (
+                <span class="service-card__badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="service-card__badge-icon">
+                    <path d="M19 5L5 19M5 5l14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <circle cx="5" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/>
+                    <circle cx="19" cy="19" r="3" stroke="currentColor" stroke-width="1.5"/>
+                  </svg>
+                  {service.price}
+                </span>
+              )}
               <span class="service-card__badge">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="service-card__badge-icon">
-                  <path d="M19 5L5 19M5 5l14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                  <circle cx="5" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/>
-                  <circle cx="19" cy="19" r="3" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
-                {service.price}
+                {service.duration}
               </span>
-            )}
+            </div>
           </div>
-        </div>
-        
-        <div class="service-card__content">
-          <h4 class="service-card__title">{service.title}</h4>
-          <p class="service-card__description">{service.description}</p>
-        </div>
-      </article>
-    ))}
+          
+          <div class="service-card__content">
+            <h4 class="service-card__title">{service.title}</h4>
+            <p class="service-card__description">{service.description}</p>
+          </div>
+        </article>
+      ))}
+    </div>
   </div>
 </section>
+
+<script>
+  // Slider functionality
+  const slider = document.querySelector('.services__track');
+  const prevBtn = document.querySelector('.services__nav-btn--prev');
+  const nextBtn = document.querySelector('.services__nav-btn--next');
+  
+  if (slider && prevBtn && nextBtn) {
+    const cardWidth = 489 + 10; // card width + gap
+    
+    prevBtn.addEventListener('click', () => {
+      slider.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    });
+  }
+</script>
 
 <style>
   .services {
     background: white;
     padding-top: 50px;
     padding-bottom: 50px;
+    overflow: hidden; /* Скрываем горизонтальный скролл на секции */
   }
 
   .services__header {
@@ -138,15 +161,25 @@ const services = [
     align-items: center;
     justify-content: center;
     color: var(--color-dark);
-    transition: background 0.2s ease;
+    transition: all 0.2s ease;
   }
 
   .services__nav-btn:hover {
     background: var(--color-beige-200);
   }
+  
+  .services__nav-btn:active {
+    transform: scale(0.95);
+  }
 
-  /* Services Grid - horizontal scroll on mobile, grid on desktop */
-  .services__grid {
+  /* Slider wrapper - full width, overflow hidden */
+  .services__slider {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* Track - scrollable, выходит за пределы viewport */
+  .services__track {
     display: flex;
     gap: 10px;
     overflow-x: auto;
@@ -154,24 +187,27 @@ const services = [
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    padding-bottom: 10px;
+    /* Левый отступ = container padding для выравнивания с заголовком */
+    padding-left: var(--container-padding-mobile);
+    /* Правый padding для последней карточки */
+    padding-right: 20px;
+    scroll-behavior: smooth;
   }
 
-  .services__grid::-webkit-scrollbar {
+  .services__track::-webkit-scrollbar {
     display: none;
   }
 
-  @media (min-width: 1200px) {
-    .services__grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      overflow: visible;
+  @media (min-width: 768px) {
+    .services__track {
+      padding-left: var(--container-padding);
+      padding-right: 50px;
     }
   }
 
-  /* Service Card - match Figma: 489×538px */
+  /* Service Card - фиксированные размеры как в Figma: 489×538px */
   .service-card {
-    flex: 0 0 320px;
+    flex: 0 0 300px;
     scroll-snap-align: start;
     background: #DEDCD9;
     border-radius: 28px;
@@ -179,21 +215,28 @@ const services = [
     display: flex;
     flex-direction: column;
     position: relative;
-    min-height: 450px;
+    height: 450px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  @media (min-width: 640px) {
+  @media (min-width: 480px) {
     .service-card {
       flex: 0 0 380px;
-      min-height: 500px;
+      height: 500px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .service-card {
+      flex: 0 0 450px;
+      height: 520px;
     }
   }
 
   @media (min-width: 1200px) {
     .service-card {
-      flex: 1;
-      min-height: 538px;
+      flex: 0 0 489px;
+      height: 538px;
     }
   }
 
@@ -221,14 +264,13 @@ const services = [
     top: 20px;
     right: 16px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 8px;
     z-index: 2;
   }
 
   @media (min-width: 640px) {
     .service-card__badges {
-      flex-direction: row;
       right: 20px;
     }
   }
@@ -270,10 +312,10 @@ const services = [
     flex-shrink: 0;
   }
 
-  /* Content block at bottom */
+  /* Content block at bottom - стильные скругления */
   .service-card__content {
     background: white;
-    border-radius: 16px;
+    border-radius: 20px 20px 12px 12px;
     padding: 12px;
     margin: auto 16px 16px;
     position: relative;

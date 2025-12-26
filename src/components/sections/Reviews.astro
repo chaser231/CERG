@@ -182,12 +182,15 @@ const studentReviews = [
     border-radius: 32px;
     margin: 20px;
     padding: 24px;
+    /* Убираем padding справа — слайдер будет до края */
+    padding-right: 0;
     overflow: hidden;
   }
 
   @media (min-width: 768px) {
     .reviews {
       padding: 33px;
+      padding-right: 0;
     }
   }
 
@@ -343,10 +346,25 @@ const studentReviews = [
   }
 
   /* Right Column: Slider */
+  /* Right Column: Slider - карточки идут до правого края белого блока */
   .reviews__slider {
     flex: 1;
     min-width: 0;
     overflow: hidden;
+    /* Вытягиваем слайдер за пределы padding контейнера */
+    margin-right: -24px;
+  }
+
+  @media (min-width: 768px) {
+    .reviews__slider {
+      margin-right: -33px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .reviews__slider {
+      margin-right: 0;
+    }
   }
 
   .reviews__track {

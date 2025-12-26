@@ -1,270 +1,403 @@
 ---
 /**
- * Hero Section
- * Layout: фоновое изображение на весь экран,
- * заголовок слева внизу, описание и кнопки справа внизу
+ * Hero Section — Bento-style layout
+ * Новый дизайн с 3D изображением в центре
  */
+
+const navItems = [
+  { label: 'О центре', href: '#about' },
+  { label: 'Услуги', href: '#services' },
+  { label: 'Отзывы', href: '#reviews' },
+  { label: 'Эксперты', href: '#experts' },
+  { label: 'Цены', href: '#courses' },
+  { label: 'Частые вопросы', href: '#faq' },
+  { label: 'Контакты', href: '#contact' },
+]
 ---
 
 <section class="hero">
-  <!-- Background Image -->
-  <img 
-    src="/images/hero/hero-image.png" 
-    alt="" 
-    class="hero__bg"
-    loading="eager"
-    fetchpriority="high"
-  />
+  <div class="hero__container">
+    <!-- Top Row: Title + Logo + Contact Button -->
+    <div class="hero__top">
+      <div class="hero__title-wrap">
+        <h1 class="hero__title">
+          Центр<br />
+          регрессивного<br />
+          гипноза
+        </h1>
+        <div class="hero__logo-badge">
+          <img src="/images/logo.png" alt="ЦЕРГ" class="hero__logo-img" />
+        </div>
+      </div>
+      
+      <a href="#contact" class="hero__contact-btn">
+        Связаться с нами
+      </a>
+    </div>
 
-  <!-- Content Container -->
-  <div class="hero__content container">
-    <!-- Left: Title -->
-    <h1 class="hero__title">
-      Центр<br />
-      регрессивного<br />
-      гипноза
-    </h1>
-
-    <!-- Right: Description + Buttons -->
-    <div class="hero__right">
-      <!-- Description Box -->
-      <div class="hero__description">
-        <p>
-          Помогаем адаптировать психические и физические реакции к негативным раздражителям 
-          в повседневной жизни, что приводит к внутреннему равновесию и здоровому пофигизму
-        </p>
+    <!-- Main Content: Image + Right Column -->
+    <div class="hero__main">
+      <!-- 3D Image -->
+      <div class="hero__image-wrap">
+        <img 
+          src="/images/hero/image 35261.png" 
+          alt="3D логотип ЦЕРГ" 
+          class="hero__image"
+          loading="eager"
+          fetchpriority="high"
+        />
       </div>
 
-      <!-- Buttons -->
-      <div class="hero__buttons">
-        <!-- Primary Button -->
-        <a href="#contact" class="hero__btn hero__btn--primary">
-          <div class="hero__btn-icon">
-            <img src="/images/icons/icon-arrow.svg" alt="" width="13" height="13" />
-          </div>
-          <span class="hero__btn-text">
-            Записаться<br />на консультацию
-          </span>
-        </a>
-
-        <!-- Secondary Button -->
+      <!-- Right Column: Description + Button -->
+      <div class="hero__right">
+        <div class="hero__description">
+          <p>
+            Помогаем адаптировать психические и физические реакции к негативным раздражителям 
+            в повседневной жизни, что приводит к внутреннему равновесию и здоровому пофигизму
+          </p>
+        </div>
+        
         <a href="#training" class="hero__btn hero__btn--secondary">
-          <div class="hero__btn-icon">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 12L12 1M12 1H3M12 1V10" stroke="currentColor" stroke-width="2"/>
-            </svg>
-          </div>
           <span class="hero__btn-text">
             Узнать<br />об обучении
           </span>
+          <div class="hero__btn-icon">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <path d="M1 12L12 1M12 1H3M12 1V10" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
         </a>
       </div>
+    </div>
+
+    <!-- Bottom Row: CTA Button + Navigation Pills -->
+    <div class="hero__bottom">
+      <a href="#contact" class="hero__btn hero__btn--primary">
+        <span class="hero__btn-text">
+          Записаться<br />на консультацию
+        </span>
+        <div class="hero__btn-icon">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M1 12L12 1M12 1H3M12 1V10" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+      </a>
+
+      <nav class="hero__nav">
+        {navItems.map((item) => (
+          <a href={item.href} class="hero__nav-link">{item.label}</a>
+        ))}
+      </nav>
     </div>
   </div>
 </section>
 
 <style>
   .hero {
-    position: relative;
-    width: 100%;
+    background: linear-gradient(135deg, #2D2A26 0%, #1D1E1E 100%);
     min-height: 100vh;
+    padding: 20px;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    overflow: hidden;
+    align-items: stretch;
   }
 
-  .hero__bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    z-index: -1;
-  }
-
-  .hero__content {
+  .hero__container {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    padding-bottom: 3rem;
-    padding-top: 120px;
+    gap: 10px;
+    max-width: 1400px;
+    margin: 0 auto;
     width: 100%;
   }
 
-  @media (min-width: 1024px) {
-    .hero__content {
-      flex-direction: row;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 0;
-      padding-bottom: 5rem;
-    }
+  /* Top Row */
+  .hero__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hero__title-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
   }
 
   .hero__title {
     color: white;
     font-family: 'Roboto Flex', sans-serif;
-    font-size: clamp(48px, 8vw, 110px);
+    font-size: clamp(32px, 6vw, 72px);
     font-weight: 700;
     font-variation-settings: 'wdth' 65;
-    line-height: 0.86;
+    line-height: 0.9;
     letter-spacing: -0.01em;
     text-transform: uppercase;
     margin: 0;
   }
 
+  .hero__logo-badge {
+    background: #3A3A3A;
+    border-radius: 16px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero__logo-img {
+    height: 24px;
+    width: auto;
+  }
+
+  @media (min-width: 768px) {
+    .hero__logo-img {
+      height: 32px;
+    }
+  }
+
+  .hero__contact-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    background: white;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .hero__contact-btn:hover {
+    background: var(--color-beige-200);
+  }
+
+  /* Main Content */
+  .hero__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 300px;
+  }
+
+  @media (min-width: 1024px) {
+    .hero__main {
+      flex-direction: row;
+      min-height: 400px;
+    }
+  }
+
+  .hero__image-wrap {
+    flex: 1;
+    background: linear-gradient(145deg, #C4A882 0%, #8B7355 100%);
+    border-radius: 32px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+  }
+
+  @media (min-width: 1024px) {
+    .hero__image-wrap {
+      min-height: auto;
+    }
+  }
+
+  .hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
   .hero__right {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 10px;
     width: 100%;
   }
 
   @media (min-width: 1024px) {
     .hero__right {
-      max-width: 524px;
+      width: 320px;
       flex-shrink: 0;
     }
   }
 
   .hero__description {
+    flex: 1;
     /* Liquid Glass Effect */
     background: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.12) 0%,
       rgba(255, 255, 255, 0.05) 50%,
-      rgba(255, 255, 255, 0.1) 100%
+      rgba(255, 255, 255, 0.08) 100%
     );
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 20px;
-    padding: 1.25rem 1.5rem;
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
   }
 
   .hero__description p {
     color: white;
-    font-size: 1rem;
+    font-size: 16px;
     line-height: 1.4;
     margin: 0;
   }
 
   @media (min-width: 768px) {
     .hero__description p {
-      font-size: 1.25rem;
+      font-size: 18px;
     }
   }
 
-  .hero__buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.625rem;
-    height: auto;
-  }
-
-  @media (min-width: 640px) {
-    .hero__buttons {
-      height: 148px;
-    }
-  }
-
+  /* Buttons */
   .hero__btn {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    padding: 1rem;
-    border-radius: 16px;
+    gap: 1rem;
+    padding: 20px 24px;
+    border-radius: 24px;
     text-decoration: none;
     transition: all 0.2s ease;
-    min-height: 120px;
-  }
-
-  @media (min-width: 640px) {
-    .hero__btn {
-      min-height: auto;
-      height: 100%;
-    }
   }
 
   .hero__btn--primary {
-    background-color: #71BB70;
-    border-radius: 16px;
+    background: white;
+    flex-shrink: 0;
   }
 
   .hero__btn--primary:hover {
-    background-color: #5EA85D;
+    background: var(--color-beige-100);
   }
 
   .hero__btn--secondary {
-    background-color: #E5E5E5;
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .hero__btn--secondary:hover {
-    background-color: #D5D5D5;
-  }
-
-  .hero__btn-icon {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .hero__btn-icon > * {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-  }
-
-  .hero__btn--primary .hero__btn-icon > * {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  .hero__btn--primary .hero__btn-icon img {
-    width: 13px;
-    height: 13px;
-    filter: none;
-  }
-
-  .hero__btn--secondary .hero__btn-icon > * {
-    background: rgba(0, 0, 0, 0.1);
-    color: #000;
-  }
-
-  .hero__btn--secondary .hero__btn-icon svg {
-    width: 13px;
-    height: 13px;
+    background: rgba(255, 255, 255, 0.15);
   }
 
   .hero__btn-text {
     font-family: 'Roboto Flex', sans-serif;
-    font-size: 1.25rem;
+    font-size: 20px;
     font-weight: 800;
     font-variation-settings: 'wdth' 25;
-    line-height: 0.86;
+    line-height: 0.9;
     letter-spacing: -0.01em;
     text-transform: uppercase;
   }
 
   @media (min-width: 768px) {
     .hero__btn-text {
-      font-size: 1.75rem;
+      font-size: 24px;
     }
   }
 
   .hero__btn--primary .hero__btn-text {
-    color: white;
+    color: black;
   }
 
   .hero__btn--secondary .hero__btn-text {
+    color: white;
+  }
+
+  .hero__btn-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .hero__btn--primary .hero__btn-icon {
+    background: rgba(0, 0, 0, 0.1);
     color: black;
+  }
+
+  .hero__btn--secondary .hero__btn-icon {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  /* Bottom Row */
+  .hero__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  @media (min-width: 768px) {
+    .hero__bottom {
+      flex-direction: row;
+      align-items: stretch;
+    }
+  }
+
+  .hero__nav {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+  }
+
+  .hero__nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 20px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .hero__nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 767px) {
+    .hero__contact-btn {
+      display: none;
+    }
+
+    .hero__nav {
+      overflow-x: auto;
+      justify-content: flex-start;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .hero__nav::-webkit-scrollbar {
+      display: none;
+    }
   }
 </style>

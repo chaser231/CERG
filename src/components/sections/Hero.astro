@@ -524,9 +524,9 @@ const navItems = [
     
     .hero__right-block {
       top: auto;
-      bottom: calc(var(--cta-height) + var(--btn-gap) * 2 + 80px);
-      left: var(--hero-padding);
-      right: var(--hero-padding);
+      bottom: calc(var(--cta-height) + var(--btn-gap) * 2 + 100px);
+      left: calc(var(--hero-padding) + 16px);
+      right: calc(var(--hero-padding) + 16px);
       width: auto;
       flex-direction: row;
     }
@@ -612,12 +612,12 @@ const navItems = [
     }
     
     .hero__cta-btn .hero__btn-text--dark {
-      color: white;
+      color: black;
     }
     
     .hero__cta-btn .hero__btn-icon--dark {
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
+      background: rgba(0, 0, 0, 0.08);
+      color: black;
     }
     
     /* Перемещаем CTA из image-wrap в hero */

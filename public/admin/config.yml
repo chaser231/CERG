@@ -2,8 +2,11 @@
 # Документация: https://decapcms.org/docs/
 
 backend:
-  name: git-gateway
+  name: github
+  repo: chaser231/CERG
   branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
 
 # Локальный режим для разработки (npm run dev)
 local_backend: true

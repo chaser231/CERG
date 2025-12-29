@@ -15,5 +15,8 @@
     "clsx": "^2.1.1",
     "preact": "^10.28.1",
     "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
   }
 }

@@ -5,7 +5,7 @@ price: 3000
 priceLabel: "₽"
 duration: 90
 durationLabel: "60-120 мин"
-image: "/images/services/service-hypnosis.png"
+image: "/images/services/service-hypnosis.webp"
 order: 1
 featured: true
 ---

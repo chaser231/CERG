@@ -5,7 +5,7 @@ price: 0
 priceLabel: "По запросу"
 duration: 180
 durationLabel: "2-5 часов"
-image: "/images/services/service-regression.png"
+image: "/images/services/service-regression.webp"
 order: 3
 featured: true
 ---

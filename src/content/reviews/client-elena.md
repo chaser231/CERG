@@ -2,7 +2,7 @@
 name: "Елена В."
 role: "Коуч"
 quote: "Гипнотерапия помогла мне справиться с паническими атаками. Уже после третьего сеанса почувствовала значительное улучшение."
-image: "/images/reviews/review-1.png"
+image: "/images/reviews/review-1.webp"
 category: "clients"
 order: 4
 ---

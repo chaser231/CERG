@@ -5,7 +5,7 @@ price: 0
 priceLabel: "Бесплатно"
 duration: 75
 durationLabel: "60-90 мин"
-image: "/images/services/service-consultation.png"
+image: "/images/services/service-consultation.webp"
 order: 4
 featured: true
 ---

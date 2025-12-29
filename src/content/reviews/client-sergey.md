@@ -2,7 +2,7 @@
 name: "Сергей Л."
 role: "Психотерапевт"
 quote: "Обучение помогло внедрить гипноз в мою психотерапевтическую практику. Качественный материал и поддержка!"
-image: "/images/reviews/review-3.png"
+image: "/images/reviews/review-3.webp"
 category: "clients"
 order: 3
 ---

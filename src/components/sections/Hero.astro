@@ -1,8 +1,8 @@
 ---
 /**
  * Hero Section — Bento-style layout
- * Динамическая система: кнопки фиксированного размера, картинка адаптируется
- * SVG маски переключаются по брейкпоинтам
+ * Динамическая система: кнопки фиксированного размера
+ * Вырезы реализованы через overlay-элементы (не SVG маску)
  */
 
 const navItems = [
@@ -17,9 +17,9 @@ const navItems = [
 ---
 
 <section class="hero">
-  <!-- Background Image with Dynamic SVG Mask -->
+  <!-- Background Image Container -->
   <div class="hero__image-wrap">
-    <div class="hero__image-mask">
+    <div class="hero__image-container">
       <img 
         src="/images/hero/image 35261.png" 
         alt="3D логотип ЦЕРГ" 
@@ -29,7 +29,23 @@ const navItems = [
       />
     </div>
     
-    <!-- CTA Button (inside image wrap for proper cutout alignment) -->
+    <!-- Cutout overlays - positioned absolutely, create the "notch" effect -->
+    <div class="hero__cutout hero__cutout--top-right"></div>
+    <div class="hero__cutout hero__cutout--bottom-left"></div>
+    
+    <!-- Title Block (inside image area) -->
+    <div class="hero__title-block">
+      <div class="hero__title-row">
+        <h1 class="hero__title">Центр</h1>
+        <div class="hero__logo">
+          <img src="/images/logo.png" alt="ЦЕРГ" class="hero__logo-img" />
+        </div>
+      </div>
+      <h1 class="hero__title">регрессивного</h1>
+      <h1 class="hero__title">гипноза</h1>
+    </div>
+    
+    <!-- CTA Button (positioned in bottom-left cutout) -->
     <a href="#contact" class="hero__cta-btn">
       <span class="hero__btn-text hero__btn-text--dark">
         Записаться<br />на консультацию
@@ -41,27 +57,31 @@ const navItems = [
       </div>
     </a>
     
-    <!-- Feedback Button (inside image wrap for proper cutout alignment) -->
+    <!-- Feedback Button (positioned in top-right cutout) -->
     <a href="#contact" class="hero__feedback-btn">
       Связаться с нами
     </a>
+    
+    <!-- Navigation Pills (desktop) -->
+    <nav class="hero__nav">
+      {navItems.map((item) => (
+        <a href={item.href} class="hero__nav-link">{item.label}</a>
+      ))}
+    </nav>
+    
+    <!-- Menu Button (tablet/mobile) -->
+    <button class="hero__menu-btn" type="button" aria-label="Открыть меню">
+      <span>Меню</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="4" y1="8" x2="20" y2="8" />
+        <line x1="4" y1="13" x2="20" y2="13" />
+        <line x1="4" y1="18" x2="20" y2="18" />
+      </svg>
+    </button>
   </div>
 
-  <!-- Title + Logo (top-left, inside image) -->
-  <div class="hero__title-block">
-    <div class="hero__title-row">
-      <h1 class="hero__title">Центр</h1>
-      <div class="hero__logo">
-        <img src="/images/logo.png" alt="ЦЕРГ" class="hero__logo-img" />
-      </div>
-    </div>
-    <h1 class="hero__title">регрессивного</h1>
-    <h1 class="hero__title">гипноза</h1>
-  </div>
-
-  <!-- Right side container: Description + Learn More Button -->
+  <!-- Right side container: Description + Learn More -->
   <div class="hero__right-block">
-    <!-- Description - Liquid Glass -->
     <div class="hero__description">
       <p>
         Помогаем адаптировать психические и физические реакции к негативным раздражителям 
@@ -69,7 +89,6 @@ const navItems = [
       </p>
     </div>
 
-    <!-- Learn More Button - Liquid Glass -->
     <a href="#training" class="hero__learn-btn">
       <span class="hero__btn-text">
         Узнать<br />об обучении
@@ -81,40 +100,11 @@ const navItems = [
       </div>
     </a>
   </div>
-
-  <!-- Navigation Pills (desktop only) -->
-  <nav class="hero__nav">
-    {navItems.map((item) => (
-      <a href={item.href} class="hero__nav-link">{item.label}</a>
-    ))}
-  </nav>
-  
-  <!-- Menu Button (tablet/mobile) -->
-  <button class="hero__menu-btn" type="button" aria-label="Открыть меню">
-    <span>Меню</span>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <line x1="4" y1="8" x2="20" y2="8" />
-      <line x1="4" y1="13" x2="20" y2="13" />
-      <line x1="4" y1="18" x2="20" y2="18" />
-    </svg>
-  </button>
-  
-  <!-- CTA Button for mobile (outside image) -->
-  <a href="#contact" class="hero__cta-btn hero__cta-btn--mobile">
-    <span class="hero__btn-text hero__btn-text--dark">
-      Записаться<br />на консультацию
-    </span>
-    <div class="hero__btn-icon hero__btn-icon--dark">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-        <path d="M1 12L12 1M12 1H3M12 1V10" stroke="currentColor" stroke-width="2"/>
-      </svg>
-    </div>
-  </a>
 </section>
 
 <style>
   /* ================================================ */
-  /* FIXED BUTTON SIZES - не масштабируются           */
+  /* BASE STYLES                                      */
   /* ================================================ */
   .hero {
     /* Фиксированные размеры кнопок */
@@ -123,58 +113,38 @@ const navItems = [
     --feedback-width: 206px;
     --feedback-height: 49px;
     
-    /* Размеры вырезов (кнопка + отступы) */
-    --cta-cutout-width: 407px;
-    --cta-cutout-height: 95px;
-    --feedback-cutout-width: 222px;
-    --feedback-cutout-height: 65px;
-    
-    /* Отступы и скругления */
-    --btn-offset: 16px;
+    /* Отступы */
     --hero-padding: 50px;
+    --btn-gap: 8px;
     --radius: 32px;
     --radius-sm: 24px;
+    
+    /* Цвет фона для вырезов */
+    --bg-color: #2A2624;
     
     position: relative;
     width: 100%;
     min-height: 100vh;
-    background: #2A2624;
-    overflow: hidden;
+    background: var(--bg-color);
+    padding: var(--hero-padding);
+    padding-bottom: calc(var(--hero-padding) + 20px);
   }
 
   /* ================================================ */
-  /* IMAGE WRAPPER - адаптивный контейнер             */
+  /* IMAGE WRAPPER                                    */
   /* ================================================ */
   .hero__image-wrap {
-    position: absolute;
-    top: var(--hero-padding);
-    left: var(--hero-padding);
-    right: var(--hero-padding);
-    bottom: var(--hero-padding);
-  }
-
-  /* ================================================ */
-  /* SVG MASKS - разные для каждого брейкпоинта       */
-  /* ================================================ */
-  
-  /* 
-    Desktop/Laptop (1024px+) — landscape, оба выреза
-    viewBox рассчитан для контейнера ~1340x800
-    Вырезы: top-right 222x65, bottom-left 407x95
-  */
-  .hero__image-mask {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - var(--hero-padding) * 2 - 20px);
+    min-height: 600px;
+  }
+
+  .hero__image-container {
+    position: absolute;
+    inset: 0;
     border-radius: var(--radius);
     overflow: hidden;
-    /* Desktop mask - both cutouts */
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 800' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1086 C1104 0 1118 14 1118 32 C1118 50 1132 64 1150 64 L1308 64 C1326 64 1340 78 1340 96 L1340 768 C1340 786 1326 800 1308 800 L439 800 C421 800 407 786 407 768 L407 737 C407 719 393 705 375 705 L32 705 C14 705 0 691 0 673 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
-    mask-size: 100% 100%;
-    mask-repeat: no-repeat;
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1340 800' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H1086 C1104 0 1118 14 1118 32 C1118 50 1132 64 1150 64 L1308 64 C1326 64 1340 78 1340 96 L1340 768 C1340 786 1326 800 1308 800 L439 800 C421 800 407 786 407 768 L407 737 C407 719 393 705 375 705 L32 705 C14 705 0 691 0 673 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
-    -webkit-mask-size: 100% 100%;
-    -webkit-mask-repeat: no-repeat;
   }
 
   .hero__image {
@@ -184,12 +154,40 @@ const navItems = [
   }
 
   /* ================================================ */
+  /* CUTOUT OVERLAYS - создают эффект вырезов         */
+  /* Фиксированные размеры, позиционированы от углов  */
+  /* ================================================ */
+  .hero__cutout {
+    position: absolute;
+    background: var(--bg-color);
+    z-index: 1;
+  }
+
+  /* Top-right cutout for Feedback button */
+  .hero__cutout--top-right {
+    top: 0;
+    right: 0;
+    width: calc(var(--feedback-width) + var(--btn-gap) * 2);
+    height: calc(var(--feedback-height) + var(--btn-gap) * 2);
+    border-bottom-left-radius: var(--radius);
+  }
+
+  /* Bottom-left cutout for CTA button */
+  .hero__cutout--bottom-left {
+    bottom: 0;
+    left: 0;
+    width: calc(var(--cta-width) + var(--btn-gap) * 2);
+    height: calc(var(--cta-height) + var(--btn-gap) * 2);
+    border-top-right-radius: var(--radius);
+  }
+
+  /* ================================================ */
   /* CTA BUTTON - фиксированный размер                */
   /* ================================================ */
   .hero__cta-btn {
     position: absolute;
-    bottom: var(--btn-offset);
-    left: var(--btn-offset);
+    bottom: var(--btn-gap);
+    left: var(--btn-gap);
     width: var(--cta-width);
     height: var(--cta-height);
     padding: 16px 20px;
@@ -206,19 +204,14 @@ const navItems = [
   .hero__cta-btn:hover {
     background: #f5f5f5;
   }
-  
-  /* Mobile CTA - скрыта на desktop */
-  .hero__cta-btn--mobile {
-    display: none;
-  }
 
   /* ================================================ */
   /* FEEDBACK BUTTON - фиксированный размер           */
   /* ================================================ */
   .hero__feedback-btn {
     position: absolute;
-    top: var(--btn-offset);
-    right: var(--btn-offset);
+    top: var(--btn-gap);
+    right: var(--btn-gap);
     width: var(--feedback-width);
     height: var(--feedback-height);
     display: flex;
@@ -233,7 +226,6 @@ const navItems = [
     text-decoration: none;
     transition: all 0.2s ease;
     z-index: 2;
-    white-space: nowrap;
   }
 
   .hero__feedback-btn:hover {
@@ -245,8 +237,8 @@ const navItems = [
   /* ================================================ */
   .hero__title-block {
     position: absolute;
-    top: calc(var(--hero-padding) + 30px);
-    left: calc(var(--hero-padding) + 30px);
+    top: 30px;
+    left: 30px;
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -282,13 +274,12 @@ const navItems = [
   }
 
   /* ================================================ */
-  /* RIGHT BLOCK - Description + Learn More           */
+  /* RIGHT BLOCK - outside image                      */
   /* ================================================ */
   .hero__right-block {
     position: absolute;
-    top: 50%;
-    right: calc(var(--hero-padding) + 30px);
-    transform: translateY(-50%);
+    top: calc(var(--hero-padding) + 200px);
+    right: var(--hero-padding);
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -390,12 +381,12 @@ const navItems = [
   }
 
   /* ================================================ */
-  /* NAVIGATION PILLS - только desktop                */
+  /* NAVIGATION PILLS                                 */
   /* ================================================ */
   .hero__nav {
     position: absolute;
-    bottom: calc(var(--hero-padding) + 16px);
-    right: calc(var(--hero-padding) + 16px);
+    bottom: var(--btn-gap);
+    right: calc(var(--feedback-width) + var(--btn-gap) * 3 + 20px);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -421,13 +412,13 @@ const navItems = [
   }
 
   /* ================================================ */
-  /* MENU BUTTON - tablet/mobile only                 */
+  /* MENU BUTTON                                      */
   /* ================================================ */
   .hero__menu-btn {
     display: none;
     position: absolute;
-    bottom: calc(var(--hero-padding) + 16px);
-    right: calc(var(--hero-padding) + 16px);
+    bottom: var(--btn-gap);
+    right: var(--btn-gap);
     padding: 8px 16px;
     background: white;
     border: 1px solid #D5D5D5;
@@ -442,20 +433,24 @@ const navItems = [
   }
 
   /* ================================================ */
-  /* RESPONSIVE: LAPTOP 1280px                        */
+  /* RESPONSIVE: 1280px                               */
   /* ================================================ */
   @media (max-width: 1400px) {
     .hero {
-      --hero-padding: 50px;
+      --hero-padding: 40px;
     }
     
-    .hero__nav {
-      /* Сокращаем навигацию */
+    .hero__right-block {
+      width: 260px;
+    }
+    
+    .hero__description p {
+      font-size: 18px;
     }
   }
 
   /* ================================================ */
-  /* RESPONSIVE: TABLET LANDSCAPE 1024px              */
+  /* RESPONSIVE: 1024px - hide nav, show menu         */
   /* ================================================ */
   @media (max-width: 1279px) {
     .hero__nav {
@@ -468,12 +463,13 @@ const navItems = [
   }
 
   /* ================================================ */
-  /* RESPONSIVE: TABLET PORTRAIT 768px                */
-  /* Оба выреза остаются, вертикальная ориентация     */
+  /* RESPONSIVE: TABLET 768-1023px                    */
   /* ================================================ */
   @media (max-width: 1023px) {
     .hero {
-      --hero-padding: 50px;
+      --hero-padding: 30px;
+      --cta-width: 350px;
+      --cta-height: 75px;
     }
     
     .hero__title {
@@ -481,28 +477,12 @@ const navItems = [
     }
     
     .hero__right-block {
-      width: 260px;
-    }
-    
-    .hero__description p {
-      font-size: 16px;
-    }
-    
-    /* Tablet portrait mask - both cutouts, taller aspect ratio */
-    .hero__image-mask {
-      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 668 924' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H414 C432 0 446 14 446 32 C446 50 460 64 478 64 L636 64 C654 64 668 78 668 96 L668 892 C668 910 654 924 636 924 L439 924 C421 924 407 910 407 892 L407 861 C407 843 393 829 375 829 L32 829 C14 829 0 815 0 797 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
-      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 668 924' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 H414 C432 0 446 14 446 32 C446 50 460 64 478 64 L636 64 C654 64 668 78 668 96 L668 892 C668 910 654 924 636 924 L439 924 C421 924 407 910 407 892 L407 861 C407 843 393 829 375 829 L32 829 C14 829 0 815 0 797 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
-    }
-    
-    /* Right block moves lower */
-    .hero__right-block {
       top: auto;
-      bottom: calc(var(--hero-padding) + 130px);
-      transform: none;
-      flex-direction: row;
+      bottom: calc(var(--cta-height) + var(--btn-gap) * 2 + 20px);
+      left: var(--hero-padding);
+      right: var(--hero-padding);
       width: auto;
-      left: calc(var(--hero-padding) + 16px);
-      right: calc(var(--hero-padding) + 16px);
+      flex-direction: row;
     }
     
     .hero__description,
@@ -515,59 +495,35 @@ const navItems = [
       justify-content: space-between;
       align-items: center;
     }
+    
+    .hero__description p {
+      font-size: 16px;
+    }
+    
+    .hero__btn-text {
+      font-size: 24px;
+    }
   }
 
   /* ================================================ */
-  /* RESPONSIVE: MOBILE 480px                         */
-  /* Только нижний вырез, feedback скрыт              */
+  /* RESPONSIVE: MOBILE 480-767px                     */
   /* ================================================ */
   @media (max-width: 767px) {
     .hero {
-      --hero-padding: 18px;
+      --hero-padding: 20px;
+      --cta-width: calc(100% - 40px);
+      --cta-height: 75px;
+      --feedback-width: 180px;
+      --feedback-height: 45px;
       min-height: auto;
-      padding: var(--hero-padding);
-      padding-bottom: calc(var(--hero-padding) + var(--cta-height) + 20px);
+      padding-bottom: calc(var(--hero-padding) + var(--cta-height) + 30px);
     }
     
     .hero__image-wrap {
-      position: relative;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: auto;
       height: auto;
-      aspect-ratio: 444 / 827;
+      min-height: 500px;
+      aspect-ratio: 9 / 16;
       max-height: 70vh;
-    }
-    
-    /* Mobile mask - only CTA cutout at bottom */
-    .hero__image-mask {
-      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 444 827' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 L412 0 C430 0 444 14 444 32 L444 795 C444 813 430 827 412 827 L32 827 C14 827 0 813 0 795 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
-      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 444 827' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M32 0 L412 0 C430 0 444 14 444 32 L444 795 C444 813 430 827 412 827 L32 827 C14 827 0 813 0 795 L0 32 C0 14 14 0 32 0 Z'/%3E%3C/svg%3E");
-    }
-    
-    /* Hide desktop CTA, show mobile CTA */
-    .hero__cta-btn:not(.hero__cta-btn--mobile) {
-      display: none;
-    }
-    
-    .hero__cta-btn--mobile {
-      display: flex;
-      position: absolute;
-      bottom: var(--hero-padding);
-      left: var(--hero-padding);
-      right: var(--hero-padding);
-      width: auto;
-    }
-    
-    .hero__feedback-btn {
-      display: none;
-    }
-    
-    .hero__title-block {
-      position: absolute;
-      top: calc(var(--hero-padding) + 50px + 30px);
-      left: calc(var(--hero-padding) + 20px);
     }
     
     .hero__title {
@@ -578,46 +534,65 @@ const navItems = [
       height: 36px;
     }
     
-    .hero__right-block {
+    .hero__title-block {
+      top: 80px;
+      left: 20px;
+    }
+    
+    /* На мобильных CTA выходит за пределы image-wrap */
+    .hero__cutout--bottom-left {
+      display: none;
+    }
+    
+    .hero__cta-btn {
       position: absolute;
-      top: auto;
-      bottom: 120px;
-      left: calc(var(--hero-padding) + 16px);
-      right: calc(var(--hero-padding) + 16px);
-      transform: none;
-      flex-direction: column;
+      bottom: var(--hero-padding);
+      left: var(--hero-padding);
+      right: var(--hero-padding);
       width: auto;
     }
     
-    .hero__description p {
-      font-size: 16px;
+    /* Перемещаем CTA из image-wrap в hero */
+    .hero__image-wrap .hero__cta-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      z-index: 100;
+    }
+    
+    .hero__right-block {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      top: auto;
+      flex-direction: column;
     }
     
     .hero__menu-btn {
-      top: calc(var(--hero-padding) + 50px + 16px);
+      top: var(--btn-gap);
       bottom: auto;
-      right: calc(var(--hero-padding) + 16px);
+      right: var(--btn-gap);
+    }
+    
+    .hero__btn-text {
+      font-size: 22px;
     }
   }
 
   /* ================================================ */
-  /* RESPONSIVE: MOBILE SMALL 375px                   */
-  /* Без вырезов, CTA полностью снаружи               */
+  /* RESPONSIVE: MOBILE SMALL <480px                  */
   /* ================================================ */
   @media (max-width: 479px) {
     .hero {
       --hero-padding: 18px;
+      --feedback-width: 0px;
+      --feedback-height: 0px;
     }
     
     .hero__image-wrap {
-      aspect-ratio: 339 / 695;
-    }
-    
-    /* No mask - simple border-radius */
-    .hero__image-mask {
-      mask-image: none;
-      -webkit-mask-image: none;
-      border-radius: var(--radius);
+      min-height: 400px;
     }
     
     .hero__title {
@@ -625,20 +600,31 @@ const navItems = [
     }
     
     .hero__title-block {
-      top: calc(var(--hero-padding) + 50px + 20px);
+      top: 60px;
+      left: 16px;
     }
     
-    .hero__btn-text {
-      font-size: 24px;
+    .hero__logo-img {
+      height: 30px;
     }
     
-    .hero__right-block {
-      bottom: 20px;
+    /* Скрываем feedback на маленьких экранах */
+    .hero__cutout--top-right,
+    .hero__feedback-btn {
+      display: none;
     }
     
     .hero__description,
     .hero__learn-btn {
       padding: 16px;
+    }
+    
+    .hero__description p {
+      font-size: 14px;
+    }
+    
+    .hero__btn-text {
+      font-size: 20px;
     }
   }
 </style>

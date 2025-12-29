@@ -173,7 +173,7 @@ const navItems = [
     border-bottom-left-radius: var(--radius);
   }
 
-  /* Inner corner - bottom edge (curve pointing up-right) */
+  /* Inner corner - bottom edge (180° rotation) */
   .hero__cutout--top-right::before {
     content: '';
     position: absolute;
@@ -181,10 +181,10 @@ const navItems = [
     right: 0;
     width: var(--radius);
     height: var(--radius);
-    background: radial-gradient(circle at 100% 0%, transparent var(--radius), var(--bg-color) var(--radius));
+    background: radial-gradient(circle at 0% 100%, transparent var(--radius), var(--bg-color) var(--radius));
   }
 
-  /* Inner corner - left edge (curve pointing down-right) */
+  /* Inner corner - left edge (90° rotation) */
   .hero__cutout--top-right::after {
     content: '';
     position: absolute;
@@ -192,7 +192,7 @@ const navItems = [
     left: calc(-1 * var(--radius));
     width: var(--radius);
     height: var(--radius);
-    background: radial-gradient(circle at 100% 100%, transparent var(--radius), var(--bg-color) var(--radius));
+    background: radial-gradient(circle at 0% 100%, transparent var(--radius), var(--bg-color) var(--radius));
   }
 
   /* Bottom-left cutout for CTA button */
@@ -204,7 +204,7 @@ const navItems = [
     border-top-right-radius: var(--radius);
   }
 
-  /* Inner corner - top edge (curve pointing down-left) */
+  /* Inner corner - top edge (180° rotation) */
   .hero__cutout--bottom-left::before {
     content: '';
     position: absolute;
@@ -212,10 +212,10 @@ const navItems = [
     left: 0;
     width: var(--radius);
     height: var(--radius);
-    background: radial-gradient(circle at 0% 100%, transparent var(--radius), var(--bg-color) var(--radius));
+    background: radial-gradient(circle at 100% 0%, transparent var(--radius), var(--bg-color) var(--radius));
   }
 
-  /* Inner corner - right edge (curve pointing up-left) */
+  /* Inner corner - right edge (90° rotation) */
   .hero__cutout--bottom-left::after {
     content: '';
     position: absolute;
@@ -223,7 +223,7 @@ const navItems = [
     right: calc(-1 * var(--radius));
     width: var(--radius);
     height: var(--radius);
-    background: radial-gradient(circle at 0% 0%, transparent var(--radius), var(--bg-color) var(--radius));
+    background: radial-gradient(circle at 100% 0%, transparent var(--radius), var(--bg-color) var(--radius));
   }
 
   /* ================================================ */

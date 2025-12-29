@@ -324,7 +324,7 @@ const navItems = [
   .hero__right-block {
     position: absolute;
     top: calc(var(--hero-padding) + 200px);
-    right: var(--hero-padding);
+    right: calc(var(--hero-padding) + 24px);
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -430,8 +430,8 @@ const navItems = [
   /* ================================================ */
   .hero__nav {
     position: absolute;
-    bottom: var(--btn-gap);
-    right: calc(var(--feedback-width) + var(--btn-gap) * 3 + 20px);
+    bottom: 24px;
+    right: 24px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -515,6 +515,7 @@ const navItems = [
       --hero-padding: 30px;
       --cta-width: 350px;
       --cta-height: 75px;
+      padding-bottom: calc(var(--hero-padding) + 60px);
     }
     
     .hero__title {
@@ -523,7 +524,7 @@ const navItems = [
     
     .hero__right-block {
       top: auto;
-      bottom: calc(var(--cta-height) + var(--btn-gap) * 2 + 20px);
+      bottom: calc(var(--cta-height) + var(--btn-gap) * 2 + 80px);
       left: var(--hero-padding);
       right: var(--hero-padding);
       width: auto;
@@ -561,7 +562,7 @@ const navItems = [
       --feedback-width: 180px;
       --feedback-height: 45px;
       min-height: auto;
-      padding-bottom: calc(var(--hero-padding) + var(--cta-height) + 30px);
+      padding-bottom: calc(var(--hero-padding) + var(--cta-height) + 40px);
     }
     
     .hero__image-wrap {
@@ -595,6 +596,28 @@ const navItems = [
       left: var(--hero-padding);
       right: var(--hero-padding);
       width: auto;
+      /* Liquid glass style for mobile */
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.2) 100%
+      );
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    
+    .hero__cta-btn .hero__btn-text--dark {
+      color: white;
+    }
+    
+    .hero__cta-btn .hero__btn-icon--dark {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
     }
     
     /* Перемещаем CTA из image-wrap в hero */
@@ -608,7 +631,7 @@ const navItems = [
     
     .hero__right-block {
       position: absolute;
-      bottom: 20px;
+      bottom: 100px;
       left: 20px;
       right: 20px;
       top: auto;
@@ -657,6 +680,10 @@ const navItems = [
     .hero__cutout--top-right,
     .hero__feedback-btn {
       display: none;
+    }
+    
+    .hero__right-block {
+      bottom: 80px;
     }
     
     .hero__description,

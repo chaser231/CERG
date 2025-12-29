@@ -825,7 +825,8 @@ const navItems = [
       
       // Close menu when clicking outside
       document.addEventListener('click', (e) => {
-        if (!menuToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+        const target = e.target as Node;
+        if (!menuToggle.contains(target) && !mobileMenu.contains(target)) {
           menuToggle.classList.remove('active');
           mobileMenu.classList.remove('active');
         }

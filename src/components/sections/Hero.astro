@@ -156,6 +156,7 @@ const navItems = [
   /* ================================================ */
   /* CUTOUT OVERLAYS - создают эффект вырезов         */
   /* Фиксированные размеры, позиционированы от углов  */
+  /* Псевдо-элементы создают внутренние скругления    */
   /* ================================================ */
   .hero__cutout {
     position: absolute;
@@ -172,6 +173,28 @@ const navItems = [
     border-bottom-left-radius: var(--radius);
   }
 
+  /* Inner corner - bottom edge */
+  .hero__cutout--top-right::before {
+    content: '';
+    position: absolute;
+    bottom: calc(-1 * var(--radius));
+    right: 0;
+    width: var(--radius);
+    height: var(--radius);
+    background: radial-gradient(circle at 0% 0%, transparent var(--radius), var(--bg-color) var(--radius));
+  }
+
+  /* Inner corner - left edge */
+  .hero__cutout--top-right::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: calc(-1 * var(--radius));
+    width: var(--radius);
+    height: var(--radius);
+    background: radial-gradient(circle at 0% 0%, transparent var(--radius), var(--bg-color) var(--radius));
+  }
+
   /* Bottom-left cutout for CTA button */
   .hero__cutout--bottom-left {
     bottom: 0;
@@ -179,6 +202,28 @@ const navItems = [
     width: calc(var(--cta-width) + var(--btn-gap) * 2);
     height: calc(var(--cta-height) + var(--btn-gap) * 2);
     border-top-right-radius: var(--radius);
+  }
+
+  /* Inner corner - top edge */
+  .hero__cutout--bottom-left::before {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--radius));
+    left: 0;
+    width: var(--radius);
+    height: var(--radius);
+    background: radial-gradient(circle at 100% 100%, transparent var(--radius), var(--bg-color) var(--radius));
+  }
+
+  /* Inner corner - right edge */
+  .hero__cutout--bottom-left::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: calc(-1 * var(--radius));
+    width: var(--radius);
+    height: var(--radius);
+    background: radial-gradient(circle at 100% 100%, transparent var(--radius), var(--bg-color) var(--radius));
   }
 
   /* ================================================ */

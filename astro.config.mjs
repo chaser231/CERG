@@ -6,6 +6,8 @@ import preact from '@astrojs/preact';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://chaser231.github.io',
+  base: '/CERG',
   vite: {
     plugins: [tailwindcss()]
   },

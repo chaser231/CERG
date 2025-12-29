@@ -4,6 +4,8 @@
  * Ответы на частые вопросы с аккордеоном
  */
 
+const base = import.meta.env.BASE_URL;
+
 const questions = [
   {
     question: 'Как будет проходить сеанс?',
@@ -39,7 +41,7 @@ const questions = [
 <section class="faq" id="faq">
   <!-- Decorative Image - 3D логотип -->
   <img 
-    src="/images/faq/image 39.webp" 
+    src={`${base}images/faq/image 39.webp`} 
     alt="" 
     class="faq__image"
     loading="lazy"

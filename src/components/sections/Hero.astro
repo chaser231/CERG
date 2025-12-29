@@ -70,14 +70,27 @@ const navItems = [
     </nav>
     
     <!-- Menu Button (tablet/mobile) -->
-    <button class="hero__menu-btn" type="button" aria-label="Открыть меню">
-      <span>Меню</span>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <button class="hero__menu-btn" type="button" aria-label="Открыть меню" id="menuToggle">
+      <span class="hero__menu-btn-text">Меню</span>
+      <svg class="hero__menu-icon hero__menu-icon--burger" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="4" y1="8" x2="20" y2="8" />
         <line x1="4" y1="13" x2="20" y2="13" />
         <line x1="4" y1="18" x2="20" y2="18" />
       </svg>
+      <svg class="hero__menu-icon hero__menu-icon--close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="6" y1="18" x2="18" y2="6" />
+      </svg>
     </button>
+    
+    <!-- Mobile Menu Dropdown -->
+    <nav class="hero__mobile-menu" id="mobileMenu">
+      <div class="hero__mobile-menu-content">
+        {navItems.map((item) => (
+          <a href={item.href} class="hero__mobile-menu-link">{item.label}</a>
+        ))}
+      </div>
+    </nav>
   </div>
 
   <!-- Right side container: Description + Learn More -->
@@ -474,7 +487,89 @@ const navItems = [
     cursor: pointer;
     align-items: center;
     gap: 10px;
-    z-index: 2;
+    z-index: 10;
+    transition: all 0.2s ease;
+  }
+
+  .hero__menu-btn:hover {
+    background: #f5f5f5;
+  }
+
+  .hero__menu-icon--close {
+    display: none;
+  }
+
+  .hero__menu-btn.active .hero__menu-icon--burger {
+    display: none;
+  }
+
+  .hero__menu-btn.active .hero__menu-icon--close {
+    display: block;
+  }
+
+  .hero__menu-btn.active .hero__menu-btn-text::after {
+    content: 'Закрыть';
+  }
+
+  .hero__menu-btn.active .hero__menu-btn-text {
+    font-size: 0;
+  }
+
+  .hero__menu-btn.active .hero__menu-btn-text::after {
+    font-size: 16px;
+  }
+
+  /* ================================================ */
+  /* MOBILE MENU DROPDOWN                             */
+  /* ================================================ */
+  .hero__mobile-menu {
+    position: absolute;
+    bottom: calc(var(--btn-gap) + 50px);
+    right: var(--btn-gap);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.9) 100%
+    );
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 12px;
+    z-index: 9;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  }
+
+  .hero__mobile-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .hero__mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .hero__mobile-menu-link {
+    display: block;
+    padding: 12px 20px;
+    color: #2A2624;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .hero__mobile-menu-link:hover {
+    background: rgba(0, 0, 0, 0.05);
   }
 
   /* ================================================ */
@@ -644,6 +739,11 @@ const navItems = [
       right: var(--btn-gap);
     }
     
+    .hero__mobile-menu {
+      top: calc(var(--btn-gap) + 50px);
+      bottom: auto;
+    }
+    
     .hero__btn-text {
       font-size: 22px;
     }
@@ -700,3 +800,36 @@ const navItems = [
     }
   }
 </style>
+
+<script>
+  // Mobile menu toggle functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    if (menuToggle && mobileMenu) {
+      // Toggle menu on button click
+      menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+      });
+      
+      // Close menu when clicking on a link
+      const menuLinks = mobileMenu.querySelectorAll('.hero__mobile-menu-link');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          menuToggle.classList.remove('active');
+          mobileMenu.classList.remove('active');
+        });
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!menuToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+          menuToggle.classList.remove('active');
+          mobileMenu.classList.remove('active');
+        }
+      });
+    }
+  });
+</script>

@@ -239,25 +239,31 @@
 
 ---
 
-## Фаза 5: Content Collections (2 часа)
+## Фаза 5: Content Collections (2 часа) ✅
 
-### 5.1 Настройка коллекций
-- [ ] Создать `src/content/config.ts`
-- [ ] Определить схемы:
-  - services
-  - courses
-  - experts
-  - reviews
-  - faq
-- [ ] Коммит: `feat: setup content collections`
+### 5.1 Настройка коллекций ✅
+- [x] Создать `src/content/config.ts`
+- [x] Определить схемы:
+  - services (услуги)
+  - courses (курсы)
+  - experts (эксперты)
+  - reviews (отзывы)
+  - faq (вопросы-ответы)
+  - directions (направления)
+  - settings (настройки сайта)
+- [x] Коммит: `feat: setup content collections`
 
-### 5.2 Наполнение контентом
-- [ ] Создать markdown/yaml файлы для каждой коллекции
-- [ ] Перенести данные из Figma
-- [ ] Коммит: `content: add initial content`
+### 5.2 Наполнение контентом ✅
+- [x] 4 услуги
+- [x] 5 курсов
+- [x] 7 отзывов (4 клиента + 3 ученика)
+- [x] 3 эксперта
+- [x] 7 FAQ
+- [x] Настройки сайта
+- [x] Коммит: `content: add initial content`
 
 ### 5.3 Интеграция с компонентами
-- [ ] Подключить `getCollection()` в секциях
+- [ ] Подключить `getCollection()` в секциях (опционально, для CMS)
 - [ ] Динамический рендеринг контента
 - [ ] Коммит: `feat: integrate content collections`
 

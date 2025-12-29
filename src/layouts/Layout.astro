@@ -51,22 +51,25 @@ const fullTitle = `${title} | ${siteName}`
     <!-- Netlify Identity Widget (для CMS авторизации) -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
-      if (window.netlifyIdentity) {
-        // Обработка токенов подтверждения/приглашения из URL
-        const hash = window.location.hash;
-        if (hash.includes('invite_token') || hash.includes('confirmation_token') || hash.includes('recovery_token')) {
-          // Открываем виджет для обработки токена
-          window.netlifyIdentity.open();
+      // Ждём загрузки виджета
+      document.addEventListener('DOMContentLoaded', function() {
+        if (window.netlifyIdentity) {
+          window.netlifyIdentity.on('init', function(user) {
+            // Проверяем токены в URL
+            const hash = window.location.hash;
+            if (hash && (hash.includes('invite_token') || hash.includes('confirmation_token') || hash.includes('recovery_token') || hash.includes('access_token'))) {
+              // Открываем виджет для обработки токена
+              window.netlifyIdentity.open();
+            }
+            
+            if (!user) {
+              window.netlifyIdentity.on('login', function() {
+                document.location.href = '/admin/';
+              });
+            }
+          });
         }
-        
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
+      });
     </script>
   </body>
 </html>

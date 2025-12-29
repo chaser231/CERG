@@ -283,21 +283,20 @@
 
 ---
 
-## Фаза 7: CRM и уведомления (2 часа)
+## Фаза 7: Обработка заявок (2 часа) 🟡 Подготовлено
 
-### 7.1 Formspree / Web3Forms
-- [ ] Создать аккаунт
-- [ ] Получить endpoint
-- [ ] Интегрировать в форму
-- [ ] Коммит: `feat: integrate form service`
-
-### 7.2 Telegram-уведомления (опционально)
+### 7.1 Yandex Cloud Function + Telegram ✅ Код готов
+- [x] Создан код Cloud Function (`cloud-function/index.js`)
+- [x] Инструкция по настройке (`cloud-function/README.md`)
+- [x] Форма поддерживает Yandex Cloud endpoint
 - [ ] Создать Telegram-бота через @BotFather
-- [ ] Webhook через Formspree / Zapier
-- [ ] Коммит: `feat: add Telegram notifications`
+- [ ] Развернуть функцию в Yandex Cloud
+- [ ] Настроить API Gateway
+- [ ] Обновить endpoint в форме
+- [ ] Коммит: `feat: deploy Yandex Cloud Function`
 
-### 7.3 CRM-интеграция (опционально)
-- [ ] Webhook в AmoCRM / Bitrix24
+### 7.2 CRM-интеграция (опционально)
+- [ ] Webhook в AmoCRM / Bitrix24 (если нужно)
 - [ ] Маппинг полей
 - [ ] Коммит: `feat: add CRM integration`
 

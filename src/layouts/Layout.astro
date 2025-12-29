@@ -52,6 +52,13 @@ const fullTitle = `${title} | ${siteName}`
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
       if (window.netlifyIdentity) {
+        // Обработка токенов подтверждения/приглашения из URL
+        const hash = window.location.hash;
+        if (hash.includes('invite_token') || hash.includes('confirmation_token') || hash.includes('recovery_token')) {
+          // Открываем виджет для обработки токена
+          window.netlifyIdentity.open();
+        }
+        
         window.netlifyIdentity.on("init", user => {
           if (!user) {
             window.netlifyIdentity.on("login", () => {

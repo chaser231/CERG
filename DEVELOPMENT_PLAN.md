@@ -269,23 +269,27 @@
 
 ---
 
-## Фаза 6: Decap CMS (2 часа)
+## Фаза 6: Decap CMS (2 часа) ✅
 
-### 6.1 Установка
-- [ ] Создать `public/admin/index.html`
-- [ ] Создать `public/admin/config.yml`
-- [ ] Коммит: `feat: add Decap CMS`
+### 6.1 Установка ✅
+- [x] Создать `public/admin/index.html`
+- [x] Создать `public/admin/config.yml`
+- [x] Коммит: `feat: add Decap CMS`
 
-### 6.2 Конфигурация коллекций
-- [ ] Настроить поля для каждой коллекции
-- [ ] Виджеты: image, markdown, list, object
-- [ ] Коммит: `feat: configure CMS collections`
+### 6.2 Конфигурация коллекций ✅
+- [x] Услуги (services) — все поля
+- [x] Курсы (courses) — все поля
+- [x] Отзывы (reviews) — с выбором категории
+- [x] Эксперты (experts) — с бейджами
+- [x] FAQ — вопрос + markdown ответ
+- [x] Настройки сайта — JSON файл
+- [x] Коммит: `feat: configure CMS collections`
 
-### 6.3 GitHub OAuth (для продакшна)
-- [ ] Создать OAuth App в GitHub
-- [ ] Настроить backend (Netlify Identity или свой)
-- [ ] Документировать настройку
-- [ ] Коммит: `feat: setup CMS authentication`
+### 6.3 Netlify Identity ✅
+- [x] Добавлен виджет в Layout
+- [x] Добавлен виджет в admin/index.html
+- [x] Редирект после логина
+- [ ] **ТРЕБУЕТСЯ:** Включить Identity в Netlify Dashboard
 
 ---
 

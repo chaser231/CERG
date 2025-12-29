@@ -1,0 +1,169 @@
+# Decap CMS Configuration
+# Документация: https://decapcms.org/docs/
+
+backend:
+  name: git-gateway
+  branch: main
+
+# Локальный режим для разработки (npm run dev)
+local_backend: true
+
+# Папка для загрузки медиафайлов
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+# Локализация интерфейса
+locale: "ru"
+
+# Коллекции контента
+collections:
+  # ==========================================
+  # УСЛУГИ
+  # ==========================================
+  - name: "services"
+    label: "🛠️ Услуги"
+    label_singular: "Услуга"
+    folder: "src/content/services"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    summary: "{{title}} — {{price}}₽"
+    sortable_fields: ["order", "title", "price"]
+    fields:
+      - { label: "Название", name: "title", widget: "string" }
+      - { label: "Описание", name: "description", widget: "text" }
+      - { label: "Цена (число)", name: "price", widget: "number", value_type: "int", min: 0 }
+      - { label: "Метка цены", name: "priceLabel", widget: "string", default: "₽" }
+      - { label: "Длительность (мин)", name: "duration", widget: "number", value_type: "int", min: 0 }
+      - { label: "Метка длительности", name: "durationLabel", widget: "string", default: "мин" }
+      - { label: "Изображение", name: "image", widget: "image" }
+      - { label: "Порядок", name: "order", widget: "number", value_type: "int", default: 0 }
+      - { label: "Показывать на главной", name: "featured", widget: "boolean", default: true }
+      - { label: "Подробное описание", name: "body", widget: "markdown", required: false }
+
+  # ==========================================
+  # КУРСЫ
+  # ==========================================
+  - name: "courses"
+    label: "📚 Курсы"
+    label_singular: "Курс"
+    folder: "src/content/courses"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    summary: "{{title}} — {{price}}₽"
+    sortable_fields: ["order", "title", "price"]
+    fields:
+      - { label: "Название", name: "title", widget: "string" }
+      - { label: "Подзаголовок", name: "subtitle", widget: "string", required: false }
+      - { label: "Цена (число)", name: "price", widget: "number", value_type: "int", min: 0 }
+      - { label: "Метка цены", name: "priceLabel", widget: "string", default: "₽" }
+      - { label: "Количество занятий", name: "lessonsCount", widget: "number", value_type: "int", min: 1 }
+      - { label: "Количество часов", name: "hoursCount", widget: "number", value_type: "int", min: 1 }
+      - { label: "Описание", name: "description", widget: "text" }
+      - { label: "Порядок", name: "order", widget: "number", value_type: "int", default: 0 }
+      - { label: "Показывать на главной", name: "featured", widget: "boolean", default: true }
+      - { label: "Подробное описание", name: "body", widget: "markdown", required: false }
+
+  # ==========================================
+  # ОТЗЫВЫ
+  # ==========================================
+  - name: "reviews"
+    label: "⭐ Отзывы"
+    label_singular: "Отзыв"
+    folder: "src/content/reviews"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    summary: "{{name}} ({{category}})"
+    sortable_fields: ["order", "name", "category"]
+    fields:
+      - { label: "Имя", name: "name", widget: "string" }
+      - { label: "Роль / Профессия", name: "role", widget: "string" }
+      - { label: "Цитата", name: "quote", widget: "text" }
+      - { label: "Фото", name: "image", widget: "image" }
+      - label: "Категория"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Клиенты", value: "clients" }
+          - { label: "Ученики", value: "students" }
+      - { label: "Порядок", name: "order", widget: "number", value_type: "int", default: 0 }
+
+  # ==========================================
+  # ЭКСПЕРТЫ
+  # ==========================================
+  - name: "experts"
+    label: "👨‍⚕️ Эксперты"
+    label_singular: "Эксперт"
+    folder: "src/content/experts"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    summary: "{{name}}"
+    sortable_fields: ["order", "name"]
+    fields:
+      - { label: "Имя", name: "name", widget: "string" }
+      - { label: "Специализация", name: "specialization", widget: "text" }
+      - { label: "Описание", name: "description", widget: "text" }
+      - { label: "Фото", name: "image", widget: "image" }
+      - label: "Бейджи / Компетенции"
+        name: "badges"
+        widget: "list"
+        required: false
+        field: { label: "Бейдж", name: "badge", widget: "string" }
+      - { label: "Светлый фон (добавить затемнение)", name: "lightBackground", widget: "boolean", default: false }
+      - { label: "Порядок", name: "order", widget: "number", value_type: "int", default: 0 }
+
+  # ==========================================
+  # FAQ
+  # ==========================================
+  - name: "faq"
+    label: "❓ Вопросы и ответы"
+    label_singular: "Вопрос"
+    folder: "src/content/faq"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    summary: "{{question}}"
+    sortable_fields: ["order", "question"]
+    fields:
+      - { label: "Вопрос", name: "question", widget: "string" }
+      - { label: "Порядок", name: "order", widget: "number", value_type: "int", default: 0 }
+      - { label: "Ответ", name: "body", widget: "markdown" }
+
+  # ==========================================
+  # НАСТРОЙКИ САЙТА
+  # ==========================================
+  - name: "settings"
+    label: "⚙️ Настройки"
+    files:
+      - label: "Общие настройки"
+        name: "site"
+        file: "src/content/settings/site.json"
+        fields:
+          - { label: "Название сайта", name: "siteTitle", widget: "string" }
+          - { label: "Описание сайта (SEO)", name: "siteDescription", widget: "text" }
+          - label: "Заголовок Hero (строки)"
+            name: "heroTitle"
+            widget: "list"
+            field: { label: "Строка", name: "line", widget: "string" }
+          - { label: "Описание Hero", name: "heroDescription", widget: "text" }
+          - { label: "Заголовок About", name: "aboutTitle", widget: "string" }
+          - { label: "Описание About", name: "aboutDescription", widget: "text" }
+          - { label: "Email", name: "contactEmail", widget: "string" }
+          - { label: "Телефон", name: "contactPhone", widget: "string" }
+          - { label: "Адрес", name: "contactAddress", widget: "string" }
+          - { label: "VK", name: "socialVk", widget: "string", required: false }
+          - { label: "Telegram", name: "socialTelegram", widget: "string", required: false }
+

@@ -1,41 +1,23 @@
 ---
 /**
  * Services Section
- * 4 карточки услуг с изображениями, описанием, ценой и длительностью
+ * Карточки услуг с изображениями, описанием, ценой и длительностью
+ * Данные загружаются из CMS (src/content/services/)
  */
+import { getCollection } from 'astro:content';
 
-// Сайт в корне домена, base не нужен
-
-const services = [
-  {
-    title: 'Сеанс гипноза',
-    description: 'Включает в себя гипноанализ. Избавление от негативных последствий после травмирующего события. Формирование нового позитивного опыта и моделирование нового поведения и реакции в будущем',
-    duration: '60-120 мин',
-    price: '3000 ₽',
-    image: '/images/services/service-hypnosis.webp',
-  },
-  {
-    title: 'ДПДГ',
-    description: 'Десенсибилизация и переработка движением глаз — активации системы мозга, отвечающей за переработку информации. Вместе со специалистом вы находите ранние интенсивные травмирующие воспоминания, оказывающиеся источником имеющихся проблем',
-    duration: '60-120 мин',
-    price: '3000 ₽',
-    image: '/images/services/service-emdr.webp',
-  },
-  {
-    title: 'Сеанс глубокой регрессии',
-    description: 'Это погружение в прошлый опыт (прошлые жизни). Он помогает выявить кармический долг и определить предназначение на подсознательном уровне. Также во время сеанса можно встретиться с наставником и получить ответы на волнующие вопросы',
-    duration: '2-5 часов',
-    price: null,
-    image: '/images/services/service-regression.webp',
-  },
-  {
-    title: 'Первичная консультация',
-    description: 'Определение целей и задач погружения, выявление гипнабельности и уровня внушаемости клиента, выбор способа погружения индивидуально для него',
-    duration: '60-90 мин',
-    price: 'Бесплатно',
-    image: '/images/services/service-consultation.webp',
-  },
-]
+// Загружаем услуги из CMS, фильтруем featured и сортируем по order
+const servicesCollection = await getCollection('services');
+const services = servicesCollection
+  .filter(s => s.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .map(s => ({
+    title: s.data.title,
+    description: s.data.description,
+    duration: s.data.duration > 0 ? `${s.data.duration} ${s.data.durationLabel}` : null,
+    price: s.data.price > 0 ? `${s.data.price} ${s.data.priceLabel}` : 'Бесплатно',
+    image: s.data.image,
+  }));
 ---
 
 <section class="services" id="services">

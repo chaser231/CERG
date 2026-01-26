@@ -2,111 +2,33 @@
 /**
  * Reviews Section
  * Отзывы клиентов и учеников с табами и слайдером
+ * Данные загружаются из CMS (src/content/reviews/)
  */
+import { getCollection } from 'astro:content';
 
-// Сайт в корне домена, base не нужен
+// Загружаем отзывы из CMS
+const reviewsCollection = await getCollection('reviews');
 
-const clientReviews = [
-  {
-    name: 'Мария А.',
-    role: 'Психотерапевт',
-    text: 'После курса я стала спокойнее и увереннее. Осознала многие причины своих тревог. Спасибо команде ЦЕРГ',
-    image: '/images/reviews/review-1.webp',
-  },
-  {
-    name: 'Марина А.',
-    role: 'Студентка',
-    text: 'Обучение помогло внедрить гипноз в мою психотерапевтическую практику. Качественный материал и поддержка!',
-    image: '/images/reviews/review-2.webp',
-  },
-  {
-    name: 'Сергей Л.',
-    role: 'Психотерапевт',
-    text: 'Обучение помогло внедрить гипноз в мою психотерапевтическую практику. Качественный материал и поддержка!',
-    image: '/images/reviews/review-3.webp',
-  },
-  {
-    name: 'Елена В.',
-    role: 'Коуч',
-    text: 'Гипнотерапия помогла мне справиться с паническими атаками. Уже после третьего сеанса почувствовала значительное улучшение.',
-    image: '/images/reviews/review-1.webp',
-  },
-  {
-    name: 'Андрей М.',
-    role: 'Предприниматель',
-    text: 'Пришёл с проблемой бессонницы. Сейчас сплю как младенец! Очень благодарен специалистам центра.',
-    image: '/images/reviews/review-3.webp',
-  },
-  {
-    name: 'Ольга К.',
-    role: 'Врач-невролог',
-    text: 'Регрессивный гипноз помог найти корень моей фобии. Теперь летаю на самолётах без страха!',
-    image: '/images/reviews/review-2.webp',
-  },
-  {
-    name: 'Игорь С.',
-    role: 'IT-специалист',
-    text: 'Избавился от курения за 2 сеанса. Не курю уже полгода и не тянет совсем. Рекомендую!',
-    image: '/images/reviews/review-1.webp',
-  },
-  {
-    name: 'Наталья Р.',
-    role: 'Домохозяйка',
-    text: 'Работа с подсознанием дала мне понимание себя. Отношения в семье стали гармоничнее.',
-    image: '/images/reviews/review-2.webp',
-  },
-]
+// Разделяем на клиентов и учеников
+const clientReviews = reviewsCollection
+  .filter(r => r.data.category === 'clients')
+  .sort((a, b) => a.data.order - b.data.order)
+  .map(r => ({
+    name: r.data.name,
+    role: r.data.role,
+    text: r.data.quote,
+    image: r.data.image,
+  }));
 
-const studentReviews = [
-  {
-    name: 'Анна К.',
-    role: 'Выпускница курса',
-    text: 'Курс превзошёл все мои ожидания! Теперь я уверенно применяю техники гипноза в своей практике.',
-    image: '/images/reviews/review-2.webp',
-  },
-  {
-    name: 'Дмитрий В.',
-    role: 'Выпускник',
-    text: 'Благодаря обучению в ЦЕРГ я получил новую профессию и начал помогать людям.',
-    image: '/images/reviews/review-1.webp',
-  },
-  {
-    name: 'Светлана П.',
-    role: 'Психолог',
-    text: 'Прошла курс регрессивного гипноза. Теперь это основной инструмент в моей работе с клиентами.',
-    image: '/images/reviews/review-3.webp',
-  },
-  {
-    name: 'Максим Т.',
-    role: 'Начинающий гипнолог',
-    text: 'Структурированная программа и отличные преподаватели. Получил все необходимые навыки для старта.',
-    image: '/images/reviews/review-1.webp',
-  },
-  {
-    name: 'Ирина Б.',
-    role: 'Психотерапевт',
-    text: 'Курс по ДПДГ открыл новые возможности в терапии травм. Клиенты отмечают быстрые результаты.',
-    image: '/images/reviews/review-2.webp',
-  },
-  {
-    name: 'Алексей Н.',
-    role: 'Коуч',
-    text: 'Разговорный гипноз — мощный инструмент! Теперь мои консультации стали эффективнее в разы.',
-    image: '/images/reviews/review-3.webp',
-  },
-  {
-    name: 'Виктория Л.',
-    role: 'Выпускница',
-    text: 'Обучение самогипнозу изменило мою жизнь. Научилась управлять стрессом и эмоциями.',
-    image: '/images/reviews/review-1.webp',
-  },
-  {
-    name: 'Роман Д.',
-    role: 'Врач',
-    text: 'Сертификат ЦЕРГ признаётся в профессиональном сообществе. Горжусь своим обучением!',
-    image: '/images/reviews/review-2.webp',
-  },
-]
+const studentReviews = reviewsCollection
+  .filter(r => r.data.category === 'students')
+  .sort((a, b) => a.data.order - b.data.order)
+  .map(r => ({
+    name: r.data.name,
+    role: r.data.role,
+    text: r.data.quote,
+    image: r.data.image,
+  }));
 ---
 
 <section class="reviews" id="reviews">

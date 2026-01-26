@@ -5,7 +5,8 @@
 2. [VPS в РФ](#2-vps-в-рф)
 3. [Настройка домена](#3-настройка-домена)
 4. [Яндекс.Метрика](#4-яндексметрика)
-5. [Чеклист перед запуском](#5-чеклист-перед-запуском)
+5. [CMS (админка)](#5-cms-админка)
+6. [Чеклист перед запуском](#6-чеклист-перед-запуском)
 
 ---
 
@@ -272,7 +273,118 @@ if (typeof ym !== 'undefined') {
 
 ---
 
-## 5. Чеклист перед запуском
+## 5. CMS (админка)
+
+Админка доступна по адресу `https://cerh.pro/admin/` и позволяет редактировать контент сайта через удобный интерфейс.
+
+### 5.1 Создание GitHub OAuth App
+
+1. Войдите в GitHub под аккаунтом, который имеет доступ к репозиторию
+2. Перейдите: **Settings → Developer settings → OAuth Apps → New OAuth App**
+3. Заполните:
+   - **Application name:** `ЦЕРГ CMS`
+   - **Homepage URL:** `https://cerh.pro`
+   - **Authorization callback URL:** `https://cerh.pro/oauth/callback`
+4. Нажмите **Register application**
+5. **Сохраните Client ID** (виден сразу)
+6. Нажмите **Generate a new client secret** и **сохраните Client Secret** (показывается только один раз!)
+
+### 5.2 Развёртывание OAuth сервера на VPS
+
+```bash
+# 1. Подключитесь к VPS
+ssh deploy@YOUR_VPS_IP
+
+# 2. Установите Node.js (если не установлен)
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs
+
+# 3. Создайте директорию для OAuth сервера
+sudo mkdir -p /var/www/cerg-oauth
+sudo chown deploy:deploy /var/www/cerg-oauth
+
+# 4. Скопируйте файлы из oauth-server/
+# (можно через scp или git clone)
+cd /var/www/cerg-oauth
+# Разместите здесь index.js и package.json из папки oauth-server/
+```
+
+### 5.3 Создание systemd сервиса
+
+Создайте файл `/etc/systemd/system/cerg-oauth.service`:
+
+```ini
+[Unit]
+Description=CERG OAuth Server for Decap CMS
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+WorkingDirectory=/var/www/cerg-oauth
+ExecStart=/usr/bin/node index.js
+Restart=on-failure
+RestartSec=10
+
+# Переменные окружения (замените на реальные значения!)
+Environment=GITHUB_CLIENT_ID=ваш_client_id
+Environment=GITHUB_CLIENT_SECRET=ваш_client_secret
+Environment=ORIGIN=https://cerh.pro
+Environment=PORT=3000
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+# Активируйте и запустите сервис
+sudo systemctl daemon-reload
+sudo systemctl enable cerg-oauth
+sudo systemctl start cerg-oauth
+
+# Проверьте статус
+sudo systemctl status cerg-oauth
+```
+
+### 5.4 Настройка Nginx proxy
+
+Добавьте в `/etc/nginx/sites-available/cerg` внутри блока `server`:
+
+```nginx
+# OAuth proxy для CMS
+location /oauth/ {
+    proxy_pass http://127.0.0.1:3000/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+```bash
+# Проверьте конфиг и перезагрузите
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+### 5.5 Проверка работы
+
+1. Откройте `https://cerh.pro/admin/`
+2. Нажмите **Войти через GitHub**
+3. Авторизуйтесь в GitHub
+4. После успешного входа вы увидите панель управления контентом
+
+### 5.6 Кто может редактировать контент?
+
+Доступ к CMS имеют пользователи GitHub, у которых есть права на запись в репозиторий `chaser231/CERG`. Чтобы добавить нового редактора:
+
+1. Перейдите в репозиторий на GitHub
+2. **Settings → Collaborators → Add people**
+3. Добавьте GitHub-аккаунт редактора
+
+---
+
+## 6. Чеклист перед запуском
 
 ### Функционал
 - [ ] Все секции отображаются корректно
@@ -299,6 +411,13 @@ if (typeof ym !== 'undefined') {
 ### Безопасность
 - [ ] SSL-сертификат установлен (https://)
 - [ ] /admin/ защищён авторизацией
+
+### CMS (админка)
+- [ ] GitHub OAuth App создан
+- [ ] OAuth сервер запущен на VPS (systemctl status cerg-oauth)
+- [ ] Nginx proxy настроен для /oauth/
+- [ ] Вход через GitHub работает
+- [ ] Можно редактировать и сохранять контент
 
 ---
 

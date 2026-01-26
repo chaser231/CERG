@@ -81,7 +81,7 @@ yc serverless function version create \
   --source-path function.zip \
   --environment TELEGRAM_BOT_TOKEN=<YOUR_BOT_TOKEN> \
   --environment TELEGRAM_CHAT_ID=<YOUR_CHAT_ID> \
-  --environment ALLOWED_ORIGIN=https://your-site.netlify.app
+  --environment ALLOWED_ORIGIN=https://cerh.pro
 ```
 
 #### 3.3 Создание API Gateway (для HTTPS-доступа)

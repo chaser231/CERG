@@ -59,7 +59,7 @@ yc serverless function version create \
   --source-path function.zip \
   --environment TELEGRAM_BOT_TOKEN=<ТОКЕН_БОТА> \
   --environment TELEGRAM_CHAT_ID=<CHAT_ID> \
-  --environment ALLOWED_ORIGIN=https://cerg.ru
+  --environment ALLOWED_ORIGIN=https://cerh.pro
 
 # 5. Создайте API Gateway (см. cloud-function/README.md)
 ```
@@ -123,7 +123,7 @@ sudo chown deploy:deploy /var/www/cerg
 ```nginx
 server {
     listen 80;
-    server_name cerg.ru www.cerg.ru;
+    server_name cerh.pro www.cerh.pro;
     root /var/www/cerg;
     index index.html;
 
@@ -163,7 +163,7 @@ sudo systemctl reload nginx
 sudo apt install certbot python3-certbot-nginx -y
 
 # Получите сертификат
-sudo certbot --nginx -d cerg.ru -d www.cerg.ru
+sudo certbot --nginx -d cerh.pro -d www.cerh.pro
 
 # Автоматическое обновление (добавится автоматически)
 sudo certbot renew --dry-run
@@ -191,36 +191,32 @@ cat deploy_key.pub >> ~/.ssh/authorized_keys
 
 ---
 
-## 3. Настройка домена
+## 3. Настройка домена cerh.pro
 
 ### 3.1 Регистрация домена
 
-Рекомендуемые регистраторы для .ru:
-- REG.RU
-- Beget
-- Timeweb
+**Выбранный регистратор:** NIC.ru
 
-### 3.2 DNS-записи
+**При покупке выбирайте минимум:**
+- ❌ Хостинг — не нужен
+- ❌ SSL — не нужен (бесплатный Certbot)
+- ❌ Конструктор сайтов — не нужен
+- ✅ **Только домен**
 
-Добавьте следующие записи:
+### 3.2 DNS-записи в NIC.ru
 
-| Тип | Имя | Значение | TTL |
-|-----|-----|----------|-----|
-| A | @ | IP_VPS | 3600 |
-| A | www | IP_VPS | 3600 |
-| CNAME | www | cerg.ru | 3600 |
+В панели управления NIC.ru → **DNS** → добавьте:
 
-### 3.3 Обновление конфига Astro
+| Тип | Хост | Значение | TTL |
+|-----|------|----------|-----|
+| A | @ | IP_ВАШЕГО_VPS | 3600 |
+| A | www | IP_ВАШЕГО_VPS | 3600 |
 
-Перед деплоем замените `astro.config.mjs` на `astro.config.production.mjs`:
+### 3.3 Конфиг Astro
 
-```bash
-cp astro.config.production.mjs astro.config.mjs
-```
-
-Убедитесь, что `site` указывает на ваш домен:
+Конфиг уже настроен на `cerh.pro`:
 ```javascript
-site: 'https://cerg.ru',
+site: 'https://cerh.pro',
 ```
 
 ---

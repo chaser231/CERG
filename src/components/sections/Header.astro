@@ -4,7 +4,7 @@
  * Скрыт в Hero-секции, появляется при скролле до второго блока
  */
 
-const base = import.meta.env.BASE_URL;
+// Сайт в корне домена, base не нужен
 
 const menuItems = [
   { label: 'О центре', href: '#about' },
@@ -23,7 +23,7 @@ const menuItems = [
     <!-- Logo -->
     <a href="/" class="header__logo">
       <img 
-        src={`${base}/images/logo.png`} 
+        src="/images/logo.png" 
         alt="ЦЕРГ — Центр регрессивного гипноза" 
         width="182" 
         height="49"

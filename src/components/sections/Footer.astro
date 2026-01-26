@@ -4,7 +4,7 @@
  * Подвал с контактами, навигацией и юридической информацией
  */
 
-const base = import.meta.env.BASE_URL;
+// BASE_URL больше не используется (сайт в корне домена)
 
 const menuItems = [
   { label: 'О центре', href: '#about' },
@@ -21,7 +21,7 @@ const menuItems = [
   <div class="footer__container">
     <!-- Logo -->
     <img 
-      src={`${base}/images/logo.png`} 
+      src="/images/logo.png" 
       alt="ЦЕРГ" 
       width="182" 
       height="49"

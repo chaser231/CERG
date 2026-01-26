@@ -4,7 +4,7 @@
  * 4 карточки услуг с изображениями, описанием, ценой и длительностью
  */
 
-const base = import.meta.env.BASE_URL;
+// Сайт в корне домена, base не нужен
 
 const services = [
   {
@@ -12,28 +12,28 @@ const services = [
     description: 'Включает в себя гипноанализ. Избавление от негативных последствий после травмирующего события. Формирование нового позитивного опыта и моделирование нового поведения и реакции в будущем',
     duration: '60-120 мин',
     price: '3000 ₽',
-    image: `${base}/images/services/service-hypnosis.webp`,
+    image: '/images/services/service-hypnosis.webp',
   },
   {
     title: 'ДПДГ',
     description: 'Десенсибилизация и переработка движением глаз — активации системы мозга, отвечающей за переработку информации. Вместе со специалистом вы находите ранние интенсивные травмирующие воспоминания, оказывающиеся источником имеющихся проблем',
     duration: '60-120 мин',
     price: '3000 ₽',
-    image: `${base}/images/services/service-emdr.webp`,
+    image: '/images/services/service-emdr.webp',
   },
   {
     title: 'Сеанс глубокой регрессии',
     description: 'Это погружение в прошлый опыт (прошлые жизни). Он помогает выявить кармический долг и определить предназначение на подсознательном уровне. Также во время сеанса можно встретиться с наставником и получить ответы на волнующие вопросы',
     duration: '2-5 часов',
     price: null,
-    image: `${base}/images/services/service-regression.webp`,
+    image: '/images/services/service-regression.webp',
   },
   {
     title: 'Первичная консультация',
     description: 'Определение целей и задач погружения, выявление гипнабельности и уровня внушаемости клиента, выбор способа погружения индивидуально для него',
     duration: '60-90 мин',
     price: 'Бесплатно',
-    image: `${base}/images/services/service-consultation.webp`,
+    image: '/images/services/service-consultation.webp',
   },
 ]
 ---

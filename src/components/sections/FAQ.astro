@@ -4,7 +4,7 @@
  * Ответы на частые вопросы с аккордеоном
  */
 
-const base = import.meta.env.BASE_URL;
+// Сайт в корне домена, base не нужен
 
 const questions = [
   {
@@ -41,7 +41,7 @@ const questions = [
 <section class="faq" id="faq">
   <!-- Decorative Image - 3D логотип -->
   <img 
-    src={`${base}/images/faq/image 39.webp`} 
+    src="/images/faq/image 39.webp" 
     alt="" 
     class="faq__image"
     loading="lazy"

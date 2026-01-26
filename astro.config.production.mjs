@@ -14,8 +14,8 @@ import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // Заменить на реальный домен
-  site: 'https://cerg.ru',
+  // Продакшен домен
+  site: 'https://cerh.pro',
   
   // Убрать base для корневого домена
   // base: '/CERG', — только для GitHub Pages

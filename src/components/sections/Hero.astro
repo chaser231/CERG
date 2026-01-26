@@ -5,7 +5,7 @@
  * Вырезы реализованы через overlay-элементы (не SVG маску)
  */
 
-const base = import.meta.env.BASE_URL;
+// Сайт в корне домена, base не нужен
 
 const navItems = [
   { label: 'О центре', href: '#about' },
@@ -23,7 +23,7 @@ const navItems = [
   <div class="hero__image-wrap">
     <div class="hero__image-container">
       <img 
-        src={`${base}/images/hero/image 35261.webp`} 
+        src="/images/hero/image 35261.webp" 
         alt="3D логотип ЦЕРГ" 
         class="hero__image"
         loading="eager"
@@ -40,7 +40,7 @@ const navItems = [
       <div class="hero__title-row">
         <h1 class="hero__title">Центр</h1>
         <div class="hero__logo">
-          <img src={`${base}/images/logo.png`} alt="ЦЕРГ" class="hero__logo-img" />
+          <img src="/images/logo.png" alt="ЦЕРГ" class="hero__logo-img" />
         </div>
       </div>
       <h1 class="hero__title">регрессивного</h1>

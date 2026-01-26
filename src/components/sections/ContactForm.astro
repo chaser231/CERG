@@ -3,21 +3,11 @@
  * Contact Form Section
  * Форма заявки на консультацию
  * С валидацией и обработкой отправки
- * 
- * Поддерживает два режима:
- * 1. Yandex Cloud Function + Telegram (продакшен, РФ-compliant)
- * 2. Web3Forms (для разработки/тестирования)
+ * Отправляет данные в Yandex Cloud Function → Telegram
  */
 
-// ПРОДАКШЕН: Yandex Cloud Function endpoint
-// Заменить на реальный URL после настройки (см. cloud-function/README.md)
-const FORM_ENDPOINT = "https://YOUR_API_GATEWAY.apigw.yandexcloud.net/submit";
-
-// Режим: 'yandex' или 'web3forms'
-const FORM_MODE = "yandex";
-
-// Для Web3Forms (только для тестирования)
-const WEB3FORMS_KEY = "YOUR_ACCESS_KEY";
+// Yandex Cloud Function endpoint
+const FORM_ENDPOINT = "https://d5d4gu7upurn7ol2iv15.ubofext2.apigw.yandexcloud.net/submit";
 ---
 
 <section class="contact" id="contact">
@@ -31,14 +21,7 @@ const WEB3FORMS_KEY = "YOUR_ACCESS_KEY";
       </p>
     </div>
     
-    <form class="contact__form" id="contactForm" novalidate data-mode={FORM_MODE} data-endpoint={FORM_ENDPOINT} data-web3key={WEB3FORMS_KEY}>
-      {FORM_MODE === 'web3forms' && (
-        <>
-          <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
-          <input type="hidden" name="subject" value="Новая заявка с сайта ЦЕРГ" />
-          <input type="hidden" name="from_name" value="ЦЕРГ Лендинг" />
-        </>
-      )}
+    <form class="contact__form" id="contactForm" novalidate data-endpoint={FORM_ENDPOINT}>
       
       <div class="contact__fields">
         <div class="contact__field">
@@ -500,34 +483,21 @@ const WEB3FORMS_KEY = "YOUR_ACCESS_KEY";
       errorMessage?.classList.remove('visible');
       
       try {
-        const mode = form.dataset.mode || 'yandex';
         const endpoint = form.dataset.endpoint || '';
         
-        let response: Response;
+        const data = {
+          name: nameInput.value.trim(),
+          email: emailInput.value.trim(),
+          phone: phoneInput.value.trim()
+        };
         
-        if (mode === 'web3forms') {
-          // Web3Forms mode (для тестирования)
-          const formData = new FormData(form);
-          response = await fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            body: formData
-          });
-        } else {
-          // Yandex Cloud Function mode (продакшен)
-          const data = {
-            name: nameInput.value.trim(),
-            email: emailInput.value.trim(),
-            phone: phoneInput.value.trim()
-          };
-          
-          response = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          });
-        }
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
         
         const result = await response.json();
         

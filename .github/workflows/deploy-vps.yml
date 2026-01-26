@@ -1,0 +1,61 @@
+# Деплой на VPS в РФ через rsync
+# 
+# НАСТРОЙКА:
+# 1. Добавить SSH-ключ в GitHub Secrets:
+#    - VPS_HOST: IP-адрес или домен VPS
+#    - VPS_USER: пользователь SSH (например, deploy)
+#    - VPS_SSH_KEY: приватный SSH-ключ
+#    - VPS_PATH: путь на сервере (например, /var/www/cerg)
+#
+# 2. На VPS должен быть установлен Nginx
+#
+# 3. После первого деплоя настроить SSL через Certbot:
+#    sudo certbot --nginx -d cerg.ru -d www.cerg.ru
+
+name: Deploy to VPS (Russia)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build site
+        run: npm run build
+        env:
+          # Для продакшена используем правильный конфиг
+          NODE_ENV: production
+      
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+      
+      - name: Deploy to VPS via rsync
+        run: |
+          rsync -avz --delete \
+            --exclude '.git' \
+            --exclude 'node_modules' \
+            ./dist/ \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_PATH }}/
+      
+      - name: Cleanup
+        run: rm -rf ~/.ssh/id_rsa

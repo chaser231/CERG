@@ -293,17 +293,16 @@
 
 ---
 
-## Фаза 7: Обработка заявок (2 часа) 🟡 Подготовлено
+## Фаза 7: Обработка заявок (2 часа) ✅ Код готов
 
 ### 7.1 Yandex Cloud Function + Telegram ✅ Код готов
 - [x] Создан код Cloud Function (`cloud-function/index.js`)
 - [x] Инструкция по настройке (`cloud-function/README.md`)
 - [x] Форма поддерживает Yandex Cloud endpoint
-- [ ] Создать Telegram-бота через @BotFather
-- [ ] Развернуть функцию в Yandex Cloud
-- [ ] Настроить API Gateway
-- [ ] Обновить endpoint в форме
-- [ ] Коммит: `feat: deploy Yandex Cloud Function`
+- [ ] Создать Telegram-бота через @BotFather — **требуется от заказчика**
+- [ ] Развернуть функцию в Yandex Cloud — **требуется от заказчика**
+- [ ] Настроить API Gateway — **требуется от заказчика**
+- [ ] Обновить endpoint в форме — **требуется от заказчика**
 
 ### 7.2 CRM-интеграция (опционально)
 - [ ] Webhook в AmoCRM / Bitrix24 (если нужно)
@@ -338,8 +337,8 @@
 - [ ] Коммит: `perf: optimize loading`
 
 ### 8.3 Технические файлы
-- [ ] `robots.txt`
-- [ ] `sitemap.xml` (astro-sitemap)
+- [x] `robots.txt`
+- [x] `sitemap.xml` (astro-sitemap) — конфиг готов, установить @astrojs/sitemap
 - [ ] Коммит: `feat: add robots.txt and sitemap`
 
 ### 8.4 Аналитика
@@ -350,12 +349,12 @@
 
 ---
 
-## Фаза 9: Юридические требования (1-2 часа)
+## Фаза 9: Юридические требования (1-2 часа) ✅
 
 ### 9.1 Юридические страницы
-- [ ] Создать `src/pages/privacy.astro`
-- [ ] Создать `src/pages/terms.astro`
-- [ ] Наполнить текстом (согласовать с заказчиком)
+- [x] Создать `src/pages/privacy.astro`
+- [x] Создать `src/pages/terms.astro`
+- [x] Наполнить текстом (согласовать с заказчиком)
 - [ ] Коммит: `feat: add legal pages`
 
 ### 9.2 Cookie Consent (опционально)
@@ -371,7 +370,7 @@
 
 ---
 
-## Фаза 10: Передача проекта заказчику
+## Фаза 10: Передача проекта заказчику ✅ Документация готова
 
 ### 10.1 Доступ к CMS
 - [ ] Добавить заказчика как Collaborator в GitHub репозиторий
@@ -379,55 +378,34 @@
 - [ ] Провести краткий созвон-обучение по CMS
 
 ### 10.2 Документация для заказчика
-- [ ] Краткое руководство по редактированию контента
+- [x] Руководство по деплою: `docs/DEPLOY_GUIDE.md`
+- [x] Инструкция по передаче: `docs/HANDOVER.md`
+- [x] Инструкция по Cloud Function: `cloud-function/README.md`
 - [ ] Контакты технической поддержки
-- [ ] Описание процесса обновления сайта
 
 ---
 
-## Фаза 11: Деплой (1-2 часа)
+## Фаза 11: Деплой (1-2 часа) 🟡 Подготовлено
 
 ### 10.1 Подготовка к деплою
 - [ ] Проверить сборку: `npm run build`
 - [ ] Проверить preview: `npm run preview`
 - [ ] Коммит: `chore: prepare for deployment`
 
-### 10.2 Вариант A: Cloudflare Pages (рекомендуется для превью)
-- [ ] Подключить GitHub-репозиторий
-- [ ] Настроить build command: `npm run build`
-- [ ] Настроить output directory: `dist`
-- [ ] Автоматические превью для PR
+### 10.2 Вариант A: GitHub Pages (для превью) ✅
+- [x] Подключить GitHub-репозиторий
+- [x] Настроить build command: `npm run build`
+- [x] Настроить output directory: `dist`
+- [x] GitHub Actions workflow готов
 
-### 10.3 Вариант B: VPS в РФ (для продакшна)
-- [ ] Арендовать VPS (минимум 1GB RAM)
-- [ ] Установить Nginx
-- [ ] Настроить GitHub Actions:
-  ```yaml
-  on:
-    push:
-      branches: [main]
-  jobs:
-    deploy:
-      - checkout
-      - npm install
-      - npm run build
-      - rsync dist/ to server
-  ```
-- [ ] Настроить Nginx:
-  ```nginx
-  server {
-      listen 80;
-      server_name cerg.ru;
-      root /var/www/cerg/dist;
-      index index.html;
-      
-      location / {
-          try_files $uri $uri/ $uri.html =404;
-      }
-  }
-  ```
-- [ ] SSL через Certbot
-- [ ] Коммит: `ci: add deployment workflow`
+### 10.3 Вариант B: VPS в РФ (для продакшна) ✅ Workflow готов
+- [x] GitHub Actions workflow для VPS: `.github/workflows/deploy-vps.yml`
+- [x] Конфиг для продакшена: `astro.config.production.mjs`
+- [x] Руководство по деплою: `docs/DEPLOY_GUIDE.md`
+- [ ] Арендовать VPS (минимум 1GB RAM) — **требуется от заказчика**
+- [ ] Установить Nginx — **требуется от заказчика**
+- [ ] Настроить GitHub Secrets (VPS_HOST, VPS_USER, VPS_SSH_KEY, VPS_PATH)
+- [ ] SSL через Certbot — **требуется от заказчика**
 
 ### 10.4 Настройка домена
 - [ ] Зарегистрировать домен (.ru)

@@ -1,0 +1,11 @@
+# robots.txt для ЦЕРГ
+# https://cerg.ru
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://cerg.ru/sitemap-index.xml
+
+# Запрет индексации админки CMS
+Disallow: /admin/

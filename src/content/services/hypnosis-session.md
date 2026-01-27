@@ -1,12 +1,14 @@
 ---
-title: "Сеанс гипноза"
-description: "Включает в себя гипноанализ. Избавление от негативных последствий после травмирующего события. Формирование нового позитивного опыта и моделирование нового поведения и реакции в будущем"
+title: Сеанс гипноза
+description: Включает в себя гипноанализ. Избавление от негативных последствий
+  после травмирующего события. Формирование нового позитивного опыта и
+  моделирование нового поведения и реакции в будущем
 category: services
 price: 3000
-priceLabel: "₽"
+priceLabel: ₽
 duration: 90
-durationLabel: "60-120 мин"
-image: "/images/services/service-hypnosis.webp"
+durationLabel: мин
+image: /images/services/service-hypnosis.webp
 order: 1
 featured: true
 ---

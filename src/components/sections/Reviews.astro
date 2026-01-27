@@ -527,14 +527,14 @@ const studentReviews = reviewsCollection
     flex-direction: column;
     padding: 24px;
     background: var(--color-beige-200);
-    min-height: 280px;
+    min-height: 450px;
     position: relative;
   }
 
   @media (min-width: 640px) {
     .review-card--text {
       flex: 0 0 320px;
-      min-height: 300px;
+      min-height: 500px;
       padding: 28px;
     }
   }
@@ -547,12 +547,12 @@ const studentReviews = reviewsCollection
   .review-card__text-content {
     color: var(--color-text);
     font-size: 15px;
-    line-height: 1.5;
+    line-height: 1.6;
     margin: 0;
     flex: 1;
     /* Ограничиваем текст с ellipsis */
     display: -webkit-box;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 12;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -560,7 +560,7 @@ const studentReviews = reviewsCollection
   @media (min-width: 640px) {
     .review-card__text-content {
       font-size: 16px;
-      -webkit-line-clamp: 7;
+      -webkit-line-clamp: 14;
     }
   }
 

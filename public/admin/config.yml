@@ -32,11 +32,18 @@ collections:
     extension: "md"
     format: "frontmatter"
     slug: "{{slug}}"
-    summary: "{{title}} — {{price}}₽"
-    sortable_fields: ["order", "title", "price"]
+    summary: "{{title}} — {{price}}₽ ({{category}})"
+    sortable_fields: ["order", "title", "price", "category"]
     fields:
       - { label: "Название", name: "title", widget: "string" }
       - { label: "Описание", name: "description", widget: "text" }
+      - label: "Категория"
+        name: "category"
+        widget: "select"
+        default: "services"
+        options:
+          - { label: "Терапия", value: "services" }
+          - { label: "Пакеты", value: "packages" }
       - { label: "Цена (число)", name: "price", widget: "number", value_type: "int", min: 0 }
       - { label: "Метка цены", name: "priceLabel", widget: "string", default: "₽" }
       - { label: "Длительность (мин)", name: "duration", widget: "number", value_type: "int", min: 0 }

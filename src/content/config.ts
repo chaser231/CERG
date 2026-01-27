@@ -19,6 +19,7 @@ const servicesCollection = defineCollection({
     image: z.string(),
     order: z.number().optional().default(0),
     featured: z.boolean().optional().default(false),
+    category: z.enum(['services', 'packages']).optional().default('services'), // Терапия или Пакеты
   }),
 });
 

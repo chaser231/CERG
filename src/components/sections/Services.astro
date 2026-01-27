@@ -2,27 +2,57 @@
 /**
  * Services Section
  * Карточки услуг с изображениями, описанием, ценой и длительностью
+ * Табы: Терапия / Пакеты
  * Данные загружаются из CMS (src/content/services/)
  */
 import { getCollection } from 'astro:content';
 
 // Загружаем услуги из CMS, фильтруем featured и сортируем по order
 const servicesCollection = await getCollection('services');
-const services = servicesCollection
-  .filter(s => s.data.featured)
+
+// Функция для маппинга данных услуги
+const mapService = (s: typeof servicesCollection[0]) => ({
+  title: s.data.title,
+  description: s.data.description,
+  duration: s.data.duration > 0 ? `${s.data.duration} ${s.data.durationLabel}` : null,
+  price: s.data.price > 0 ? `${s.data.price} ${s.data.priceLabel}` : 'Бесплатно',
+  image: s.data.image,
+});
+
+// Разделяем на Терапию и Пакеты
+const therapyServices = servicesCollection
+  .filter(s => s.data.featured && (s.data.category === 'services' || !s.data.category))
   .sort((a, b) => a.data.order - b.data.order)
-  .map(s => ({
-    title: s.data.title,
-    description: s.data.description,
-    duration: s.data.duration > 0 ? `${s.data.duration} ${s.data.durationLabel}` : null,
-    price: s.data.price > 0 ? `${s.data.price} ${s.data.priceLabel}` : 'Бесплатно',
-    image: s.data.image,
-  }));
+  .map(mapService);
+
+const packageServices = servicesCollection
+  .filter(s => s.data.featured && s.data.category === 'packages')
+  .sort((a, b) => a.data.order - b.data.order)
+  .map(mapService);
+
+// Проверяем, есть ли данные в каждой категории
+const hasTherapy = therapyServices.length > 0;
+const hasPackages = packageServices.length > 0;
+const showTabs = hasTherapy && hasPackages;
 ---
 
 <section class="services" id="services">
   <div class="services__header container">
-    <h2 class="services__title">Наши услуги</h2>
+    <div class="services__header-left">
+      <h2 class="services__title">Наши услуги</h2>
+      
+      {/* Tabs - показываем только если есть обе категории */}
+      {showTabs && (
+        <div class="services__tabs">
+          <button class="services__tab services__tab--active" data-tab="therapy">
+            Терапия
+          </button>
+          <button class="services__tab" data-tab="packages">
+            Пакеты
+          </button>
+        </div>
+      )}
+    </div>
     
     <!-- Navigation Arrows -->
     <div class="services__nav">
@@ -41,8 +71,9 @@ const services = servicesCollection
 
   <!-- Slider выходит за пределы контейнера -->
   <div class="services__slider">
-    <div class="services__track">
-      {services.map((service) => (
+    {/* Therapy Services Track */}
+    <div class="services__track services__track--therapy">
+      {therapyServices.map((service) => (
         <article class="service-card">
           <div class="service-card__image-wrap">
             <img 
@@ -64,13 +95,15 @@ const services = servicesCollection
                   {service.price}
                 </span>
               )}
-              <span class="service-card__badge">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="service-card__badge-icon">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
-                  <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-                {service.duration}
-              </span>
+              {service.duration && (
+                <span class="service-card__badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="service-card__badge-icon">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  {service.duration}
+                </span>
+              )}
             </div>
           </div>
           
@@ -81,26 +114,99 @@ const services = servicesCollection
         </article>
       ))}
     </div>
+
+    {/* Packages Track - hidden by default */}
+    {hasPackages && (
+      <div class="services__track services__track--packages" style="display: none;">
+        {packageServices.map((service) => (
+          <article class="service-card">
+            <div class="service-card__image-wrap">
+              <img 
+                src={service.image} 
+                alt={service.title}
+                class="service-card__image"
+                loading="lazy"
+              />
+              
+              <!-- Badges -->
+              <div class="service-card__badges">
+                {service.price && (
+                  <span class="service-card__badge">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="service-card__badge-icon">
+                      <path d="M19 5L5 19M5 5l14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      <circle cx="5" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/>
+                      <circle cx="19" cy="19" r="3" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    {service.price}
+                  </span>
+                )}
+                {service.duration && (
+                  <span class="service-card__badge">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="service-card__badge-icon">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                      <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    {service.duration}
+                  </span>
+                )}
+              </div>
+            </div>
+            
+            <div class="service-card__content">
+              <h4 class="service-card__title">{service.title}</h4>
+              <p class="service-card__description">{service.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
   </div>
 </section>
 
 <script>
-  // Slider functionality
-  const slider = document.querySelector('.services__track');
+  // Tab switching
+  const tabs = document.querySelectorAll('.services__tab');
+  const therapyTrack = document.querySelector('.services__track--therapy') as HTMLElement | null;
+  const packagesTrack = document.querySelector('.services__track--packages') as HTMLElement | null;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Update active tab
+      tabs.forEach(t => t.classList.remove('services__tab--active'));
+      tab.classList.add('services__tab--active');
+      
+      // Show/hide tracks
+      const tabType = (tab as HTMLElement).dataset.tab;
+      if (tabType === 'therapy') {
+        if (therapyTrack) therapyTrack.style.display = 'flex';
+        if (packagesTrack) packagesTrack.style.display = 'none';
+      } else {
+        if (therapyTrack) therapyTrack.style.display = 'none';
+        if (packagesTrack) packagesTrack.style.display = 'flex';
+      }
+    });
+  });
+
+  // Slider navigation
   const prevBtn = document.querySelector('.services__nav-btn--prev');
   const nextBtn = document.querySelector('.services__nav-btn--next');
   
-  if (slider && prevBtn && nextBtn) {
-    const cardWidth = 489 + 10; // card width + gap
-    
-    prevBtn.addEventListener('click', () => {
-      slider.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-    });
-    
-    nextBtn.addEventListener('click', () => {
-      slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
-    });
+  function getActiveTrack(): HTMLElement | null {
+    if (therapyTrack && therapyTrack.style.display !== 'none') return therapyTrack;
+    return packagesTrack || therapyTrack;
   }
+  
+  const cardWidth = 489 + 10; // card width + gap
+  
+  prevBtn?.addEventListener('click', () => {
+    const track = getActiveTrack();
+    track?.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+  });
+  
+  nextBtn?.addEventListener('click', () => {
+    const track = getActiveTrack();
+    track?.scrollBy({ left: cardWidth, behavior: 'smooth' });
+  });
 </script>
 
 <style>
@@ -113,10 +219,31 @@ const services = servicesCollection
 
   .services__header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 2rem;
+    gap: 1rem;
     margin-bottom: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .services__header {
+      align-items: center;
+      gap: 2rem;
+    }
+  }
+
+  .services__header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .services__header-left {
+      flex-direction: row;
+      align-items: center;
+      gap: 2rem;
+    }
   }
 
   .services__title {
@@ -129,14 +256,54 @@ const services = servicesCollection
     margin: 0;
   }
 
+  /* Tabs - лаконичный стиль */
+  .services__tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: #F2F2F2;
+    padding: 4px;
+    border-radius: 999px;
+  }
+
+  .services__tab {
+    padding: 10px 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: all 0.2s ease;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 640px) {
+    .services__tab {
+      padding: 12px 24px;
+      font-size: 16px;
+    }
+  }
+
+  .services__tab:hover {
+    color: var(--color-text);
+  }
+
+  .services__tab--active {
+    background: white;
+    color: var(--color-text);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
   .services__nav {
     display: flex;
     gap: 0.5rem;
+    flex-shrink: 0;
   }
 
   .services__nav-btn {
-    width: 60px;
-    height: 60px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background: #F2F2F2;
     border: none;
@@ -146,6 +313,13 @@ const services = servicesCollection
     justify-content: center;
     color: var(--color-dark);
     transition: all 0.2s ease;
+  }
+
+  @media (min-width: 640px) {
+    .services__nav-btn {
+      width: 60px;
+      height: 60px;
+    }
   }
 
   .services__nav-btn:hover {

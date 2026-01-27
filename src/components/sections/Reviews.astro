@@ -1,7 +1,7 @@
 ---
 /**
  * Reviews Section
- * Отзывы клиентов и учеников с табами и слайдером
+ * Отзывы клиентов (анонимные, текстовые) и учеников (с фото) с табами и слайдером
  * Данные загружаются из CMS (src/content/reviews/)
  */
 import { getCollection } from 'astro:content';
@@ -9,25 +9,26 @@ import { getCollection } from 'astro:content';
 // Загружаем отзывы из CMS
 const reviewsCollection = await getCollection('reviews');
 
-// Разделяем на клиентов и учеников
+// Отзывы клиентов — анонимные, текстовые карточки
 const clientReviews = reviewsCollection
   .filter(r => r.data.category === 'clients')
-  .sort((a, b) => a.data.order - b.data.order)
-  .map(r => ({
-    name: r.data.name,
-    role: r.data.role,
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
+  .map((r, index) => ({
+    id: `client-review-${index}`,
     text: r.data.quote,
-    image: r.data.image,
+    fullText: r.data.fullText || r.data.quote, // Полный текст или краткая цитата
+    hasFullText: !!r.data.fullText && r.data.fullText !== r.data.quote,
   }));
 
+// Отзывы учеников — с фото и именем
 const studentReviews = reviewsCollection
   .filter(r => r.data.category === 'students')
-  .sort((a, b) => a.data.order - b.data.order)
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
   .map(r => ({
-    name: r.data.name,
-    role: r.data.role,
+    name: r.data.name || 'Ученик',
+    role: r.data.role || '',
     text: r.data.quote,
-    image: r.data.image,
+    image: r.data.image || '/images/reviews/review-1.webp',
   }));
 ---
 
@@ -45,8 +46,6 @@ const studentReviews = reviewsCollection
       <!-- Tabs -->
       <div class="reviews__tabs">
         <button class="reviews__tab reviews__tab--active" data-tab="clients">
-          <img src="/images/reviews/review-1.webp" alt="" class="reviews__tab-avatar" />
-          <img src="/images/reviews/review-2.webp" alt="" class="reviews__tab-avatar" />
           Клиенты
         </button>
         <button class="reviews__tab" data-tab="students">
@@ -78,33 +77,33 @@ const studentReviews = reviewsCollection
 
     <!-- Right Column: Cards Slider -->
     <div class="reviews__slider">
-      <!-- Clients Reviews -->
+      <!-- Clients Reviews — анонимные текстовые карточки -->
       <div class="reviews__track reviews__track--clients">
         {clientReviews.map((review) => (
-          <article class="review-card">
-            <img 
-              src={review.image} 
-              alt={review.name}
-              class="review-card__image"
-              loading="lazy"
-            />
-            <!-- Имя и роль сверху -->
-            <div class="review-card__header">
-              <h4 class="review-card__name">{review.name}</h4>
-              <span class="review-card__role">{review.role}</span>
+          <article class="review-card review-card--text">
+            <div class="review-card__quote-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" opacity="0.15">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+              </svg>
             </div>
-            <!-- Цитата снизу -->
-            <div class="review-card__footer">
-              <p class="review-card__text">{review.text}</p>
-            </div>
+            <p class="review-card__text-content">{review.text}</p>
+            {review.hasFullText && (
+              <button 
+                class="review-card__read-more" 
+                data-review-id={review.id}
+                data-full-text={review.fullText}
+              >
+                Читать весь отзыв
+              </button>
+            )}
           </article>
         ))}
       </div>
       
-      <!-- Students Reviews (hidden by default) -->
+      <!-- Students Reviews — с фото (hidden by default) -->
       <div class="reviews__track reviews__track--students" style="display: none;">
         {studentReviews.map((review) => (
-          <article class="review-card">
+          <article class="review-card review-card--photo">
             <img 
               src={review.image} 
               alt={review.name}
@@ -114,7 +113,7 @@ const studentReviews = reviewsCollection
             <!-- Имя и роль сверху -->
             <div class="review-card__header">
               <h4 class="review-card__name">{review.name}</h4>
-              <span class="review-card__role">{review.role}</span>
+              {review.role && <span class="review-card__role">{review.role}</span>}
             </div>
             <!-- Цитата снизу -->
             <div class="review-card__footer">
@@ -127,11 +126,30 @@ const studentReviews = reviewsCollection
   </div>
 </section>
 
+<!-- Modal for full review text -->
+<div class="review-modal" id="reviewModal">
+  <div class="review-modal__backdrop"></div>
+  <div class="review-modal__content">
+    <button class="review-modal__close" aria-label="Закрыть">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <div class="review-modal__quote-icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" opacity="0.1">
+        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+      </svg>
+    </div>
+    <p class="review-modal__text" id="reviewModalText"></p>
+  </div>
+</div>
+
 <script>
   // Tab switching
   const tabs = document.querySelectorAll('.reviews__tab');
-  const clientsTrack = document.querySelector('.reviews__track--clients');
-  const studentsTrack = document.querySelector('.reviews__track--students');
+  const clientsTrack = document.querySelector('.reviews__track--clients') as HTMLElement | null;
+  const studentsTrack = document.querySelector('.reviews__track--students') as HTMLElement | null;
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -140,13 +158,13 @@ const studentReviews = reviewsCollection
       tab.classList.add('reviews__tab--active');
       
       // Show/hide tracks
-      const tabType = tab.dataset.tab;
+      const tabType = (tab as HTMLElement).dataset.tab;
       if (tabType === 'clients') {
-        clientsTrack.style.display = 'flex';
-        studentsTrack.style.display = 'none';
+        if (clientsTrack) clientsTrack.style.display = 'flex';
+        if (studentsTrack) studentsTrack.style.display = 'none';
       } else {
-        clientsTrack.style.display = 'none';
-        studentsTrack.style.display = 'flex';
+        if (clientsTrack) clientsTrack.style.display = 'none';
+        if (studentsTrack) studentsTrack.style.display = 'flex';
       }
     });
   });
@@ -155,18 +173,56 @@ const studentReviews = reviewsCollection
   const prevBtn = document.querySelector('.reviews__nav-btn--prev');
   const nextBtn = document.querySelector('.reviews__nav-btn--next');
   
-  function getActiveTrack() {
-    return clientsTrack.style.display !== 'none' ? clientsTrack : studentsTrack;
+  function getActiveTrack(): HTMLElement | null {
+    if (clientsTrack && clientsTrack.style.display !== 'none') return clientsTrack;
+    return studentsTrack || clientsTrack;
   }
   
   const cardWidth = 320 + 16; // card width + gap
   
   prevBtn?.addEventListener('click', () => {
-    getActiveTrack().scrollBy({ left: -cardWidth, behavior: 'smooth' });
+    getActiveTrack()?.scrollBy({ left: -cardWidth, behavior: 'smooth' });
   });
   
   nextBtn?.addEventListener('click', () => {
-    getActiveTrack().scrollBy({ left: cardWidth, behavior: 'smooth' });
+    getActiveTrack()?.scrollBy({ left: cardWidth, behavior: 'smooth' });
+  });
+
+  // Modal functionality
+  const modal = document.getElementById('reviewModal');
+  const modalText = document.getElementById('reviewModalText');
+  const modalBackdrop = document.querySelector('.review-modal__backdrop');
+  const modalClose = document.querySelector('.review-modal__close');
+  const readMoreButtons = document.querySelectorAll('.review-card__read-more');
+
+  function openModal(text: string) {
+    if (modal && modalText) {
+      modalText.textContent = text;
+      modal.classList.add('review-modal--open');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeModal() {
+    if (modal) {
+      modal.classList.remove('review-modal--open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  readMoreButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const fullText = (btn as HTMLElement).dataset.fullText;
+      if (fullText) openModal(fullText);
+    });
+  });
+
+  modalBackdrop?.addEventListener('click', closeModal);
+  modalClose?.addEventListener('click', closeModal);
+  
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
   });
 </script>
 
@@ -376,8 +432,8 @@ const studentReviews = reviewsCollection
     display: none;
   }
 
-  /* Review Card - фото на весь фон */
-  .review-card {
+  /* ===== Review Card with Photo (Students) ===== */
+  .review-card--photo {
     flex: 0 0 280px;
     scroll-snap-align: start;
     border-radius: 16px;
@@ -390,7 +446,7 @@ const studentReviews = reviewsCollection
   }
 
   @media (min-width: 640px) {
-    .review-card {
+    .review-card--photo {
       flex: 0 0 320px;
       min-height: 500px;
     }
@@ -459,5 +515,161 @@ const studentReviews = reviewsCollection
     font-weight: 400;
     line-height: 1.3;
     margin: 0;
+  }
+
+  /* ===== Review Card Text Only (Clients - Anonymous) ===== */
+  .review-card--text {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    background: var(--color-beige-200);
+    min-height: 280px;
+    position: relative;
+  }
+
+  @media (min-width: 640px) {
+    .review-card--text {
+      flex: 0 0 320px;
+      min-height: 300px;
+      padding: 28px;
+    }
+  }
+
+  .review-card__quote-icon {
+    color: var(--color-dark);
+    margin-bottom: 16px;
+  }
+
+  .review-card__text-content {
+    color: var(--color-text);
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+    flex: 1;
+    /* Ограничиваем текст с ellipsis */
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (min-width: 640px) {
+    .review-card__text-content {
+      font-size: 16px;
+      -webkit-line-clamp: 7;
+    }
+  }
+
+  .review-card__read-more {
+    margin-top: 16px;
+    padding: 12px 20px;
+    background: white;
+    border: none;
+    border-radius: 999px;
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    align-self: flex-start;
+  }
+
+  .review-card__read-more:hover {
+    background: var(--color-dark);
+    color: white;
+  }
+
+  /* ===== Modal ===== */
+  .review-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .review-modal--open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .review-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+  }
+
+  .review-modal__content {
+    position: relative;
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+  }
+
+  .review-modal--open .review-modal__content {
+    transform: translateY(0);
+  }
+
+  @media (min-width: 640px) {
+    .review-modal__content {
+      padding: 40px;
+    }
+  }
+
+  .review-modal__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-beige-200);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-dark);
+    transition: all 0.2s ease;
+  }
+
+  .review-modal__close:hover {
+    background: var(--color-dark);
+    color: white;
+  }
+
+  .review-modal__quote-icon {
+    color: var(--color-dark);
+    margin-bottom: 16px;
+  }
+
+  .review-modal__text {
+    color: var(--color-text);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    white-space: pre-wrap;
+  }
+
+  @media (min-width: 640px) {
+    .review-modal__text {
+      font-size: 18px;
+    }
   }
 </style>

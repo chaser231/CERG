@@ -94,16 +94,17 @@ collections:
     summary: "{{name}} ({{category}})"
     sortable_fields: ["order", "name", "category"]
     fields:
-      - { label: "Имя", name: "name", widget: "string" }
-      - { label: "Роль / Профессия", name: "role", widget: "string" }
-      - { label: "Цитата", name: "quote", widget: "text" }
-      - { label: "Фото", name: "image", widget: "image" }
       - label: "Категория"
         name: "category"
         widget: "select"
         options:
-          - { label: "Клиенты", value: "clients" }
+          - { label: "Клиенты (анонимно)", value: "clients" }
           - { label: "Ученики", value: "students" }
+      - { label: "Имя (только для учеников)", name: "name", widget: "string", required: false, hint: "Оставьте пустым для анонимных отзывов клиентов" }
+      - { label: "Роль / Профессия (только для учеников)", name: "role", widget: "string", required: false }
+      - { label: "Краткая цитата (превью)", name: "quote", widget: "text", hint: "Показывается на карточке" }
+      - { label: "Полный текст отзыва", name: "fullText", widget: "text", required: false, hint: "Для кнопки 'Читать весь отзыв'" }
+      - { label: "Фото (только для учеников)", name: "image", widget: "image", required: false }
       - { label: "Порядок", name: "order", widget: "number", value_type: "int", default: 0 }
 
   # ==========================================

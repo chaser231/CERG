@@ -43,10 +43,11 @@ const coursesCollection = defineCollection({
 const reviewsCollection = defineCollection({
   type: 'content',
   schema: z.object({
-    name: z.string(),
-    role: z.string(), // "Психотерапевт", "Студент" и т.д.
-    quote: z.string(),
-    image: z.string(),
+    name: z.string().optional(), // Опционально для анонимных отзывов клиентов
+    role: z.string().optional(), // Опционально для анонимных отзывов
+    quote: z.string(), // Краткая цитата (превью)
+    fullText: z.string().optional(), // Полный текст отзыва (для модалки)
+    image: z.string().optional(), // Опционально для анонимных отзывов клиентов
     category: z.enum(['clients', 'students']), // Клиенты или Ученики
     order: z.number().optional().default(0),
   }),

@@ -6,7 +6,7 @@ category: services
 price: 3500
 priceLabel: ₽
 duration: 75
-durationLabel: 60-90 мин
+durationLabel: мин
 image: /images/services/service-consultation.webp
 order: 4
 featured: true

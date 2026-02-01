@@ -2,22 +2,18 @@
 /**
  * FAQ Section
  * Ответы на частые вопросы с аккордеоном
- * Данные загружаются из CMS (src/content/faq/)
+ * Контент из CMS рендерится как HTML (списки, жирный текст, отступы)
  */
 import { getCollection } from 'astro:content';
 
-// Загружаем FAQ из CMS
+// Загружаем FAQ из CMS, рендерим body в HTML через Content-компонент
 const faqCollection = await getCollection('faq');
+const sortedEntries = faqCollection.sort((a, b) => a.data.order - b.data.order);
 const questions = await Promise.all(
-  faqCollection
-    .sort((a, b) => a.data.order - b.data.order)
-    .map(async (q) => {
-      const { Content } = await q.render();
-      return {
-        question: q.data.question,
-        answer: q.body, // markdown body содержит ответ
-      };
-    })
+  sortedEntries.map(async (entry) => {
+    const { Content } = await entry.render();
+    return { question: entry.data.question, Content };
+  })
 );
 ---
 
@@ -34,21 +30,24 @@ const questions = await Promise.all(
     <h2 class="faq__title">Ответы на вопросы</h2>
     
     <div class="faq__questions">
-      {questions.map((item, index) => (
-        <details class="faq-item" open={index === 0}>
-          <summary class="faq-item__question">
-            <span class="faq-item__text">{item.question}</span>
-            <span class="faq-item__icon">
-              <svg width="25" height="16" viewBox="0 0 25 16" fill="none">
-                <path d="M2 2L12.5 12L23 2" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-              </svg>
-            </span>
-          </summary>
-          <div class="faq-item__answer">
-            <p>{item.answer}</p>
-          </div>
-        </details>
-      ))}
+      {questions.map((item, index) => {
+        const AnswerContent = item.Content;
+        return (
+          <details class="faq-item" open={index === 0}>
+            <summary class="faq-item__question">
+              <span class="faq-item__text">{item.question}</span>
+              <span class="faq-item__icon">
+                <svg width="25" height="16" viewBox="0 0 25 16" fill="none">
+                  <path d="M2 2L12.5 12L23 2" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </summary>
+            <div class="faq-item__answer">
+              <AnswerContent />
+            </div>
+          </details>
+        );
+      })}
     </div>
   </div>
 </section>
@@ -167,11 +166,45 @@ const questions = await Promise.all(
     padding: 0 24px 24px;
     color: rgba(255, 255, 255, 0.7);
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
+  /* Форматирование из CMS: параграфы, списки, жирный текст */
   .faq-item__answer p {
-    margin: 0;
+    margin: 0 0 0.75em;
+  }
+
+  .faq-item__answer p:last-child {
+    margin-bottom: 0;
+  }
+
+  .faq-item__answer strong {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+  }
+
+  .faq-item__answer ul,
+  .faq-item__answer ol {
+    margin: 0.5em 0 0.75em;
+    padding-left: 1.5em;
+  }
+
+  .faq-item__answer ul {
+    list-style-type: disc;
+  }
+
+  .faq-item__answer ol {
+    list-style-type: decimal;
+  }
+
+  .faq-item__answer li {
+    margin-bottom: 0.35em;
+  }
+
+  .faq-item__answer li ul,
+  .faq-item__answer li ol {
+    margin-top: 0.35em;
+    margin-bottom: 0.35em;
   }
 </style>
 

@@ -4,9 +4,9 @@ description: Включает в себя гипноанализ. Избавле
   после травмирующего события. Формирование нового позитивного опыта и
   моделирование нового поведения и реакции в будущем
 category: services
-price: 3000
+price: 6000
 priceLabel: ₽
-duration: 90
+duration: 120
 durationLabel: мин
 image: /images/services/service-hypnosis.webp
 order: 1

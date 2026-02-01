@@ -5,9 +5,9 @@ description: Это погружение в прошлый опыт (прошл�
   во время сеанса можно встретиться с наставником и получить ответы на волнующие
   вопросы
 category: services
-price: 0
-priceLabel: По запросу
-duration: 180
+price: 6000
+priceLabel: ₽
+duration: 60
 durationLabel: мин
 image: /images/services/service-regression.webp
 order: 3

@@ -5,9 +5,9 @@ description: Десенсибилизация и переработка движ
   находите ранние интенсивные травмирующие воспоминания, оказывающиеся
   источником имеющихся проблем
 category: services
-price: 3000
+price: 6000
 priceLabel: ₽
-duration: 90
+duration: 56
 durationLabel: мин
 image: /images/services/service-emdr.webp
 order: 2

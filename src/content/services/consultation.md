@@ -8,7 +8,7 @@ priceLabel: ₽
 duration: 75
 durationLabel: мин
 image: /images/services/service-consultation.webp
-order: 4
+order: 1
 featured: true
 ---
 Первичная консультация — встреча для знакомства, определения целей терапии и подбора оптимального подхода.

@@ -5,7 +5,7 @@ description: Определение целей и задач погружени�
 category: services
 price: 3500
 priceLabel: ₽
-duration: 75
+duration: 54
 durationLabel: мин
 image: /images/services/service-consultation.webp
 order: 1

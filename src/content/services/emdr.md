@@ -10,7 +10,7 @@ priceLabel: ₽
 duration: 56
 durationLabel: мин
 image: /images/services/service-emdr.webp
-order: 2
+order: 4
 featured: true
 ---
 

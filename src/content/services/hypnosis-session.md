@@ -9,7 +9,7 @@ priceLabel: ₽
 duration: 120
 durationLabel: мин
 image: /images/services/service-hypnosis.webp
-order: 1
+order: 2
 featured: true
 ---
 

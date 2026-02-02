@@ -7,7 +7,7 @@ description: Десенсибилизация и переработка движ
 category: services
 price: 6000
 priceLabel: ₽
-duration: 56
+duration: 60
 durationLabel: мин
 image: /images/services/service-emdr.webp
 order: 4

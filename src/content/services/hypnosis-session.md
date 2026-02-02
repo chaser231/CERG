@@ -6,7 +6,7 @@ description: Включает в себя гипноанализ. Избавле
 category: services
 price: 6000
 priceLabel: ₽
-duration: 120
+duration: 60
 durationLabel: мин
 image: /images/services/service-hypnosis.webp
 order: 2

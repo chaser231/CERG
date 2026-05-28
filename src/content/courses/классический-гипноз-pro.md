@@ -1,5 +1,6 @@
 ---
-title: Классический гипноз PRO
+title: "Классический гипноз "
+subtitle: PRO
 price: 90000
 priceLabel: ₽
 lessonsCount: 10
